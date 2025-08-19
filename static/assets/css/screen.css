@@ -1,0 +1,43 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  font-family: "Helvetica", "Lucida Grande", Arial, sans-serif;
+}
+
+h2 {
+  color: #95290c;
+  font-size: 1.8em;
+  font-weight: bold;
+}
+
+p {
+  margin: 10px 0 10px 0;
+}
+
+em {
+  font-style: italic;
+}
+
+a {
+  color: #95290c;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+strong {
+  font-weight: bold;
+}
+
+sup {
+  vertical-align: super;
+  font-size: 0.8em;
+}
+
+a:hover {
+  text-decoration: underline;
+}

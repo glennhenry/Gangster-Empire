@@ -1,7 +1,7 @@
-id = 4
-gameCacheBreaker = MafiaCacheBreaker.swf
-gameFolder = mafia
-subdomain = data
+- id = 4
+- gameCacheBreaker = MafiaCacheBreaker.swf
+- gameFolder = mafia
+- subdomain = data
 
 Known links:
 
