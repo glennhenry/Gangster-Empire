@@ -1,5 +1,6 @@
 package dev.gangster
 
+import dev.gangster.utils.Logger
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.serialization.kotlinx.protobuf.*
@@ -9,6 +10,8 @@ import io.ktor.server.plugins.calllogging.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.plugins.statuspages.*
+import io.ktor.server.request.receive
+import io.ktor.server.request.receiveText
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
@@ -80,14 +83,20 @@ fun Application.module() {
             }
         }
 
+        post("/ftracking") {
+            val body = call.receiveText()
+            Logger.debug {  "Received f tracking: $body" }
+        }
+
         // web assets
         staticFiles("/assets", File("static/assets"))
         staticFiles("/game", File("static/game"))
 
         // game related
-        staticFiles("/files-ak", File("static/files-ak"))
-        staticFiles("/account", File("static/account"))
-        staticFiles("/data", File("static/data"))
+        staticFiles("/gangster-account", File("static/gangster-account"))
+        staticFiles("/gangster-data", File("static/gangster-data"))
+        staticFiles("/gangster-content", File("static/gangster-content"))
+        staticFiles("/ftracking", File("static/ftracking"))
     }
 }
 
@@ -98,6 +107,9 @@ fun Application.module() {
  * - subdomain = data
  *
  * Known links:
+ *
+ * POST
+ * 	http://f.tracking.goodgamestudios.com/clienttracker.php
  *
  * cache breaker:
  * - `http://files-ak.goodgamestudios.com/games-config/country.xml` (downloaded)

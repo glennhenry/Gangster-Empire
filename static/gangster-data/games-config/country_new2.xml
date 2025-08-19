@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<countries>
+	<AR>
+		<country>AR</country>
+		<browserCodes>[es, es-ES, es-41, es-AR, es-MX, es-CL, es-LA, es-VE, es-US, es-CO]</browserCodes>
+		<flashCode>es</flashCode>
+		<lang>es</lang>
+		<timezoneStart>-3</timezoneStart>
+		<timezoneEnd>-3</timezoneEnd>
+	</AR>
+	<AU>
+		<country>AU</country>
+		<browserCodes>[en-us, en-GB, en, en-au, en-CA, en-ZA, en_US, en-NZ, en-IN, en-IE]</browserCodes>
+		<flashCode>en</flashCode>
+		<lang>en</lang>
+		<timezoneStart>7</timezoneStart>
+		<timezoneEnd>10</timezoneEnd>
+	</AU>
+	<BG>
+		<country>BG</country>
+		<browserCodes>[bg, bg-BG, en-US, en]</browserCodes>
+		<flashCode/>
+		<lang>bg</lang>
+		<timezoneStart>2</timezoneStart>
+		<timezoneEnd>2</timezoneEnd>
+	</BG>
+	<BR>
+		<country>BR</country>
+		<browserCodes>[pt-BR, pt-PT, pt]</browserCodes>
+		<flashCode>pt</flashCode>
+		<lang>pt</lang>
+		<timezoneStart>-5</timezoneStart>
+		<timezoneEnd>-3</timezoneEnd>
+	</BR>
+	<CL>
+		<country>CL</country>
+		<browserCodes>[es, es-ES, es-41, es-AR, es-MX, es-CL, es-LA, es-VE, es-US, es-CO]</browserCodes>
+		<flashCode>es</flashCode>
+		<lang>es</lang>
+		<timezoneStart>-4</timezoneStart>
+		<timezoneEnd>-4</timezoneEnd>
+	</CL>
+	<CN>
+		<country>CN</country>
+		<browserCodes>[zh-CN, zh-tw, zh-hk, zh, zh-SG]</browserCodes>
+		<flashCode>zh-CN</flashCode>
+		<lang>zh_CN</lang>
+		<timezoneStart>8</timezoneStart>
+		<timezoneEnd>8</timezoneEnd>
+	</CN>
+	<CO>
+		<country>CO</country>
+		<browserCodes>[es, es-ES, es-41, es-AR, es-MX, es-CL, es-LA, es-VE, es-US, es-CO]</browserCodes>
+		<flashCode>es</flashCode>
+		<lang>es</lang>
+		<timezoneStart>-5</timezoneStart>
+		<timezoneEnd>-5</timezoneEnd>
+	</CO>
+	<CZ>
+		<country>CZ</country>
+		<browserCodes>[cs, cs-CZ]</browserCodes>
+		<flashCode>cs</flashCode>
+		<lang>cs</lang>
+		<timezoneStart>1</timezoneStart>
+		<timezoneEnd>1</timezoneEnd>
+	</CZ>
+	<DE>
+		<country>DE</country>
+		<browserCodes>[de, de-DE, de-AT, de-CH, de_DE, de-LU, de-LI, de-ES]</browserCodes>
+		<flashCode>de</flashCode>
+		<lang>de</lang>
+		<timezoneStart>1</timezoneStart>
+		<timezoneEnd>1</timezoneEnd>
+	</DE>
+	<DK>
+		<country>DK</country>
+		<browserCodes>[da, da-dk]</browserCodes>
+		<flashCode>da</flashCode>
+		<lang>da</lang>
+		<timezoneStart>1</timezoneStart>
+		<timezoneEnd>1</timezoneEnd>
+	</DK>
+	<ES>
+		<country>ES</country>
+		<browserCodes>[es, es-ES, es-41, es-AR, es-MX, es-CL, es-LA, es-VE, es-US, es-CO]</browserCodes>
+		<flashCode>es</flashCode>
+		<lang>es</lang>
+		<timezoneStart>1</timezoneStart>
+		<timezoneEnd>1</timezoneEnd>
+	</ES>
+	<FI>
+		<country>FI</country>
+		<browserCodes>[fi, fi-FI]</browserCodes>
+		<flashCode>fi</flashCode>
+		<lang>fi</lang>
+		<timezoneStart>2</timezoneStart>
+		<timezoneEnd>2</timezoneEnd>
+	</FI>
+	<FR>
+		<country>FR</country>
+		<browserCodes>[fr, fr-fr, fr-CA, fr-BE, fr-CH, fr_FR, fr-LU, fr_CA, fr-vu, fr%Pr]</browserCodes>
+		<flashCode>fr</flashCode>
+		<lang>fr</lang>
+		<timezoneStart>1</timezoneStart>
+		<timezoneEnd>1</timezoneEnd>
+	</FR>
+	<GB>
+		<country>GB</country>
+		<browserCodes>[en-us, en-GB, en, en-au, en-CA, en-ZA, en_US, en-NZ, en-IN, en-IE]</browserCodes>
+		<flashCode>en</flashCode>
+		<lang>en</lang>
+		<timezoneStart>0</timezoneStart>
+		<timezoneEnd>0</timezoneEnd>
+	</GB>
+	<GR>
+		<country>GR</country>
+		<browserCodes>[el, el-GR, el-CY]</browserCodes>
+		<flashCode/>
+		<lang>el</lang>
+		<timezoneStart>2</timezoneStart>
+		<timezoneEnd>2</timezoneEnd>
+	</GR>
+	<HU>
+		<country>HU</country>
+		<browserCodes>[hu, hu-HU, hu-SK, hu-RO, hu-]</browserCodes>
+		<flashCode>hu</flashCode>
+		<lang>hu</lang>
+		<timezoneStart>1</timezoneStart>
+		<timezoneEnd>1</timezoneEnd>
+	</HU>
+	<IN>
+		<country>IN</country>
+		<browserCodes>[en-us, en-GB, en, en-au, en-CA, en-ZA, en_US, en-NZ, en-IN, en-IE]</browserCodes>
+		<flashCode>en</flashCode>
+		<lang>en</lang>
+		<timezoneStart>5</timezoneStart>
+		<timezoneEnd>6</timezoneEnd>
+	</IN>
+	<IT>
+		<country>IT</country>
+		<browserCodes>[it, it-IT, it-CH, it_IT, it-GB, it-]</browserCodes>
+		<flashCode>it</flashCode>
+		<lang>it</lang>
+		<timezoneStart>1</timezoneStart>
+		<timezoneEnd>1</timezoneEnd>
+	</IT>
+	<JP>
+		<country>JP</country>
+		<browserCodes>[ja, ja-JP, en-Us]</browserCodes>
+		<flashCode>ja</flashCode>
+		<lang>ja</lang>
+		<timezoneStart>9</timezoneStart>
+		<timezoneEnd>9</timezoneEnd>
+	</JP>
+	<KR>
+		<country>KR</country>
+		<browserCodes>[ko, ko-KR, en-US]</browserCodes>
+		<flashCode>ko</flashCode>
+		<lang>ko</lang>
+		<timezoneStart>9</timezoneStart>
+		<timezoneEnd>9</timezoneEnd>
+	</KR>
+	<LT>
+		<country>LT</country>
+		<browserCodes>[lt, lt-lt, en-US, en]</browserCodes>
+		<flashCode/>
+		<lang>lt</lang>
+		<timezoneStart>2</timezoneStart>
+		<timezoneEnd>2</timezoneEnd>
+	</LT>
+	<MX>
+		<country>MX</country>
+		<browserCodes>[es, es-ES, es-41, es-AR, es-MX, es-CL, es-LA, es-VE, es-US, es-CO]</browserCodes>
+		<flashCode>es</flashCode>
+		<lang>es</lang>
+		<timezoneStart>-8</timezoneStart>
+		<timezoneEnd>-6</timezoneEnd>
+	</MX>
+	<NL>
+		<country>NL</country>
+		<browserCodes>[nl, nl-NL, nl-BE, nl-]</browserCodes>
+		<flashCode>nl</flashCode>
+		<lang>nl</lang>
+		<timezoneStart>1</timezoneStart>
+		<timezoneEnd>1</timezoneEnd>
+	</NL>
+	<NO>
+		<country>NO</country>
+		<browserCodes>[no, no-NO, nb, nb-NO, nn-NO, nn]</browserCodes>
+		<flashCode>no</flashCode>
+		<lang>no</lang>
+		<timezoneStart>1</timezoneStart>
+		<timezoneEnd>1</timezoneEnd>
+	</NO>
+	<PL>
+		<country>PL</country>
+		<browserCodes>[pl, pl-PL, pl-US, pl-IE, pl-GB, pl-]</browserCodes>
+		<flashCode>pl</flashCode>
+		<lang>pl</lang>
+		<timezoneStart>1</timezoneStart>
+		<timezoneEnd>1</timezoneEnd>
+	</PL>
+	<PT>
+		<country>PT</country>
+		<browserCodes>[pt-BR, pt-PT, pt]</browserCodes>
+		<flashCode>pt</flashCode>
+		<lang>pt</lang>
+		<timezoneStart>0</timezoneStart>
+		<timezoneEnd>0</timezoneEnd>
+	</PT>
+	<RO>
+		<country>RO</country>
+		<browserCodes>[ro, ro-RO, ro-MD,en-US, en]</browserCodes>
+		<flashCode/>
+		<lang>ro</lang>
+		<timezoneStart>2</timezoneStart>
+		<timezoneEnd>2</timezoneEnd>
+	</RO>
+	<RU>
+		<country>RU</country>
+		<browserCodes>[ru, ru-RU, ru-DE]</browserCodes>
+		<flashCode>ru</flashCode>
+		<lang>ru</lang>
+		<timezoneStart>3</timezoneStart>
+		<timezoneEnd>3</timezoneEnd>
+	</RU>
+	<SE>
+		<country>SE</country>
+		<browserCodes>[sv, sv-SE, sv-FI]</browserCodes>
+		<flashCode>sv</flashCode>
+		<lang>sv</lang>
+		<timezoneStart>1</timezoneStart>
+		<timezoneEnd>1</timezoneEnd>
+	</SE>
+	<SK>
+		<country>SK</country>
+		<browserCodes>[sk, sk-sk, sk-CZ, cs]</browserCodes>
+		<flashCode/>
+		<lang>sk</lang>
+		<timezoneStart>1</timezoneStart>
+		<timezoneEnd>1</timezoneEnd>
+	</SK>
+	<TR>
+		<country>TR</country>
+		<browserCodes>[tr, tr-TR]</browserCodes>
+		<flashCode>tr</flashCode>
+		<lang>tr</lang>
+		<timezoneStart>2</timezoneStart>
+		<timezoneEnd>2</timezoneEnd>
+	</TR>
+	<US>
+		<country>US</country>
+		<browserCodes>[en-us, en-GB, en, en-au, en-CA, en-ZA, en_US, en-NZ, en-IN, en-IE]</browserCodes>
+		<flashCode>en</flashCode>
+		<lang>en</lang>
+		<timezoneStart>-11</timezoneStart>
+		<timezoneEnd>-5</timezoneEnd>
+	</US>
+	<VE>
+		<country>VE</country>
+		<browserCodes>[es, es-ES, es-41, es-AR, es-MX, es-CL, es-LA, es-VE, es-US, es-CO]</browserCodes>
+		<flashCode>es</flashCode>
+		<lang>es</lang>
+		<timezoneStart>-5</timezoneStart>
+		<timezoneEnd>-4</timezoneEnd>
+	</VE>
+</countries>
