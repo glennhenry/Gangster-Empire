@@ -34,3 +34,8 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Others ###
+logs/
+.kotlin
+deploy/
