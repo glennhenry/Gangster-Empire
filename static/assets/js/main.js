@@ -26,6 +26,7 @@ function startGame() {
   const attributes = { id: "game", name: "game" };
 
   swfobject.embedSWF(
+    // "/game/MafiaCacheBreakerSwf.swf",
     "/game/GoodgameGangster.swf",
     "game-container",
     "100%",

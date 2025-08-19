@@ -99,11 +99,18 @@ fun Application.module() {
         staticFiles("/assets", File("static/assets"))
         staticFiles("/game", File("static/game"))
 
-        // game related
+        // crossdomain
+        staticFiles("crossdomain.xml", File("static"))
+
+        // subdomain
+        staticFiles("/files-ak", File("static/gangster-files"))
+        staticFiles("/gangster-files", File("static/gangster-files"))
+        staticFiles("/account", File("static/gangster-account"))
         staticFiles("/gangster-account", File("static/gangster-account"))
+        staticFiles("/data", File("static/gangster-data"))
         staticFiles("/gangster-data", File("static/gangster-data"))
+        staticFiles("/content", File("static/gangster-content"))
         staticFiles("/gangster-content", File("static/gangster-content"))
-        staticFiles("/ftracking", File("static/ftracking"))
 
         // not yet requested, only seen in decompiled
         staticFiles("/cdn", File("static/cdn")) // CookieSaver.swf
