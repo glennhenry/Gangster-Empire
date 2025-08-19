@@ -83,5 +83,22 @@ fun Application.module() {
         // web assets
         staticFiles("/assets", File("static/assets"))
         staticFiles("/game", File("static/game"))
+
+        // game related
+        staticFiles("/files-ak", File("static/files-ak"))
+        staticFiles("/account", File("static/account"))
     }
 }
+
+/**
+ * - id = 4
+ * - gameCacheBreaker = MafiaCacheBreaker.swf
+ * - gameFolder = mafia
+ * - subdomain = data
+ *
+ * Known links:
+ *
+ * cache breaker:
+ * - `http://files-ak.goodgamestudios.com/games-config/country.xml` (downloaded)
+ * - `http://account.goodgamestudios.com/CookieSaver.swf` (not downloaded)
+ */
