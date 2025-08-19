@@ -87,6 +87,7 @@ fun Application.module() {
         // game related
         staticFiles("/files-ak", File("static/files-ak"))
         staticFiles("/account", File("static/account"))
+        staticFiles("/data", File("static/data"))
     }
 }
 
