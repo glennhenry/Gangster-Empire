@@ -8,6 +8,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 import java.io.File
+import java.net.URLDecoder
+import java.nio.charset.StandardCharsets
 import java.text.SimpleDateFormat
 
 fun RoutingContext.logInput(txt: Any?, logFull: Boolean = false) {
@@ -240,6 +242,10 @@ object Logger {
 
         return newFile
     }
+}
+
+fun String.decodedUrl(): String {
+    return URLDecoder.decode(this, StandardCharsets.UTF_8.toString())
 }
 
 enum class LogLevel() {

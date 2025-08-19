@@ -1,17 +1,17 @@
 package dev.gangster
 
 import dev.gangster.utils.Logger
+import dev.gangster.utils.decodedUrl
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.serialization.kotlinx.protobuf.*
 import io.ktor.server.application.*
-import io.ktor.server.http.content.staticFiles
+import io.ktor.server.http.content.*
 import io.ktor.server.plugins.calllogging.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.plugins.statuspages.*
-import io.ktor.server.request.receive
-import io.ktor.server.request.receiveText
+import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
@@ -85,7 +85,14 @@ fun Application.module() {
 
         post("/ftracking") {
             val body = call.receiveText()
-            Logger.debug {  "Received f tracking: $body" }
+            Logger.debug { "Received f tracking: $body" }
+            call.respond(HttpStatusCode.OK)
+        }
+
+        post("/logging") {
+            val body = call.receiveText()
+            Logger.debug(logFull = true) { "Received external logging: ${body.decodedUrl()}" }
+            call.respond(HttpStatusCode.OK)
         }
 
         // web assets
@@ -97,6 +104,9 @@ fun Application.module() {
         staticFiles("/gangster-data", File("static/gangster-data"))
         staticFiles("/gangster-content", File("static/gangster-content"))
         staticFiles("/ftracking", File("static/ftracking"))
+
+        // not yet requested, only seen in decompiled
+        staticFiles("/cdn", File("static/cdn")) // CookieSaver.swf
     }
 }
 
@@ -114,4 +124,17 @@ fun Application.module() {
  * cache breaker:
  * - `http://files-ak.goodgamestudios.com/games-config/country.xml` (downloaded)
  * - `http://account.goodgamestudios.com/CookieSaver.swf` (not downloaded)
+ * 
+ *
+ * SUB_DOMAIN_FILE_SERVER_OLD = "files-ak"
+ * SUB_DOMAIN_MEDIA_SERVER_OLD = "media"
+ * SUB_DOMAIN_DATA_SERVER_OLD = "data"
+ * SUB_DOMAIN_CONTENT_SERVER_OLD = "content"
+ * SUB_DOMAIN_ACCOUNT_SERVER_OLD = "account"
+ * SUB_DOMAIN_FILE_SERVER_NEW = "gangster-files-ak"
+ * SUB_DOMAIN_MEDIA_SERVER_NEW = "gangster-media"
+ * SUB_DOMAIN_DATA_SERVER_NEW = "gangster-data"
+ * SUB_DOMAIN_CONTENT_SERVER_NEW = "gangster-content"
+ * SUB_DOMAIN_ACCOUNT_SERVER_NEW = "gangster-account"
+ * cdnSubDomain = "content"
  */
