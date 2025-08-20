@@ -106,6 +106,15 @@ class Server(
                         data.startsWithString("%xt%MafiaEx%pin") -> {
                             Logger.debug { "Received xt pin message" }
                         }
+
+                        data.startsWithString("%xt%MafiaEx%vck") -> {
+                            val r = 1
+                            val unknown1 = 0
+                            val unknown2 = 0
+                            connection.sendRaw(
+                                SmartFoxString.makeXt("vck", r, unknown1, unknown2)
+                            )
+                        }
                     }
 
                     Logger.info("<------------ SOCKET MESSAGE END ------------>")
