@@ -27,6 +27,7 @@ object SmartFoxXML {
         )
     }
 
+    // client used smartfox extension to replace rmlist during login response
     fun rmList(r: Int): String {
         return makeSys(
             action = "rmList", r = r,
@@ -48,17 +49,13 @@ object SmartFoxXML {
         )
     }
 
-    // I think r is room id
     fun joinOk(r: Int, pid: Int): String {
-        return makeSys(
-            action = "joinOK", r = r,
-            inner = XmlBuilder("pid")
-                .attr("id", pid.toString())
-                .child("vars") {}
-                .child("uLs") {
-                    attr("r", "1")
-                }
-                .build()
-        )
+        val inner = XmlBuilder("pid")
+            .attr("id", pid.toString())
+            .child("vars") {}
+            .child("uLs") { attr("r", "1") }
+            .build()
+
+        return makeSys("joinOK", r, inner)
     }
 }

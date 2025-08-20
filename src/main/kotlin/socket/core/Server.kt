@@ -93,8 +93,7 @@ class Server(
 
                         // Handle room list
                         data.startsWithString("<msg t='sys'><body action='autoJoin'") -> {
-                            val roomIndex = 1
-                            connection.sendRaw(SmartFoxXML.joinOk(r = -1, pid = 1))
+                            connection.sendRaw(SmartFoxXML.joinOk(r = 1, pid = 0))
                         }
                     }
 
