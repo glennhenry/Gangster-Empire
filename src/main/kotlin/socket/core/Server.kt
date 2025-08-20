@@ -82,7 +82,7 @@ class Server(
                                                    // (_loc3_ >> 0 & 1) = priv  [0 if flags=2]
                                                    // (_loc3_ >> 3 & 1) = limbo [0 if flags=2]
 
-                            val roomName = "Lobby" // param5
+                            val roomName = "Lobby" // param5 must be lobby
                             connection.sendRaw(
                                 SmartFoxString.makeXt(
                                     "rlu", r, roomId, userCount,
@@ -94,6 +94,17 @@ class Server(
                         // Handle room list
                         data.startsWithString("<msg t='sys'><body action='autoJoin'") -> {
                             connection.sendRaw(SmartFoxXML.joinOk(r = 1, pid = 0))
+                        }
+
+                        // Response to roundTrip message (likely first periodic ping)
+                        data.startsWithString("<msg t='sys'><body action='roundTrip'") -> {
+                            connection.sendRaw(SmartFoxXML.roundTripResponse())
+                        }
+
+                        // Response to periodic ping which is sent after the first roundTrip
+                        // follows zone name in 1.xml
+                        data.startsWithString("%xt%MafiaEx%pin") -> {
+                            Logger.debug { "Received xt pin message" }
                         }
                     }
 

@@ -58,4 +58,11 @@ object SmartFoxXML {
 
         return makeSys("joinOK", r, inner)
     }
+
+    /**
+     * Round trip response. I think it signify the start of periodic ping.
+     */
+    fun roundTripResponse(r: Int = 1): String {
+        return makeSys(action = "roundTripRes", r = r, inner = "")
+    }
 }
