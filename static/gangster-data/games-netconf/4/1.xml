@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <network>
 	<instances>
-		<instance value="0">
+		<instance value="1">
 			<server>127.0.0.1</server>
 			<port>7777</port>
 			<zone>MafiaPS</zone>
@@ -14,149 +14,149 @@
 			<countries>["BG","BR","CN","CZ","DE","DK","ES","FI","FR","GB","GR","HU","IT","JP","KP","KR","NL","NO","PL","PT","RO","RU","SE","SK","TR","US"]</countries>
 			<defaultcountry>default</defaultcountry>
 		</instance>
-		<instance value="1">
-			<server>game-int1.ggs-gangster.com</server>
-			<port>443</port>
-			<zone>MafiaEx</zone>
-			<zoneId>4</zoneId>
-			<capacity>100</capacity>
-			<instanceName>1</instanceName>
-			<isFavorite>0</isFavorite>
-			<instanceLocaId/>
-			<isInternational>1</isInternational>
-			<countries>["BG","BR","CN","CZ","DE","DK","ES","FI","FR","GB","GR","HU","IT","JP","KP","KR","NL","NO","PL","PT","RO","RU","SE","SK","TR","US"]</countries>
-			<defaultcountry>default</defaultcountry>
-		</instance>
-		<instance value="2">
-			<server>game-int2.ggs-gangster.com</server>
-			<port>443</port>
-			<zone>MafiaEx2</zone>
-			<zoneId>68</zoneId>
-			<capacity>100</capacity>
-			<instanceName>2</instanceName>
-			<isFavorite>0</isFavorite>
-			<instanceLocaId/>
-			<isInternational>1</isInternational>
-			<countries>["BG","BR","CN","CZ","DE","DK","ES","FI","FR","GB","GR","HU","IT","JP","KP","KR","NL","NO","PL","PT","RO","RU","SE","SK","TR","US"]</countries>
-			<defaultcountry>default</defaultcountry>
-		</instance>
-		<instance value="3">
-			<server>game-de1.ggs-gangster.com</server>
-			<port>443</port>
-			<zone>MafiaEx3</zone>
-			<zoneId>71</zoneId>
-			<capacity>100</capacity>
-			<instanceName>1</instanceName>
-			<isFavorite>0</isFavorite>
-			<instanceLocaId/>
-			<isInternational>0</isInternational>
-			<countries>["DE"]</countries>
-			<defaultcountry>DE</defaultcountry>
-		</instance>
-		<instance value="4">
-			<server>game-en1.ggs-gangster.com</server>
-			<port>443</port>
-			<zone>MafiaEx4</zone>
-			<zoneId>75</zoneId>
-			<capacity>100</capacity>
-			<instanceName>1</instanceName>
-			<isFavorite>0</isFavorite>
-			<instanceLocaId>generic_language_en</instanceLocaId>
-			<isInternational>0</isInternational>
-			<countries>["GB","US"]</countries>
-			<defaultcountry>default</defaultcountry>
-		</instance>
-		<instance value="5">
-			<server>game-pt1.ggs-gangster.com</server>
-			<port>443</port>
-			<zone>MafiaEx5</zone>
-			<zoneId>76</zoneId>
-			<capacity>100</capacity>
-			<instanceName>1</instanceName>
-			<isFavorite>0</isFavorite>
-			<instanceLocaId/>
-			<isInternational>0</isInternational>
-			<countries>["PT"]</countries>
-			<defaultcountry>PT</defaultcountry>
-		</instance>
-		<instance value="6">
-			<server>game-int3.ggs-gangster.com</server>
-			<port>443</port>
-			<zone>MafiaEx_6</zone>
-			<zoneId>120</zoneId>
-			<capacity>100</capacity>
-			<instanceName>3</instanceName>
-			<isFavorite>0</isFavorite>
-			<instanceLocaId/>
-			<isInternational>1</isInternational>
-			<countries>["BG","BR","CN","CZ","DE","DK","ES","FI","FR","GB","GR","HU","IT","JP","KP","KR","NL","NO","PL","PT","RO","RU","SE","SK","TR","US"]</countries>
-			<defaultcountry>default</defaultcountry>
-		</instance>
-		<instance value="7">
-			<server>game-int4.ggs-gangster.com</server>
-			<port>443</port>
-			<zone>MafiaEx_7</zone>
-			<zoneId>124</zoneId>
-			<capacity>100</capacity>
-			<instanceName>4</instanceName>
-			<isFavorite>0</isFavorite>
-			<instanceLocaId/>
-			<isInternational>1</isInternational>
-			<countries>["BG","BR","CN","CZ","DE","DK","ES","FI","FR","GB","GR","HU","IT","JP","KP","KR","NL","NO","PL","PT","RO","RU","SE","SK","TR","US"]</countries>
-			<defaultcountry>default</defaultcountry>
-		</instance>
-		<instance value="8">
-			<server>game-cz1.ggs-gangster.com</server>
-			<port>443</port>
-			<zone>MafiaEx_8</zone>
-			<zoneId>127</zoneId>
-			<capacity>100</capacity>
-			<instanceName>1</instanceName>
-			<isFavorite>0</isFavorite>
-			<instanceLocaId/>
-			<isInternational>0</isInternational>
-			<countries>["CZ"]</countries>
-			<defaultcountry>CZ</defaultcountry>
-		</instance>
-		<instance value="9">
-			<server>game-tr1.ggs-gangster.com</server>
-			<port>443</port>
-			<zone>MafiaEx_9</zone>
-			<zoneId>136</zoneId>
-			<capacity>100</capacity>
-			<instanceName>1</instanceName>
-			<isFavorite>0</isFavorite>
-			<instanceLocaId/>
-			<isInternational>0</isInternational>
-			<countries>["TR"]</countries>
-			<defaultcountry>TR</defaultcountry>
-		</instance>
-		<instance value="10">
-			<server>game-fr1.ggs-gangster.com</server>
-			<port>443</port>
-			<zone>MafiaEx_10</zone>
-			<zoneId>145</zoneId>
-			<capacity>100</capacity>
-			<instanceName>1</instanceName>
-			<isFavorite>0</isFavorite>
-			<instanceLocaId/>
-			<isInternational>0</isInternational>
-			<countries>["FR"]</countries>
-			<defaultcountry>FR</defaultcountry>
-		</instance>
-		<instance value="11">
-			<server>game-es1.ggs-gangster.com</server>
-			<port>443</port>
-			<zone>MafiaEx_11</zone>
-			<zoneId>153</zoneId>
-			<capacity>100</capacity>
-			<instanceName>1</instanceName>
-			<isFavorite>0</isFavorite>
-			<instanceLocaId/>
-			<isInternational>0</isInternational>
-			<countries>["ES"]</countries>
-			<defaultcountry>ES</defaultcountry>
-		</instance>
+<!--		<instance value="1">-->
+<!--			<server>game-int1.ggs-gangster.com</server>-->
+<!--			<port>443</port>-->
+<!--			<zone>MafiaEx</zone>-->
+<!--			<zoneId>4</zoneId>-->
+<!--			<capacity>100</capacity>-->
+<!--			<instanceName>1</instanceName>-->
+<!--			<isFavorite>0</isFavorite>-->
+<!--			<instanceLocaId/>-->
+<!--			<isInternational>1</isInternational>-->
+<!--			<countries>["BG","BR","CN","CZ","DE","DK","ES","FI","FR","GB","GR","HU","IT","JP","KP","KR","NL","NO","PL","PT","RO","RU","SE","SK","TR","US"]</countries>-->
+<!--			<defaultcountry>default</defaultcountry>-->
+<!--		</instance>-->
+<!--		<instance value="2">-->
+<!--			<server>game-int2.ggs-gangster.com</server>-->
+<!--			<port>443</port>-->
+<!--			<zone>MafiaEx2</zone>-->
+<!--			<zoneId>68</zoneId>-->
+<!--			<capacity>100</capacity>-->
+<!--			<instanceName>2</instanceName>-->
+<!--			<isFavorite>0</isFavorite>-->
+<!--			<instanceLocaId/>-->
+<!--			<isInternational>1</isInternational>-->
+<!--			<countries>["BG","BR","CN","CZ","DE","DK","ES","FI","FR","GB","GR","HU","IT","JP","KP","KR","NL","NO","PL","PT","RO","RU","SE","SK","TR","US"]</countries>-->
+<!--			<defaultcountry>default</defaultcountry>-->
+<!--		</instance>-->
+<!--		<instance value="3">-->
+<!--			<server>game-de1.ggs-gangster.com</server>-->
+<!--			<port>443</port>-->
+<!--			<zone>MafiaEx3</zone>-->
+<!--			<zoneId>71</zoneId>-->
+<!--			<capacity>100</capacity>-->
+<!--			<instanceName>1</instanceName>-->
+<!--			<isFavorite>0</isFavorite>-->
+<!--			<instanceLocaId/>-->
+<!--			<isInternational>0</isInternational>-->
+<!--			<countries>["DE"]</countries>-->
+<!--			<defaultcountry>DE</defaultcountry>-->
+<!--		</instance>-->
+<!--		<instance value="4">-->
+<!--			<server>game-en1.ggs-gangster.com</server>-->
+<!--			<port>443</port>-->
+<!--			<zone>MafiaEx4</zone>-->
+<!--			<zoneId>75</zoneId>-->
+<!--			<capacity>100</capacity>-->
+<!--			<instanceName>1</instanceName>-->
+<!--			<isFavorite>0</isFavorite>-->
+<!--			<instanceLocaId>generic_language_en</instanceLocaId>-->
+<!--			<isInternational>0</isInternational>-->
+<!--			<countries>["GB","US"]</countries>-->
+<!--			<defaultcountry>default</defaultcountry>-->
+<!--		</instance>-->
+<!--		<instance value="5">-->
+<!--			<server>game-pt1.ggs-gangster.com</server>-->
+<!--			<port>443</port>-->
+<!--			<zone>MafiaEx5</zone>-->
+<!--			<zoneId>76</zoneId>-->
+<!--			<capacity>100</capacity>-->
+<!--			<instanceName>1</instanceName>-->
+<!--			<isFavorite>0</isFavorite>-->
+<!--			<instanceLocaId/>-->
+<!--			<isInternational>0</isInternational>-->
+<!--			<countries>["PT"]</countries>-->
+<!--			<defaultcountry>PT</defaultcountry>-->
+<!--		</instance>-->
+<!--		<instance value="6">-->
+<!--			<server>game-int3.ggs-gangster.com</server>-->
+<!--			<port>443</port>-->
+<!--			<zone>MafiaEx_6</zone>-->
+<!--			<zoneId>120</zoneId>-->
+<!--			<capacity>100</capacity>-->
+<!--			<instanceName>3</instanceName>-->
+<!--			<isFavorite>0</isFavorite>-->
+<!--			<instanceLocaId/>-->
+<!--			<isInternational>1</isInternational>-->
+<!--			<countries>["BG","BR","CN","CZ","DE","DK","ES","FI","FR","GB","GR","HU","IT","JP","KP","KR","NL","NO","PL","PT","RO","RU","SE","SK","TR","US"]</countries>-->
+<!--			<defaultcountry>default</defaultcountry>-->
+<!--		</instance>-->
+<!--		<instance value="7">-->
+<!--			<server>game-int4.ggs-gangster.com</server>-->
+<!--			<port>443</port>-->
+<!--			<zone>MafiaEx_7</zone>-->
+<!--			<zoneId>124</zoneId>-->
+<!--			<capacity>100</capacity>-->
+<!--			<instanceName>4</instanceName>-->
+<!--			<isFavorite>0</isFavorite>-->
+<!--			<instanceLocaId/>-->
+<!--			<isInternational>1</isInternational>-->
+<!--			<countries>["BG","BR","CN","CZ","DE","DK","ES","FI","FR","GB","GR","HU","IT","JP","KP","KR","NL","NO","PL","PT","RO","RU","SE","SK","TR","US"]</countries>-->
+<!--			<defaultcountry>default</defaultcountry>-->
+<!--		</instance>-->
+<!--		<instance value="8">-->
+<!--			<server>game-cz1.ggs-gangster.com</server>-->
+<!--			<port>443</port>-->
+<!--			<zone>MafiaEx_8</zone>-->
+<!--			<zoneId>127</zoneId>-->
+<!--			<capacity>100</capacity>-->
+<!--			<instanceName>1</instanceName>-->
+<!--			<isFavorite>0</isFavorite>-->
+<!--			<instanceLocaId/>-->
+<!--			<isInternational>0</isInternational>-->
+<!--			<countries>["CZ"]</countries>-->
+<!--			<defaultcountry>CZ</defaultcountry>-->
+<!--		</instance>-->
+<!--		<instance value="9">-->
+<!--			<server>game-tr1.ggs-gangster.com</server>-->
+<!--			<port>443</port>-->
+<!--			<zone>MafiaEx_9</zone>-->
+<!--			<zoneId>136</zoneId>-->
+<!--			<capacity>100</capacity>-->
+<!--			<instanceName>1</instanceName>-->
+<!--			<isFavorite>0</isFavorite>-->
+<!--			<instanceLocaId/>-->
+<!--			<isInternational>0</isInternational>-->
+<!--			<countries>["TR"]</countries>-->
+<!--			<defaultcountry>TR</defaultcountry>-->
+<!--		</instance>-->
+<!--		<instance value="10">-->
+<!--			<server>game-fr1.ggs-gangster.com</server>-->
+<!--			<port>443</port>-->
+<!--			<zone>MafiaEx_10</zone>-->
+<!--			<zoneId>145</zoneId>-->
+<!--			<capacity>100</capacity>-->
+<!--			<instanceName>1</instanceName>-->
+<!--			<isFavorite>0</isFavorite>-->
+<!--			<instanceLocaId/>-->
+<!--			<isInternational>0</isInternational>-->
+<!--			<countries>["FR"]</countries>-->
+<!--			<defaultcountry>FR</defaultcountry>-->
+<!--		</instance>-->
+<!--		<instance value="11">-->
+<!--			<server>game-es1.ggs-gangster.com</server>-->
+<!--			<port>443</port>-->
+<!--			<zone>MafiaEx_11</zone>-->
+<!--			<zoneId>153</zoneId>-->
+<!--			<capacity>100</capacity>-->
+<!--			<instanceName>1</instanceName>-->
+<!--			<isFavorite>0</isFavorite>-->
+<!--			<instanceLocaId/>-->
+<!--			<isInternational>0</isInternational>-->
+<!--			<countries>["ES"]</countries>-->
+<!--			<defaultcountry>ES</defaultcountry>-->
+<!--		</instance>-->
 	</instances>
 	<general>
 		<usekeybaselogin>false</usekeybaselogin>
