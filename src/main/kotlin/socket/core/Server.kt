@@ -2,6 +2,7 @@ package dev.gangster.socket.core
 
 import dev.gangster.SERVER_HOST
 import dev.gangster.SOCKET_SERVER_PORT
+import dev.gangster.socket.protocol.SmartFoxString
 import dev.gangster.socket.protocol.SmartFoxXML
 import dev.gangster.utils.Logger
 import dev.gangster.utils.UUID
@@ -11,6 +12,9 @@ import io.ktor.utils.io.*
 import kotlinx.coroutines.*
 import java.nio.charset.Charset
 import java.util.concurrent.ConcurrentHashMap
+
+const val POLICY_REQUEST =
+    "<cross-domain-policy><allow-access-from domain='*' to-ports='7777' /></cross-domain-policy>\u0000"
 
 class Server(
     private val host: String = SERVER_HOST,
@@ -33,8 +37,10 @@ class Server(
                         socket = socket,
                         output = socket.openWriteChannel(autoFlush = true),
                     )
-                    clients[connection.connectionId] = connection
                     Logger.info { "New client: ${connection.socket.remoteAddress}" }
+                    clients[connection.connectionId] = connection.also {
+                        it.sendRaw(POLICY_REQUEST.toByteArray())
+                    }
                     handleClient(connection)
                 }
             } catch (e: Exception) {
@@ -60,19 +66,30 @@ class Server(
                     Logger.debug { "Received raw: ${data.decodeToString()}" }
 
                     when {
-                        // Version check handshake
+                        // Version check handshake (follows original smartfox)
                         data.startsWithString("<msg t='sys'><body action='verChk'") -> {
                             connection.sendRaw(SmartFoxXML.apiOK())
                         }
 
-                        // Handle server login
+                        // Handle server login (game uses extension for login response)
                         data.startsWithString("<msg t='sys'><body action='login'") -> {
-                            connection.sendRaw(SmartFoxXML.logOK(userId = 123, mod = 0, name = "testadmin"))
+                            val r = -1
+                            val roomIndex = 1
+                            val maxUsers = 100
+                            val flags = 2 // unknown
+                            val roomName = "Lobby"
+                            connection.sendRaw(
+                                SmartFoxString.makeXt(
+                                    "rlu", r, roomIndex, maxUsers,
+                                    flags, roomName
+                                )
+                            )
                         }
 
                         // Handle room list
-                        data.startsWithString("<msg t='sys'><body action='getRmList'") -> {
-                            connection.sendRaw(SmartFoxXML.rmList(r = -1))
+                        data.startsWithString("<msg t='sys'><body action='autoJoin'") -> {
+                            val roomIndex = 1
+                            connection.sendRaw(SmartFoxXML.joinOk(r = roomIndex, pid = 1))
                         }
                     }
 

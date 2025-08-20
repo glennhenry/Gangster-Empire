@@ -47,4 +47,18 @@ object SmartFoxXML {
                 .build()
         )
     }
+
+    // I think r is room id
+    fun joinOk(r: Int, pid: Int): String {
+        return makeSys(
+            action = "joinOK", r = r,
+            inner = XmlBuilder("pid")
+                .attr("id", pid.toString())
+                .child("vars") {}
+                .child("uLs") {
+                    attr("r", "1")
+                }
+                .build()
+        )
+    }
 }
