@@ -90,8 +90,9 @@ fun Application.module() {
         }
 
         post("/logging") {
-            val body = call.receiveText()
-            Logger.debug(logFull = true) { "Received external logging: ${body.decodedUrl()}" }
+            val body = call.receiveText().decodedUrl()
+            Logger.debug(logFull = true) { "Received external logging: $body" }
+            Logger.debug(logFull = true) { "TL;DR; ${body.substringAfter("logMessage")}" }
             call.respond(HttpStatusCode.OK)
         }
 
@@ -118,6 +119,13 @@ fun Application.module() {
 }
 
 /**
+ *
+ * log:
+ *    import com.goodgamestudios.externalLogging.ExternalLog;
+ *
+ *    ExternalLog.slog("message", "source");
+ *
+ * game save: C:\Users\<username>\AppData\Roaming\com.goodgamestudios.mafia.MafiaFrameOne\Local Store\#SharedObjects
  * - id = 4
  * - gameCacheBreaker = MafiaCacheBreaker.swf
  * - gameFolder = mafia
