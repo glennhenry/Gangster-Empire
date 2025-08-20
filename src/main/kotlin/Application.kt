@@ -92,7 +92,7 @@ fun Application.module() {
         post("/logging") {
             val body = call.receiveText().decodedUrl()
             Logger.debug(logFull = true) { "Received external logging: $body" }
-            Logger.debug(logFull = true) { "TL;DR; ${body.substringAfter("logMessage")}" }
+            Logger.debug(logFull = true) { "TL;DR; ${body.substringAfter("logMessage").substringBefore("errorCode")}" }
             call.respond(HttpStatusCode.OK)
         }
 
@@ -116,6 +116,13 @@ fun Application.module() {
         // not yet requested, only seen in decompiled
         staticFiles("/cdn", File("static/cdn")) // CookieSaver.swf
     }
+
+    // 6. Start game server
+    val server = Server()
+    server.start()
+    Runtime.getRuntime().addShutdownHook(Thread {
+        server.shutdown()
+    })
 }
 
 /**
@@ -139,7 +146,7 @@ fun Application.module() {
  * cache breaker:
  * - `http://files-ak.goodgamestudios.com/games-config/country.xml` (downloaded)
  * - `http://account.goodgamestudios.com/CookieSaver.swf` (not downloaded)
- * 
+ *
  *
  * SUB_DOMAIN_FILE_SERVER_OLD = "files-ak"
  * SUB_DOMAIN_MEDIA_SERVER_OLD = "media"
