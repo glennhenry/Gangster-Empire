@@ -1,5 +1,6 @@
 package dev.gangster
 
+import dev.gangster.socket.core.Server
 import dev.gangster.utils.Logger
 import dev.gangster.utils.decodedUrl
 import io.ktor.http.*

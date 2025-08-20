@@ -1,10 +1,12 @@
-package dev.gangster
+package dev.gangster.socket.core
 
+import dev.gangster.SERVER_HOST
+import dev.gangster.SOCKET_SERVER_PORT
+import dev.gangster.socket.protocol.SmartFoxXML
 import dev.gangster.utils.Logger
 import dev.gangster.utils.UUID
 import io.ktor.network.selector.*
 import io.ktor.network.sockets.*
-import io.ktor.util.date.*
 import io.ktor.utils.io.*
 import kotlinx.coroutines.*
 import java.nio.charset.Charset
@@ -61,12 +63,12 @@ class Server(
                     when {
                         // Version check handshake
                         data.startsWithString("<msg t='sys'><body action='verChk'") -> {
-                            connection.sendRaw("<msg t='sys'><body action='apiOK' r='0'></body></msg>" + "\u0000")
+                            connection.sendRaw(SmartFoxXML.apiOK())
                         }
 
                         // Handle login
                         data.startsWithString("<msg t='sys'><body action='login'") -> {
-                            connection.sendRaw("<msg t='sys'><body action='logOK' r='0'><login id='123' mod='1' /></body></msg>" + "\u0000")
+                            connection.sendRaw(SmartFoxXML.logOK(userId = 123, mod = 1, name = "testadmin"))
                         }
                     }
 

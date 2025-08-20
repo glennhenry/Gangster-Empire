@@ -1,4 +1,4 @@
-package dev.gangster
+package dev.gangster.socket.core
 
 import dev.gangster.utils.Logger
 import dev.gangster.utils.UUID
