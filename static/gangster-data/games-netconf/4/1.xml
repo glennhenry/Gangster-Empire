@@ -5,7 +5,7 @@
 			<server>127.0.0.1</server>
 			<port>7777</port>
 			<zone>MafiaEx</zone>
-			<zoneId>69</zoneId>
+			<zoneId>4</zoneId>
 			<capacity>100</capacity>
 			<instanceName>1</instanceName>
 			<isFavorite>1</isFavorite>

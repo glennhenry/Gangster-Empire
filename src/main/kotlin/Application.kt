@@ -127,7 +127,7 @@ fun Application.module() {
 }
 
 /**
- *
+ *"C:\Users\USER\.airsdk\AIRSDK_51.2.2.3\bin\adl.exe"
  * log:
  *    import com.goodgamestudios.externalLogging.ExternalLog;
  *

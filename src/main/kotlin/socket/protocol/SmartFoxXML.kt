@@ -33,7 +33,7 @@ object SmartFoxXML {
             inner = XmlBuilder("rmList")
                 .child("rm") {
                     attr("id", "0")
-                    attr("maxu", "50")
+                    attr("maxu", "100")
                     attr("maxs", "5")
                     attr("temp", "0")
                     attr("game", "1")
@@ -41,32 +41,8 @@ object SmartFoxXML {
                     attr("lmb", "0")
                     attr("ucnt", "0")
                     attr("scnt", "0")
-                    child("n") { text("Lobbyx") }
+                    child("n") { text("MafiaEx") }
                     child("vars") {}
-                }
-                .child("rm") {
-                    attr("id", "1")
-                    attr("maxu", "50")
-                    attr("maxs", "5")
-                    attr("temp", "0")
-                    attr("game", "1")
-                    attr("priv", "0")
-                    attr("lmb", "0")
-                    attr("ucnt", "2")
-                    attr("scnt", "0")
-                    child("n") { text("Gamex") }
-                    child("vars") {
-                        child("var") {
-                            attr("n", "map")
-                            attr("t", "s")
-                            text("desert")
-                        }
-                        child("var") {
-                            attr("n", "round")
-                            attr("t", "n")
-                            text("3")
-                        }
-                    }
                 }
                 .build()
         )
