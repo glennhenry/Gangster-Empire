@@ -59,16 +59,20 @@ class Server(
                     val data = buffer.copyOfRange(0, bytesRead)
                     Logger.debug { "Received raw: ${data.decodeToString()}" }
 
-
                     when {
                         // Version check handshake
                         data.startsWithString("<msg t='sys'><body action='verChk'") -> {
                             connection.sendRaw(SmartFoxXML.apiOK())
                         }
 
-                        // Handle login
+                        // Handle server login
                         data.startsWithString("<msg t='sys'><body action='login'") -> {
-                            connection.sendRaw(SmartFoxXML.logOK(userId = 123, mod = 1, name = "testadmin"))
+                            connection.sendRaw(SmartFoxXML.logOK(userId = 123, mod = 0, name = "testadmin"))
+                        }
+
+                        // Handle room list
+                        data.startsWithString("<msg t='sys'><body action='getRmList'") -> {
+                            connection.sendRaw(SmartFoxXML.rmList(r = -1))
                         }
                     }
 
