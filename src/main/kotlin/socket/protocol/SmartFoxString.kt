@@ -8,7 +8,7 @@ object SmartFoxString {
             msg.forEach {
                 append("%$it")
             }
-            append("%")
+            append("%\u0000")
         }
     }
 }

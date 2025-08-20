@@ -38,9 +38,7 @@ class Server(
                         output = socket.openWriteChannel(autoFlush = true),
                     )
                     Logger.info { "New client: ${connection.socket.remoteAddress}" }
-                    clients[connection.connectionId] = connection.also {
-                        it.sendRaw(POLICY_REQUEST.toByteArray())
-                    }
+                    clients[connection.connectionId]
                     handleClient(connection)
                 }
             } catch (e: Exception) {
@@ -68,20 +66,27 @@ class Server(
                     when {
                         // Version check handshake (follows original smartfox)
                         data.startsWithString("<msg t='sys'><body action='verChk'") -> {
+                            connection.sendRaw(POLICY_REQUEST.toByteArray()) // first request so response this first
                             connection.sendRaw(SmartFoxXML.apiOK())
                         }
 
                         // Handle server login (game uses extension for login response)
                         data.startsWithString("<msg t='sys'><body action='login'") -> {
-                            val r = -1
-                            val roomIndex = 1
-                            val maxUsers = 100
-                            val flags = 2 // unknown
-                            val roomName = "Lobby"
+                            val r = -1             // param0
+                            val roomId = 1         // param1
+                            val userCount = 1      // param2
+                            val maxUsers = 100     // param3
+                            val flags = 2          // param4 flags for room.
+                                                   // (_loc3_ >> 1 & 1) = temp  [1 if flags=2]
+                                                   // (_loc3_ >> 2 & 1) = game  [0 if flags=2]
+                                                   // (_loc3_ >> 0 & 1) = priv  [0 if flags=2]
+                                                   // (_loc3_ >> 3 & 1) = limbo [0 if flags=2]
+
+                            val roomName = "Lobby" // param5
                             connection.sendRaw(
                                 SmartFoxString.makeXt(
-                                    "rlu", r, roomIndex, maxUsers,
-                                    flags, roomName
+                                    "rlu", r, roomId, userCount,
+                                    maxUsers, flags, roomName
                                 )
                             )
                         }
@@ -89,7 +94,7 @@ class Server(
                         // Handle room list
                         data.startsWithString("<msg t='sys'><body action='autoJoin'") -> {
                             val roomIndex = 1
-                            connection.sendRaw(SmartFoxXML.joinOk(r = roomIndex, pid = 1))
+                            connection.sendRaw(SmartFoxXML.joinOk(r = -1, pid = 1))
                         }
                     }
 
