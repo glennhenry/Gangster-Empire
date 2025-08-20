@@ -127,17 +127,6 @@ fun Application.module() {
 }
 
 /**
- *"C:\Users\USER\.airsdk\AIRSDK_51.2.2.3\bin\adl.exe"
- * log:
- *    import com.goodgamestudios.externalLogging.ExternalLog;
- *
- *    ExternalLog.slog("message", "source");
- *
- * game save: C:\Users\<username>\AppData\Roaming\com.goodgamestudios.mafia.MafiaFrameOne\Local Store\#SharedObjects
- * - id = 4
- * - gameCacheBreaker = MafiaCacheBreaker.swf
- * - gameFolder = mafia
- * - subdomain = data
  *
  * Known links:
  *
@@ -160,4 +149,42 @@ fun Application.module() {
  * SUB_DOMAIN_CONTENT_SERVER_NEW = "gangster-content"
  * SUB_DOMAIN_ACCOUNT_SERVER_NEW = "gangster-account"
  * cdnSubDomain = "content"
+ *
+ * SmartFoxClient: sending: <msg t='sys'><body action='verChk' r='0'><ver v='161' /></body></msg>
+ *
+ * SmartFoxClient: handleSocketData with raw completed buffer:<cross-domain-policy><allow-access-from domain='*' to-ports='443' /></cross-domain-policy>
+ * SmartFoxClient: handleMessage raw param1:<cross-domain-policy><allow-access-from domain='*' to-ports='443' /></cross-domain-policy>
+ * SmartFoxClient: handleSocketData with raw completed buffer:<msg t='sys'><body action='apiOK' r='0'></body></msg>
+ * SmartFoxClient: handleMessage raw param1:<msg t='sys'><body action='apiOK' r='0'></body></msg>
+ * SysHandler: handleMessage: raw param1 object:<msg t="sys">
+ * <body action="apiOK" r="0"/>
+ * </msg>
+ * SysHandler: handleMessage: raw param2 string:xml
+ * handleApiOK
+ * SmartFoxClient: sending: <msg t='sys'><body action='login' r='0'><login z='MafiaEx'><nick><![CDATA[]]></nick><pword><![CDATA[201211301209%de%]]></pword></login></body></msg>
+ *
+ * SmartFoxClient: handleSocketData with raw completed buffer:%xt%rlu%-1%1%18%100000%2%Lobby%
+ * SmartFoxClient: handleMessage raw param1:%xt%rlu%-1%1%18%100000%2%Lobby%
+ * SmartFoxClient: sending: <msg t='sys'><body action='autoJoin' r='-1'></body></msg>
+ *
+ * SmartFoxClient: handleSocketData with raw completed buffer:<msg t='sys'><body action='joinOK' r='1'><pid id='0'/><vars /><uLs r='1'></uLs></body></msg>
+ * SmartFoxClient: handleMessage raw param1:<msg t='sys'><body action='joinOK' r='1'><pid id='0'/><vars /><uLs r='1'></uLs></body></msg>
+ * SysHandler: handleMessage: raw param1 object:<msg t="sys">
+ * <body action="joinOK" r="1">
+ * <pid id="0"/>
+ * <vars/>
+ * <uLs r="1"/>
+ * </body>
+ * </msg>
+ * SysHandler: handleMessage: raw param2 string:xml
+ * SmartFoxClient: sending: <msg t='sys'><body action='roundTrip' r='1'></body></msg>
+ *
+ * SmartFoxClient: handleSocketData with raw completed buffer:<msg t='sys'><body action='roundTripRes' r='1'></body></msg>
+ * SmartFoxClient: handleMessage raw param1:<msg t='sys'><body action='roundTripRes' r='1'></body></msg>
+ * SysHandler: handleMessage: raw param1 object:<msg t="sys">
+ * <body action="roundTripRes" r="1"/>
+ * </msg>
+ * SysHandler: handleMessage: raw param2 string:xml
+ * SmartFoxClient: handleSocketData with raw completed buffer:%xt%vck%1%0%0%
+ * SmartFoxClient: handleMessage raw param1:%xt%vck%1%0%0%
  */
