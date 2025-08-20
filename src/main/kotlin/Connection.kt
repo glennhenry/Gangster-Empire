@@ -10,6 +10,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 
+/**
+ * Smartfox convention:
+ *
+ * if message starts with:
+ * - "<": XML
+ * - "{": JSON
+ * - "%": String
+ */
 class Connection(
     var playerId: String = "",
     val connectionId: String = UUID.new(),
@@ -26,6 +34,18 @@ class Connection(
         Logger.debug(logFull = logFull) { "Sending raw: ${b.decodeToString()}" }
         output.writeFully(b)
     }
+
+    /**
+     * Send raw unserialized message to client
+     *
+     * @param b raw message in string
+     */
+    suspend fun sendRaw(message: String, logFull: Boolean = false) {
+        val bytes = message.toByteArray(Charsets.UTF_8)
+        Logger.debug(logFull = logFull) { "Sending raw: $message" }
+        output.writeFully(bytes)
+    }
+
 
     fun shutdown() {
         scope.cancel()

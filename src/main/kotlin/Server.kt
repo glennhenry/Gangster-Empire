@@ -7,6 +7,7 @@ import io.ktor.network.sockets.*
 import io.ktor.util.date.*
 import io.ktor.utils.io.*
 import kotlinx.coroutines.*
+import java.nio.charset.Charset
 import java.util.concurrent.ConcurrentHashMap
 
 class Server(
@@ -56,7 +57,18 @@ class Server(
                     val data = buffer.copyOfRange(0, bytesRead)
                     Logger.debug { "Received raw: ${data.decodeToString()}" }
 
-                    // do
+
+                    when {
+                        // Version check handshake
+                        data.startsWithString("<msg t='sys'><body action='verChk'") -> {
+                            connection.sendRaw("<msg t='sys'><body action='apiOK' r='0'></body></msg>" + "\u0000")
+                        }
+
+                        // Handle login
+                        data.startsWithString("<msg t='sys'><body action='login'") -> {
+                            connection.sendRaw("<msg t='sys'><body action='logOK' r='0'><login id='123' mod='1' /></body></msg>" + "\u0000")
+                        }
+                    }
 
                     Logger.info("<------------ SOCKET MESSAGE END ------------>")
                 }
@@ -78,6 +90,15 @@ fun ByteArray.startsWithBytes(prefix: ByteArray): Boolean {
     if (this.size < prefix.size) return false
     for (i in prefix.indices) {
         if (this[i] != prefix[i]) return false
+    }
+    return true
+}
+
+fun ByteArray.startsWithString(prefix: String, charset: Charset = Charsets.UTF_8): Boolean {
+    val prefixBytes = prefix.toByteArray(charset)
+    if (this.size < prefixBytes.size) return false
+    for (i in prefixBytes.indices) {
+        if (this[i] != prefixBytes[i]) return false
     }
     return true
 }
