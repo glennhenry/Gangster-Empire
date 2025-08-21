@@ -3,6 +3,7 @@ package dev.gangster.socket.core
 import dev.gangster.SERVER_HOST
 import dev.gangster.SOCKET_SERVER_PORT
 import dev.gangster.context.GlobalContext
+import dev.gangster.model.LreRequest
 import dev.gangster.protobuf.CreateAvatarRequest
 import dev.gangster.protobuf.CreateAvatarResponse
 import dev.gangster.socket.protocol.SmartFoxString
@@ -16,7 +17,6 @@ import kotlinx.coroutines.*
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.decodeFromByteArray
 import kotlinx.serialization.encodeToByteArray
-import kotlinx.serialization.encodeToHexString
 import kotlinx.serialization.protobuf.ProtoBuf
 import java.nio.charset.Charset
 import java.util.concurrent.ConcurrentHashMap
@@ -129,7 +129,7 @@ class Server(
                         data.startsWithString("%xt%MafiaEx%createavatar") -> {
                             // ex: %xt%MafiaEx%createavatar%1%CAIQAxoqMiExfjF+Mn4xfjR+Mn4wfjAhMH40fjJ+M340fjR+M34wfjZ+Mn4xfjEw%
                             val xtReq = SmartFoxString.parsePbXt(data)
-                            val pbRequest = ProtoBuf.decodeFromByteArray<CreateAvatarRequest>(xtReq.payload)
+                            val pbRequest = ProtoBuf.decodeFromByteArray<CreateAvatarRequest>(xtReq.pbPayload)
                             Logger.debug { "Received createavatar request: $pbRequest" }
 
                             val pbResponse = CreateAvatarResponse(result = 1)
@@ -140,6 +140,12 @@ class Server(
                                 Base64.encode(GlobalContext.pb.encodeToByteArray(pbResponse))
                             )
                             connection.sendRaw(xtRes)
+                        }
+
+                        data.startsWithString("%xt%MafiaEx%lre") -> {
+                            // Received raw: %xt%MafiaEx%lre%1%adminplayer%adminplayer@gmail.com%adminpass%<RoundHouseKick>%en%<RoundHouseKick>%1755594777186888054%<RoundHouseKick>%1%-1%-1%-1%-1%adminplayer@gmail.com;;;;;;;;;;;0%
+                            val lreRequest = SmartFoxString.parseObjXt<LreRequest>(data)
+                            Logger.debug { "Received lre request: $lreRequest" }
                         }
                     }
 
