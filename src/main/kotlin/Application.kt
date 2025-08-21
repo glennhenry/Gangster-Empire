@@ -1,5 +1,6 @@
 package dev.gangster
 
+import dev.gangster.context.GlobalContext
 import dev.gangster.socket.core.Server
 import dev.gangster.utils.Logger
 import dev.gangster.utils.decodedUrl
@@ -35,6 +36,7 @@ const val FILE_SERVER_PORT = 8080
 const val API_SERVER_PORT = 8080
 const val SOCKET_SERVER_PORT = 7777
 
+@OptIn(ExperimentalSerializationApi::class)
 fun Application.module() {
     // 1. Configure Websockets
     install(WebSockets) {
@@ -50,14 +52,18 @@ fun Application.module() {
         ignoreUnknownKeys = true
         encodeDefaults = true
     }
+    val protobuf = ProtoBuf { encodeDefaults = true }
 
     @OptIn(ExperimentalSerializationApi::class)
     install(ContentNegotiation) {
         json(json)
-        protobuf(ProtoBuf)
+        protobuf(protobuf)
     }
 
-    // 3. Configure HTTP
+    // 3. Init global context
+    GlobalContext.init(json, protobuf)
+
+    // 4. Configure HTTP
     install(CORS) {
         allowHost(API_SERVER_HOST, schemes = listOf("http"))
         allowHost(SOCKET_SERVER_HOST, schemes = listOf("http"))
@@ -70,10 +76,10 @@ fun Application.module() {
         }
     }
 
-    // 4. Configure Logging
+    // 5. Configure Logging
     install(CallLogging)
 
-    // 5. Configure API routes
+    // 6. Configure API routes
     routing {
         get("/") {
             val indexFile = File("static/index.html")
@@ -118,7 +124,7 @@ fun Application.module() {
         staticFiles("/cdn", File("static/cdn")) // CookieSaver.swf
     }
 
-    // 6. Start game server
+    // 7. Start game server
     val server = Server()
     server.start()
     Runtime.getRuntime().addShutdownHook(Thread {
@@ -127,6 +133,10 @@ fun Application.module() {
 }
 
 /**
+ *
+ * adminplayer
+ * adminplayer@gmail.com
+ * adminplayer
  *
  * Known links:
  *
@@ -150,41 +160,4 @@ fun Application.module() {
  * SUB_DOMAIN_ACCOUNT_SERVER_NEW = "gangster-account"
  * cdnSubDomain = "content"
  *
- * SmartFoxClient: sending: <msg t='sys'><body action='verChk' r='0'><ver v='161' /></body></msg>
- *
- * SmartFoxClient: handleSocketData with raw completed buffer:<cross-domain-policy><allow-access-from domain='*' to-ports='443' /></cross-domain-policy>
- * SmartFoxClient: handleMessage raw param1:<cross-domain-policy><allow-access-from domain='*' to-ports='443' /></cross-domain-policy>
- * SmartFoxClient: handleSocketData with raw completed buffer:<msg t='sys'><body action='apiOK' r='0'></body></msg>
- * SmartFoxClient: handleMessage raw param1:<msg t='sys'><body action='apiOK' r='0'></body></msg>
- * SysHandler: handleMessage: raw param1 object:<msg t="sys">
- * <body action="apiOK" r="0"/>
- * </msg>
- * SysHandler: handleMessage: raw param2 string:xml
- * handleApiOK
- * SmartFoxClient: sending: <msg t='sys'><body action='login' r='0'><login z='MafiaEx'><nick><![CDATA[]]></nick><pword><![CDATA[201211301209%de%]]></pword></login></body></msg>
- *
- * SmartFoxClient: handleSocketData with raw completed buffer:%xt%rlu%-1%1%18%100000%2%Lobby%
- * SmartFoxClient: handleMessage raw param1:%xt%rlu%-1%1%18%100000%2%Lobby%
- * SmartFoxClient: sending: <msg t='sys'><body action='autoJoin' r='-1'></body></msg>
- *
- * SmartFoxClient: handleSocketData with raw completed buffer:<msg t='sys'><body action='joinOK' r='1'><pid id='0'/><vars /><uLs r='1'></uLs></body></msg>
- * SmartFoxClient: handleMessage raw param1:<msg t='sys'><body action='joinOK' r='1'><pid id='0'/><vars /><uLs r='1'></uLs></body></msg>
- * SysHandler: handleMessage: raw param1 object:<msg t="sys">
- * <body action="joinOK" r="1">
- * <pid id="0"/>
- * <vars/>
- * <uLs r="1"/>
- * </body>
- * </msg>
- * SysHandler: handleMessage: raw param2 string:xml
- * SmartFoxClient: sending: <msg t='sys'><body action='roundTrip' r='1'></body></msg>
- *
- * SmartFoxClient: handleSocketData with raw completed buffer:<msg t='sys'><body action='roundTripRes' r='1'></body></msg>
- * SmartFoxClient: handleMessage raw param1:<msg t='sys'><body action='roundTripRes' r='1'></body></msg>
- * SysHandler: handleMessage: raw param1 object:<msg t="sys">
- * <body action="roundTripRes" r="1"/>
- * </msg>
- * SysHandler: handleMessage: raw param2 string:xml
- * SmartFoxClient: handleSocketData with raw completed buffer:%xt%vck%1%0%0%
- * SmartFoxClient: handleMessage raw param1:%xt%vck%1%0%0%
  */
