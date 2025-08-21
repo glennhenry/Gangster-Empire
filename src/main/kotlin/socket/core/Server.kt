@@ -12,6 +12,7 @@ import dev.gangster.model.protobuf.PBCreateAvatarRequest
 import dev.gangster.model.protobuf.PBCreateAvatarResponse
 import dev.gangster.model.protobuf.PBEquipmentGetArmamentPresetStatusResponse
 import dev.gangster.model.protobuf.PBEquipmentViewArmamentResponse
+import dev.gangster.model.protobuf.PBEquipmentViewFoodResponse
 import dev.gangster.model.protobuf.PBEquipmentViewGearResponse
 import dev.gangster.model.protobuf.PBMiscNewAchievementsResponse
 import dev.gangster.model.protobuf.PBMiscPaymentInfoResponse
@@ -314,6 +315,15 @@ class Server(
                             )
                             connection.sendRaw(viewGearRes)
 
+                            /* viewfood */
+                            val viewFoodPbResponse = PBEquipmentViewFoodResponse.empty(AdminData.PLAYER_ID_INT)
+                            val viewFoodRes = SmartFoxString.makeXt(
+                                "viewfood",
+                                reqId,
+                                -1, // signify protobuf mode
+                                Base64.encode(GlobalContext.pb.encodeToByteArray(viewFoodPbResponse))
+                            )
+                            connection.sendRaw(viewFoodRes)
 
                             // send apd (ready message)
                             val likelyStatusCodeWhere0IsSuccess = 0
