@@ -3,15 +3,16 @@ package dev.gangster.socket.core
 import dev.gangster.SERVER_HOST
 import dev.gangster.SOCKET_SERVER_PORT
 import dev.gangster.context.GlobalContext
-import dev.gangster.model.AchievementVO
+import dev.gangster.model.vo.AchievementVO
 import dev.gangster.model.GoldConstantsData
 import dev.gangster.model.LreRequest
 import dev.gangster.model.PlayerInfo
 import dev.gangster.model.toPayload
+import dev.gangster.model.vo.toPayload
 import dev.gangster.protobuf.CreateAvatarRequest
 import dev.gangster.protobuf.CreateAvatarResponse
+import dev.gangster.protobuf.MiscNewAchievementsResponse
 import dev.gangster.protobuf.MiscPlayerProfileResponse
-import dev.gangster.protobuf.common.PlayerProfile
 import dev.gangster.socket.protocol.SmartFoxString
 import dev.gangster.socket.protocol.SmartFoxXML
 import dev.gangster.utils.AdminData
@@ -179,7 +180,7 @@ class Server(
 //                        }
 
                         // to send in order:
-                        // *oga, *sgc, *oio, playerprofile, newachievements, oga,
+                        // *oga, *sgc, *oio, *playerprofile, newachievements, oga,
                         // paymentinfo, oud, playercurrency, viewarmament, getarmamentpresetstatus,
                         // viewgear, viewfood, viewinventory, viewitems, viewitems, viewitems, auc,
                         // getplayerbooster, showmissionbooster, viewmissions, viewwork, png, sae, lfe, gch,
@@ -234,6 +235,16 @@ class Server(
                                 Base64.encode(GlobalContext.pb.encodeToByteArray(playerProfilePbResponse))
                             )
                             connection.sendRaw(playerprofileRes)
+
+                            /* newachievements */
+                            val newAchievementsPbResponse = MiscNewAchievementsResponse.empty()
+                            val newAchievementsRes = SmartFoxString.makeXt(
+                                "newachievements",
+                                reqId,
+                                -1, // signify protobuf mode
+                                Base64.encode(GlobalContext.pb.encodeToByteArray(newAchievementsPbResponse))
+                            )
+                            connection.sendRaw(newAchievementsRes)
 
                             // send apd (ready message)
                             val likelyStatusCodeWhere0IsSuccess = 0
