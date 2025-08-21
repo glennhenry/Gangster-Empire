@@ -13,6 +13,8 @@ import dev.gangster.model.protobuf.PBCreateAvatarResponse
 import dev.gangster.model.protobuf.PBMiscNewAchievementsResponse
 import dev.gangster.model.protobuf.PBMiscPlayerProfileResponse
 import dev.gangster.model.protobuf.common.PBMiscPaymentInfoResponse
+import dev.gangster.model.user.MafiaUserData
+import dev.gangster.model.user.toOudResponse
 import dev.gangster.model.user.toPayload
 import dev.gangster.model.vo.toPayload
 import dev.gangster.socket.protocol.SmartFoxString
@@ -183,7 +185,7 @@ class Server(
 
                         // to send in order:
                         // *oga, *sgc, *oio, *playerprofile, *newachievements
-                        // paymentinfo, oud, playercurrency, viewarmament, getarmamentpresetstatus,
+                        // *paymentinfo, oud, playercurrency, viewarmament, getarmamentpresetstatus,
                         // viewgear, viewfood, viewinventory, viewitems, viewitems, viewitems, auc,
                         // getplayerbooster, showmissionbooster, viewmissions, viewwork, png, sae, lfe, gch,
                         // gfl, getactivequests, sgs, sga, apd
@@ -257,6 +259,16 @@ class Server(
                                 Base64.encode(GlobalContext.pb.encodeToByteArray(paymentInfoResponse))
                             )
                             connection.sendRaw(paymentInfoRes)
+
+                            /* oud */
+                            val oudXtResponse = SmartFoxString.makeXt(
+                                "oud",
+                                apdXtRequest.reqId,
+                                statusCodeSuccess,
+                                AdminData.PLAYER_ID_INT,
+                                MafiaUserData.dummy().toOudResponse()
+                            )
+                            connection.sendRaw(oudXtResponse)
 
                             // send apd (ready message)
                             val likelyStatusCodeWhere0IsSuccess = 0
