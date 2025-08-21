@@ -3,8 +3,10 @@ package dev.gangster.socket.core
 import dev.gangster.SERVER_HOST
 import dev.gangster.SOCKET_SERVER_PORT
 import dev.gangster.context.GlobalContext
+import dev.gangster.model.components.AttributeCostsData
 import dev.gangster.model.vo.AchievementVO
 import dev.gangster.model.components.GoldConstantsData
+import dev.gangster.model.components.toAucResponse
 import dev.gangster.model.request.LreRequest
 import dev.gangster.model.user.PlayerInfo
 import dev.gangster.model.components.toPayload
@@ -193,7 +195,7 @@ class Server(
                         // to send in order:
                         // *oga, *sgc, *oio, *playerprofile, *newachievements
                         // *paymentinfo, *oud, *playercurrency, *viewarmament, *getarmamentpresetstatus,
-                        // *viewgear, *viewfood, *viewinventory, *viewitems, *viewitems, *viewitems, auc,
+                        // *viewgear, *viewfood, *viewinventory, *viewitems, *viewitems, *viewitems, *auc,
                         // getplayerbooster, showmissionbooster, viewmissions, viewwork, png, sae, lfe, gch,
                         // gfl, getactivequests, sgs, sga, apd
 
@@ -366,6 +368,15 @@ class Server(
                                 Base64.encode(GlobalContext.pb.encodeToByteArray(viewItemsPbResponse3))
                             )
                             connection.sendRaw(viewItemsRes3)
+
+                            /* auc */
+                            val aucXtResponse = SmartFoxString.makeXt(
+                                "auc",
+                                apdXtRequest.reqId,
+                                statusCodeSuccess,
+                                AttributeCostsData().toAucResponse()
+                            )
+                            connection.sendRaw(aucXtResponse)
 
                             // send apd (ready message)
                             val likelyStatusCodeWhere0IsSuccess = 0
