@@ -4,7 +4,8 @@ data class XtMessage(
     val zone: String,
     val command: String,
     val reqId: String,
-    val payload: ByteArray,
+    val stringParts: List<String> = emptyList(),
+    val pbPayload: ByteArray = byteArrayOf(0),
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -15,7 +16,7 @@ data class XtMessage(
         if (zone != other.zone) return false
         if (command != other.command) return false
         if (reqId != other.reqId) return false
-        if (!payload.contentEquals(other.payload)) return false
+        if (!pbPayload.contentEquals(other.pbPayload)) return false
 
         return true
     }
@@ -24,7 +25,7 @@ data class XtMessage(
         var result = zone.hashCode()
         result = 31 * result + command.hashCode()
         result = 31 * result + reqId.hashCode()
-        result = 31 * result + payload.contentHashCode()
+        result = 31 * result + pbPayload.contentHashCode()
         return result
     }
 }
