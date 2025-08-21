@@ -6,11 +6,13 @@ import dev.gangster.context.GlobalContext
 import dev.gangster.model.AchievementVO
 import dev.gangster.model.GoldConstantsData
 import dev.gangster.model.LreRequest
+import dev.gangster.model.PlayerInfo
 import dev.gangster.model.toPayload
 import dev.gangster.protobuf.CreateAvatarRequest
 import dev.gangster.protobuf.CreateAvatarResponse
 import dev.gangster.socket.protocol.SmartFoxString
 import dev.gangster.socket.protocol.SmartFoxXML
+import dev.gangster.utils.AdminData
 import dev.gangster.utils.Logger
 import dev.gangster.utils.UUID
 import io.ktor.network.selector.*
@@ -175,7 +177,7 @@ class Server(
 //                        }
 
                         // to send in order:
-                        // oga, sgc, oio, playerprofile, newachievements, oga,
+                        // *oga, *sgc, oio, playerprofile, newachievements, oga,
                         // paymentinfo, oud, playercurrency, viewarmament, getarmamentpresetstatus,
                         // viewgear, viewfood, viewinventory, viewitems, viewitems, viewitems, auc,
                         // getplayerbooster, showmissionbooster, viewmissions, viewwork, png, sae, lfe, gch,
@@ -207,6 +209,19 @@ class Server(
                                 GoldConstantsData().toPayload()
                             )
                             connection.sendRaw(sgcRes)
+
+                            /* OIO */
+                            val oioRes = SmartFoxString.makeXt(
+                                "oio",
+                                reqId,
+                                statusCodeSuccess,
+                                PlayerInfo(
+                                    email = AdminData.EMAIL,
+                                    emailVerified = false,
+                                    tutorialCompleted = false
+                                ).toPayload()
+                            )
+                            connection.sendRaw(oioRes)
 
                             // send apd (ready message)
                             val likelyStatusCodeWhere0IsSuccess = 0

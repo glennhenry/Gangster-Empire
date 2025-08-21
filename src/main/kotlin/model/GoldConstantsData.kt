@@ -1,11 +1,14 @@
 package dev.gangster.model
 
+import kotlinx.serialization.Serializable
+
 /**
  * SGC (gold constants used in-game as price)
  * [example: %xt%sgc%1%0%625+125+125+125+1250+125+625+625+125+125+125+125+625+125+250+250%%]
  *
  * each is separated by +
  */
+@Serializable
 data class GoldConstantsData(
     val createClanPrice: Int = 1,
     val changeAvatarPrice: Int = 1,
