@@ -1,4 +1,4 @@
-package dev.gangster.protobuf.common
+package dev.gangster.model.protobuf.common
 
 import dev.gangster.model.constants.ItemQuality
 import dev.gangster.model.constants.ItemType

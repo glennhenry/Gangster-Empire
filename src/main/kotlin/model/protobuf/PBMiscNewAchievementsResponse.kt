@@ -1,6 +1,6 @@
-package dev.gangster.protobuf
+package dev.gangster.model.protobuf
 
-import dev.gangster.protobuf.common.PBAchievement
+import dev.gangster.model.protobuf.common.PBAchievement
 import kotlinx.serialization.Serializable
 
 /**

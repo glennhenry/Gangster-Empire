@@ -1,10 +1,10 @@
-package dev.gangster.model
+package dev.gangster.model.request
 
 import io.ktor.util.date.getTimeMillis
 import kotlinx.serialization.Serializable
 
 /**
- * Lre request
+ * LRE or login/register request
  *
  * @property mail
  * @property pw

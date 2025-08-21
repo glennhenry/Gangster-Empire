@@ -1,4 +1,4 @@
-package dev.gangster.model
+package dev.gangster.model.user
 
 import dev.gangster.utils.toInt
 import kotlinx.serialization.Serializable

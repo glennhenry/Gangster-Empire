@@ -1,4 +1,4 @@
-package dev.gangster.protobuf.common
+package dev.gangster.model.protobuf.common
 
 import kotlinx.serialization.Serializable
 
