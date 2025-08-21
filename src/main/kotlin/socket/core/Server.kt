@@ -3,7 +3,9 @@ package dev.gangster.socket.core
 import dev.gangster.SERVER_HOST
 import dev.gangster.SOCKET_SERVER_PORT
 import dev.gangster.context.GlobalContext
+import dev.gangster.model.AchievementVO
 import dev.gangster.model.LreRequest
+import dev.gangster.model.toPayload
 import dev.gangster.protobuf.CreateAvatarRequest
 import dev.gangster.protobuf.CreateAvatarResponse
 import dev.gangster.socket.protocol.SmartFoxString
@@ -21,7 +23,6 @@ import kotlinx.serialization.protobuf.ProtoBuf
 import java.nio.charset.Charset
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.io.encoding.Base64
-import kotlin.random.Random
 
 const val POLICY_REQUEST =
     "<cross-domain-policy><allow-access-from domain='*' to-ports='7777' /></cross-domain-policy>\u0000"
@@ -181,12 +182,25 @@ class Server(
 
                         // apd is supposed to be send when the all data is sent to game
                         data.startsWithString("%xt%MafiaEx%apd") -> {
+                            val apdXtRequest = SmartFoxString.parseXt(data) // empty payload, only reqId
+                            val reqId = apdXtRequest.reqId
+                            val statusCodeSuccess = 0
+                            val playerId = 1
+
                             // prepare data...
-                            
+                            /* OGA */
+                            val ogaRes = SmartFoxString.makeXt(
+                                "oga",
+                                reqId,
+                                statusCodeSuccess,
+                                playerId,
+                                AchievementVO.dummyAll().toPayload()
+                            )
+                            connection.sendRaw(ogaRes)
+
+                            /* SGC */
 
                             // send apd (ready message)
-                            val apdXtRequest = SmartFoxString.parseXt(data) // empty payload, only reqId
-
                             val likelyStatusCodeWhere0IsSuccess = 0
                             val apdXtResponse = SmartFoxString.makeXt(
                                 "apd",
