@@ -2,6 +2,9 @@ package dev.gangster.socket.core
 
 import dev.gangster.SERVER_HOST
 import dev.gangster.SOCKET_SERVER_PORT
+import dev.gangster.context.GlobalContext
+import dev.gangster.protobuf.CreateAvatarRequest
+import dev.gangster.protobuf.CreateAvatarResponse
 import dev.gangster.socket.protocol.SmartFoxString
 import dev.gangster.socket.protocol.SmartFoxXML
 import dev.gangster.utils.Logger
@@ -10,8 +13,14 @@ import io.ktor.network.selector.*
 import io.ktor.network.sockets.*
 import io.ktor.utils.io.*
 import kotlinx.coroutines.*
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.decodeFromByteArray
+import kotlinx.serialization.encodeToByteArray
+import kotlinx.serialization.encodeToHexString
+import kotlinx.serialization.protobuf.ProtoBuf
 import java.nio.charset.Charset
 import java.util.concurrent.ConcurrentHashMap
+import kotlin.io.encoding.Base64
 
 const val POLICY_REQUEST =
     "<cross-domain-policy><allow-access-from domain='*' to-ports='7777' /></cross-domain-policy>\u0000"
@@ -48,6 +57,7 @@ class Server(
         }
     }
 
+    @OptIn(ExperimentalSerializationApi::class)
     private fun handleClient(connection: Connection) {
         coroutineScope.launch {
             val socket = connection.socket
@@ -77,10 +87,10 @@ class Server(
                             val userCount = 1      // param2
                             val maxUsers = 100     // param3
                             val flags = 2          // param4 flags for room.
-                                                   // (_loc3_ >> 1 & 1) = temp  [1 if flags=2]
-                                                   // (_loc3_ >> 2 & 1) = game  [0 if flags=2]
-                                                   // (_loc3_ >> 0 & 1) = priv  [0 if flags=2]
-                                                   // (_loc3_ >> 3 & 1) = limbo [0 if flags=2]
+                            // (_loc3_ >> 1 & 1) = temp  [1 if flags=2]
+                            // (_loc3_ >> 2 & 1) = game  [0 if flags=2]
+                            // (_loc3_ >> 0 & 1) = priv  [0 if flags=2]
+                            // (_loc3_ >> 3 & 1) = limbo [0 if flags=2]
 
                             val roomName = "Lobby" // param5 must be lobby
                             connection.sendRaw(
@@ -114,6 +124,22 @@ class Server(
                             connection.sendRaw(
                                 SmartFoxString.makeXt("vck", r, unknown1, unknown2)
                             )
+                        }
+
+                        data.startsWithString("%xt%MafiaEx%createavatar") -> {
+                            // ex: %xt%MafiaEx%createavatar%1%CAIQAxoqMiExfjF+Mn4xfjR+Mn4wfjAhMH40fjJ+M340fjR+M34wfjZ+Mn4xfjEw%
+                            val xtReq = SmartFoxString.parsePbXt(data)
+                            val pbRequest = ProtoBuf.decodeFromByteArray<CreateAvatarRequest>(xtReq.payload)
+                            Logger.debug { "Received createavatar request: $pbRequest" }
+
+                            val pbResponse = CreateAvatarResponse(result = 1)
+                            val xtRes = SmartFoxString.makeXt(
+                                "createavatar",
+                                xtReq.reqId,
+                                -1, // signify protobuf mode
+                                Base64.encode(GlobalContext.pb.encodeToByteArray(pbResponse))
+                            )
+                            connection.sendRaw(xtRes)
                         }
                     }
 
