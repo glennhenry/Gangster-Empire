@@ -12,6 +12,7 @@ import dev.gangster.model.protobuf.PBCreateAvatarRequest
 import dev.gangster.model.protobuf.PBCreateAvatarResponse
 import dev.gangster.model.protobuf.PBMiscNewAchievementsResponse
 import dev.gangster.model.protobuf.PBMiscPlayerProfileResponse
+import dev.gangster.model.protobuf.common.PBMiscPaymentInfoResponse
 import dev.gangster.model.user.toPayload
 import dev.gangster.model.vo.toPayload
 import dev.gangster.socket.protocol.SmartFoxString
@@ -248,6 +249,14 @@ class Server(
                             connection.sendRaw(newAchievementsRes)
 
                             /* paymentinfo */
+                            val paymentInfoResponse = PBMiscPaymentInfoResponse.dummy()
+                            val paymentInfoRes = SmartFoxString.makeXt(
+                                "paymentinfo",
+                                reqId,
+                                -1, // signify protobuf mode
+                                Base64.encode(GlobalContext.pb.encodeToByteArray(paymentInfoResponse))
+                            )
+                            connection.sendRaw(paymentInfoRes)
 
                             // send apd (ready message)
                             val likelyStatusCodeWhere0IsSuccess = 0
