@@ -4,6 +4,7 @@ import dev.gangster.SERVER_HOST
 import dev.gangster.SOCKET_SERVER_PORT
 import dev.gangster.context.GlobalContext
 import dev.gangster.model.AchievementVO
+import dev.gangster.model.GoldConstantsData
 import dev.gangster.model.LreRequest
 import dev.gangster.model.toPayload
 import dev.gangster.protobuf.CreateAvatarRequest
@@ -199,6 +200,13 @@ class Server(
                             connection.sendRaw(ogaRes)
 
                             /* SGC */
+                            val sgcRes = SmartFoxString.makeXt(
+                                "sgc",
+                                reqId,
+                                statusCodeSuccess,
+                                GoldConstantsData().toPayload()
+                            )
+                            connection.sendRaw(sgcRes)
 
                             // send apd (ready message)
                             val likelyStatusCodeWhere0IsSuccess = 0
