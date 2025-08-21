@@ -26,6 +26,7 @@ import dev.gangster.model.protobuf.PBMissionBoosterShowMissionBoosterResponse
 import dev.gangster.model.protobuf.PBMissionViewRequest
 import dev.gangster.model.protobuf.PBMissionViewResponse
 import dev.gangster.model.protobuf.PBShopViewItemsResponse
+import dev.gangster.model.protobuf.PBWorkViewWorkResponse
 import dev.gangster.model.user.MafiaUserData
 import dev.gangster.model.user.toOudResponse
 import dev.gangster.model.user.toPayload
@@ -200,7 +201,7 @@ class Server(
                         // *oga, *sgc, *oio, *playerprofile, *newachievements
                         // *paymentinfo, *oud, *playercurrency, *viewarmament, *getarmamentpresetstatus,
                         // *viewgear, *viewfood, *viewinventory, *viewitems, *viewitems, *viewitems, *auc,
-                        // *getplayerbooster, *showmissionbooster, *viewmissions, viewwork, png, sae, lfe, gch,
+                        // *getplayerbooster, *showmissionbooster, *viewmissions, *viewwork, png, sae, lfe, gch,
                         // gfl, getactivequests, sgs, sga, apd
 
                         // apd is supposed to be send when the all data is sent to game
@@ -405,8 +406,7 @@ class Server(
                             connection.sendRaw(showMissionBoosterRes)
 
                             /* viewmissions */
-                            val viewMissionsPbResponse =
-                                PBMissionViewResponse
+                            val viewMissionsPbResponse = PBMissionViewResponse.dummy()
                             val viewMissionsRes = SmartFoxString.makeXt(
                                 "viewmissions",
                                 reqId,
@@ -414,6 +414,16 @@ class Server(
                                 Base64.encode(GlobalContext.pb.encodeToByteArray(viewMissionsPbResponse))
                             )
                             connection.sendRaw(viewMissionsRes)
+
+                            /* viewwork */
+                            val viewWorkPbResponse = PBWorkViewWorkResponse.dummy()
+                            val viewWorkRes = SmartFoxString.makeXt(
+                                "viewwork",
+                                reqId,
+                                -1, // signify protobuf mode
+                                Base64.encode(GlobalContext.pb.encodeToByteArray(viewWorkPbResponse))
+                            )
+                            connection.sendRaw(viewWorkRes)
 
 
                             // send apd (ready message)
