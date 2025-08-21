@@ -3,7 +3,9 @@ package dev.gangster.model.protobuf
 import kotlinx.serialization.Serializable
 
 /**
- * booster like bicycle, taxi, jet
+ * for getplayerbooster
+ *
+ * still confused, its similar to PBMissionBoosterShowMissionBoosterResponse
  */
 @Serializable
 data class PBMissionBoosterGetPlayerBoosterBooster(
