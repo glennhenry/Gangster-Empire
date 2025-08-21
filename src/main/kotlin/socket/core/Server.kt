@@ -171,6 +171,30 @@ class Server(
 //                            val xtRes1 = SmartFoxString.makeXt("lgn", xtReq.reqId, 0, 315, 48343, 0, 0, 0)
 //                            connection.sendRaw(xtRes1)
 //                        }
+
+                        // to send in order:
+                        // oga, sgc, oio, playerprofile, newachievements, oga,
+                        // paymentinfo, oud, playercurrency, viewarmament, getarmamentpresetstatus,
+                        // viewgear, viewfood, viewinventory, viewitems, viewitems, viewitems, auc,
+                        // getplayerbooster, showmissionbooster, viewmissions, viewwork, png, sae, lfe, gch,
+                        // gfl, getactivequests, sgs, sga, apd
+
+                        // apd is supposed to be send when the all data is sent to game
+                        data.startsWithString("%xt%MafiaEx%apd") -> {
+                            // prepare data...
+                            
+
+                            // send apd (ready message)
+                            val apdXtRequest = SmartFoxString.parseXt(data) // empty payload, only reqId
+
+                            val likelyStatusCodeWhere0IsSuccess = 0
+                            val apdXtResponse = SmartFoxString.makeXt(
+                                "apd",
+                                apdXtRequest.reqId,
+                                likelyStatusCodeWhere0IsSuccess,
+                            )
+                            connection.sendRaw(apdXtResponse)
+                        }
                     }
 
                     Logger.info("<------------ SOCKET MESSAGE END ------------>")
