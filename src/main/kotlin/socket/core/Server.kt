@@ -14,6 +14,7 @@ import dev.gangster.model.protobuf.PBEquipmentGetArmamentPresetStatusResponse
 import dev.gangster.model.protobuf.PBEquipmentViewArmamentResponse
 import dev.gangster.model.protobuf.PBEquipmentViewFoodResponse
 import dev.gangster.model.protobuf.PBEquipmentViewGearResponse
+import dev.gangster.model.protobuf.PBEquipmentViewInventoryResponse
 import dev.gangster.model.protobuf.PBMiscNewAchievementsResponse
 import dev.gangster.model.protobuf.PBMiscPaymentInfoResponse
 import dev.gangster.model.protobuf.PBMiscPlayerCurrencyResponse
@@ -191,7 +192,7 @@ class Server(
                         // to send in order:
                         // *oga, *sgc, *oio, *playerprofile, *newachievements
                         // *paymentinfo, *oud, *playercurrency, *viewarmament, *getarmamentpresetstatus,
-                        // *viewgear, viewfood, viewinventory, viewitems, viewitems, viewitems, auc,
+                        // *viewgear, *viewfood, *viewinventory, viewitems, viewitems, viewitems, auc,
                         // getplayerbooster, showmissionbooster, viewmissions, viewwork, png, sae, lfe, gch,
                         // gfl, getactivequests, sgs, sga, apd
 
@@ -275,7 +276,7 @@ class Server(
                             )
                             connection.sendRaw(oudXtResponse)
 
-                            /* playercurrency */
+                            /* playercurrency (player's resources, cash, gold) */
                             val playerCurrencyPbResponse = PBMiscPlayerCurrencyResponse.dummy()
                             val playerCurrencyRes = SmartFoxString.makeXt(
                                 "playercurrency",
@@ -285,7 +286,7 @@ class Server(
                             )
                             connection.sendRaw(playerCurrencyRes)
 
-                            /* viewarmament */
+                            /* viewarmament (the preset of equipment) */
                             val viewArmamentPbResponse = PBEquipmentViewArmamentResponse.dummy(AdminData.PLAYER_ID_INT)
                             val viewArmamentRes = SmartFoxString.makeXt(
                                 "viewarmament",
@@ -305,7 +306,7 @@ class Server(
                             )
                             connection.sendRaw(getArmamentPresetStatusRes)
 
-                            /* viewgear */
+                            /* viewgear (the 8 item that increases attributes) */
                             val viewGearPbResponse = PBEquipmentViewGearResponse.empty(AdminData.PLAYER_ID_INT)
                             val viewGearRes = SmartFoxString.makeXt(
                                 "viewgear",
@@ -315,7 +316,7 @@ class Server(
                             )
                             connection.sendRaw(viewGearRes)
 
-                            /* viewfood */
+                            /* viewfood (player food booster) */
                             val viewFoodPbResponse = PBEquipmentViewFoodResponse.empty(AdminData.PLAYER_ID_INT)
                             val viewFoodRes = SmartFoxString.makeXt(
                                 "viewfood",
@@ -324,6 +325,16 @@ class Server(
                                 Base64.encode(GlobalContext.pb.encodeToByteArray(viewFoodPbResponse))
                             )
                             connection.sendRaw(viewFoodRes)
+
+                            /* viewinventory (player inventory) */
+                            val viewInventoryPbResponse = PBEquipmentViewInventoryResponse.empty()
+                            val viewInventoryRes = SmartFoxString.makeXt(
+                                "viewinventory",
+                                reqId,
+                                -1, // signify protobuf mode
+                                Base64.encode(GlobalContext.pb.encodeToByteArray(viewInventoryPbResponse))
+                            )
+                            connection.sendRaw(viewInventoryRes)
 
                             // send apd (ready message)
                             val likelyStatusCodeWhere0IsSuccess = 0
