@@ -10,6 +10,7 @@ import dev.gangster.model.user.PlayerInfo
 import dev.gangster.model.components.toPayload
 import dev.gangster.model.protobuf.PBCreateAvatarRequest
 import dev.gangster.model.protobuf.PBCreateAvatarResponse
+import dev.gangster.model.protobuf.PBEquipmentGetArmamentPresetStatusResponse
 import dev.gangster.model.protobuf.PBEquipmentViewArmamentResponse
 import dev.gangster.model.protobuf.PBMiscNewAchievementsResponse
 import dev.gangster.model.protobuf.PBMiscPaymentInfoResponse
@@ -187,7 +188,7 @@ class Server(
 
                         // to send in order:
                         // *oga, *sgc, *oio, *playerprofile, *newachievements
-                        // *paymentinfo, *oud, *playercurrency, viewarmament, getarmamentpresetstatus,
+                        // *paymentinfo, *oud, *playercurrency, *viewarmament, getarmamentpresetstatus,
                         // viewgear, viewfood, viewinventory, viewitems, viewitems, viewitems, auc,
                         // getplayerbooster, showmissionbooster, viewmissions, viewwork, png, sae, lfe, gch,
                         // gfl, getactivequests, sgs, sga, apd
@@ -285,12 +286,22 @@ class Server(
                             /* viewarmament */
                             val viewArmamentPbResponse = PBEquipmentViewArmamentResponse.dummy(AdminData.PLAYER_ID_INT)
                             val viewArmamentRes = SmartFoxString.makeXt(
-                                "paymentinfo",
+                                "viewarmament",
                                 reqId,
                                 -1, // signify protobuf mode
                                 Base64.encode(GlobalContext.pb.encodeToByteArray(viewArmamentPbResponse))
                             )
                             connection.sendRaw(viewArmamentRes)
+
+                            /* getarmamentpresetstatus */
+                            val getArmamentPresetStatusPbResponse = PBEquipmentGetArmamentPresetStatusResponse.dummy()
+                            val getArmamentPresetStatusRes = SmartFoxString.makeXt(
+                                "getarmamentpresetstatus",
+                                reqId,
+                                -1, // signify protobuf mode
+                                Base64.encode(GlobalContext.pb.encodeToByteArray(getArmamentPresetStatusPbResponse))
+                            )
+                            connection.sendRaw(getArmamentPresetStatusRes)
 
 
                             // send apd (ready message)

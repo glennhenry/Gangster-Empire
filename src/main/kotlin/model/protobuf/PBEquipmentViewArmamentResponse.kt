@@ -3,6 +3,9 @@ package dev.gangster.model.protobuf
 import dev.gangster.model.protobuf.common.PBItemSlot
 import kotlinx.serialization.Serializable
 
+/**
+ * example request: %xt%viewarmament%1%-1%CLDkpQIQCBgFInUIABAAGAEibQgxEAQYAyIHCOKcAhCVSSgBMgUIABCPTjgDSgUIURCYAVIECAQQAnIMCCMVcT2qPx0AAAAAcgwIJBWamRm+HQrXIzxyDAgkFZqZGT4dj8L1PHIMCBUVj8L1PB0AAAAAcgwIBxWPwvU8HQAAAAAiMwgFEAAYASIrCAUQARgFIgYIoB8QiA4oADIFCAgQj05SBAgDEANyDAgFFc3MzD0dAAAAACIzCAAQAhgBIisIBxABGAYiBgigHxCIDigAMgUICBCPTlIECAMQA3IMCAUVCtejPR0AAAAAIjMIBRADGAEiKwgCEAEYBiIGCNgEEJAcKAEyBQgAEI9OUgQIAxACcgwICRWPwvU9HQAAAAAoADgTQBY=%
+ */
 @Serializable
 data class PBEquipmentViewArmamentResponse(
     val playerId: Int,
