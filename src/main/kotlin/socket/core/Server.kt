@@ -10,6 +10,8 @@ import dev.gangster.model.PlayerInfo
 import dev.gangster.model.toPayload
 import dev.gangster.protobuf.CreateAvatarRequest
 import dev.gangster.protobuf.CreateAvatarResponse
+import dev.gangster.protobuf.MiscPlayerProfileResponse
+import dev.gangster.protobuf.common.PlayerProfile
 import dev.gangster.socket.protocol.SmartFoxString
 import dev.gangster.socket.protocol.SmartFoxXML
 import dev.gangster.utils.AdminData
@@ -154,8 +156,8 @@ class Server(
                             Logger.debug { "Received lre request: $lreRequest" }
 
                             val likelyStatusCodeWhere0IsSuccess = 0
-                            val userId = 420
-                            val playerId = 10
+                            val userId = AdminData.USER_ID
+                            val playerId = AdminData.PLAYER_ID_INT
                             val xtRes1 = SmartFoxString.makeXt(
                                 "lre",
                                 xtReq.reqId,
@@ -177,7 +179,7 @@ class Server(
 //                        }
 
                         // to send in order:
-                        // *oga, *sgc, oio, playerprofile, newachievements, oga,
+                        // *oga, *sgc, *oio, playerprofile, newachievements, oga,
                         // paymentinfo, oud, playercurrency, viewarmament, getarmamentpresetstatus,
                         // viewgear, viewfood, viewinventory, viewitems, viewitems, viewitems, auc,
                         // getplayerbooster, showmissionbooster, viewmissions, viewwork, png, sae, lfe, gch,
@@ -222,6 +224,16 @@ class Server(
                                 ).toPayload()
                             )
                             connection.sendRaw(oioRes)
+
+                            /* playerprofile */
+                            val playerProfilePbResponse = MiscPlayerProfileResponse.dummy()
+                            val playerprofileRes = SmartFoxString.makeXt(
+                                "playerprofile",
+                                reqId,
+                                -1, // signify protobuf mode
+                                Base64.encode(GlobalContext.pb.encodeToByteArray(playerProfilePbResponse))
+                            )
+                            connection.sendRaw(playerprofileRes)
 
                             // send apd (ready message)
                             val likelyStatusCodeWhere0IsSuccess = 0
