@@ -13,14 +13,14 @@ import kotlinx.serialization.Serializable
  * [example: %xt%playerprofile%1%-1%CAEQsOSlAiKCAQoKSmVubnlIYXplXxACGikyITB+Mn4wfjJ+MX4yfjB+MCEwfjN+Mn4wfjR+NH4wfjJ+M34wfjJ+NiACKgoIlQIQ5gIYQSBaMhYIwg0QzMwBHRsbP0ElA7A0QS0AAMhCSg8KBQgeEPZEEgYIpDcQ3XBYtwFgTmgAcBJ4AYgB/////wc=%]
  */
 @Serializable
-data class PlayerProfile(
+data class PBPlayerProfile(
     val name: String,
     val gender: Int,
     val picString: String,
     val characterClass: Int,
-    val attributes: Attributes,
-    val combatStats: CombatStats,
-    val highscore: Highscore,
+    val attributes: PBAttributes,
+    val combatStats: PBCombatStats,
+    val highscore: PBHighscore,
     val wonDuels: Int,
     val lostDuels: Int,
     val isIgnored: Boolean,
@@ -31,15 +31,15 @@ data class PlayerProfile(
     val rankInClan: Int?,
 ) {
     companion object {
-        fun dummy(): PlayerProfile {
-            return PlayerProfile(
+        fun dummy(): PBPlayerProfile {
+            return PBPlayerProfile(
                 name = AdminData.USERNAME,
                 gender = AdminData.GENDER,
                 picString = "",
                 characterClass = AdminData.CHARACTER_CLASS,
-                attributes = Attributes.dummy(),
-                combatStats = CombatStats.dummy(),
-                highscore = Highscore.dummy(),
+                attributes = PBAttributes.dummy(),
+                combatStats = PBCombatStats.dummy(),
+                highscore = PBHighscore.dummy(),
                 wonDuels = 0,
                 lostDuels = 0,
                 isIgnored = false,

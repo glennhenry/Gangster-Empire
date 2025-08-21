@@ -3,14 +3,14 @@ package dev.gangster.protobuf.common
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ItemEffect(
+data class PBItemEffect(
     val id: Int,
     val first: Float,
     val second: Float?
 ) {
     companion object {
-        fun dummy(id: Int): ItemEffect {
-            return ItemEffect(
+        fun dummy(id: Int): PBItemEffect {
+            return PBItemEffect(
                 id = id,
                 first = 1f,
                 second = null

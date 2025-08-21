@@ -13,7 +13,7 @@ import kotlinx.serialization.Serializable
  *
  */
 @Serializable
-data class CreateAvatarRequest(
+data class PBCreateAvatarRequest(
     val gender: Int,
     val characterClass: Int,
     val portrait: String,

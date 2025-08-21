@@ -3,13 +3,13 @@ package dev.gangster.protobuf.common
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Duration(
+data class PBDuration(
     val total: Int,
     val remaining: Int?
 ) {
     companion object {
-        fun dummy(): Duration {
-            return Duration(
+        fun dummy(): PBDuration {
+            return PBDuration(
                 total = 1000,
                 remaining = 450
             )

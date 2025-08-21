@@ -1,6 +1,6 @@
 package dev.gangster.protobuf
 
-import dev.gangster.protobuf.common.PlayerProfile
+import dev.gangster.protobuf.common.PBPlayerProfile
 import dev.gangster.utils.AdminData
 import kotlinx.serialization.Serializable
 
@@ -8,19 +8,19 @@ import kotlinx.serialization.Serializable
  * result is enum where OK = 1, PLAYER_UNKNOWN = 2, INVALID_NAME = 3
  */
 @Serializable
-data class MiscPlayerProfileResponse(
+data class PBMiscPlayerProfileResponse(
     val result: Int = 1,
     val playerId: Int?,
     val playerName: String?,
-    val profile: PlayerProfile?
+    val profile: PBPlayerProfile?
 ) {
     companion object {
-        fun dummy(): MiscPlayerProfileResponse {
-            return MiscPlayerProfileResponse(
+        fun dummy(): PBMiscPlayerProfileResponse {
+            return PBMiscPlayerProfileResponse(
                 result = 1,
                 playerId = AdminData.PLAYER_ID_INT,
                 playerName = AdminData.USERNAME,
-                profile = PlayerProfile.dummy()
+                profile = PBPlayerProfile.dummy()
             )
         }
     }

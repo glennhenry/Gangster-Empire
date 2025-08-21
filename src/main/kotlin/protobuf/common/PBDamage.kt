@@ -3,15 +3,15 @@ package dev.gangster.protobuf.common
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Levels(
+data class PBDamage(
     val min: Int,
-    val max: Int,
+    val max: Int
 ) {
     companion object {
-        fun dummy(): Levels {
-            return Levels(
-                min = 1,
-                max = 7
+        fun dummy(): PBDamage {
+            return PBDamage(
+                min = 10,
+                max = 30,
             )
         }
     }

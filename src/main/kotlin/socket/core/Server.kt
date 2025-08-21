@@ -9,10 +9,10 @@ import dev.gangster.model.LreRequest
 import dev.gangster.model.PlayerInfo
 import dev.gangster.model.toPayload
 import dev.gangster.model.vo.toPayload
-import dev.gangster.protobuf.CreateAvatarRequest
-import dev.gangster.protobuf.CreateAvatarResponse
-import dev.gangster.protobuf.MiscNewAchievementsResponse
-import dev.gangster.protobuf.MiscPlayerProfileResponse
+import dev.gangster.protobuf.PBCreateAvatarRequest
+import dev.gangster.protobuf.PBCreateAvatarResponse
+import dev.gangster.protobuf.PBMiscNewAchievementsResponse
+import dev.gangster.protobuf.PBMiscPlayerProfileResponse
 import dev.gangster.socket.protocol.SmartFoxString
 import dev.gangster.socket.protocol.SmartFoxXML
 import dev.gangster.utils.AdminData
@@ -138,10 +138,10 @@ class Server(
                         // Handle create avatar
                         data.startsWithString("%xt%MafiaEx%createavatar") -> {
                             val xtReq = SmartFoxString.parsePbXt(data)
-                            val pbRequest = ProtoBuf.decodeFromByteArray<CreateAvatarRequest>(xtReq.pbPayload)
+                            val pbRequest = ProtoBuf.decodeFromByteArray<PBCreateAvatarRequest>(xtReq.pbPayload)
                             Logger.debug { "Received createavatar request: $pbRequest" }
 
-                            val pbResponse = CreateAvatarResponse(result = 1)
+                            val pbResponse = PBCreateAvatarResponse(result = 1)
                             val xtRes = SmartFoxString.makeXt(
                                 "createavatar",
                                 xtReq.reqId,
@@ -180,7 +180,7 @@ class Server(
 //                        }
 
                         // to send in order:
-                        // *oga, *sgc, *oio, *playerprofile, newachievements, oga,
+                        // *oga, *sgc, *oio, *playerprofile, *newachievements
                         // paymentinfo, oud, playercurrency, viewarmament, getarmamentpresetstatus,
                         // viewgear, viewfood, viewinventory, viewitems, viewitems, viewitems, auc,
                         // getplayerbooster, showmissionbooster, viewmissions, viewwork, png, sae, lfe, gch,
@@ -227,7 +227,7 @@ class Server(
                             connection.sendRaw(oioRes)
 
                             /* playerprofile */
-                            val playerProfilePbResponse = MiscPlayerProfileResponse.dummy()
+                            val playerProfilePbResponse = PBMiscPlayerProfileResponse.dummy()
                             val playerprofileRes = SmartFoxString.makeXt(
                                 "playerprofile",
                                 reqId,
@@ -237,7 +237,7 @@ class Server(
                             connection.sendRaw(playerprofileRes)
 
                             /* newachievements */
-                            val newAchievementsPbResponse = MiscNewAchievementsResponse.empty()
+                            val newAchievementsPbResponse = PBMiscNewAchievementsResponse.empty()
                             val newAchievementsRes = SmartFoxString.makeXt(
                                 "newachievements",
                                 reqId,
@@ -245,6 +245,8 @@ class Server(
                                 Base64.encode(GlobalContext.pb.encodeToByteArray(newAchievementsPbResponse))
                             )
                             connection.sendRaw(newAchievementsRes)
+
+                            /* paymentinfo */
 
                             // send apd (ready message)
                             val likelyStatusCodeWhere0IsSuccess = 0

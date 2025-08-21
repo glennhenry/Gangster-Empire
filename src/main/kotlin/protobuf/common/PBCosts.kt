@@ -3,13 +3,13 @@ package dev.gangster.protobuf.common
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Costs(
+data class PBCosts(
     val buy: Int,
     val sell: Int,
 ) {
     companion object {
-        fun dummy(): Costs {
-            return Costs(
+        fun dummy(): PBCosts {
+            return PBCosts(
                 buy = 100,
                 sell = 5000
             )

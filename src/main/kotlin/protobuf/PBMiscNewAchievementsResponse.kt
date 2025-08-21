@@ -1,6 +1,6 @@
 package dev.gangster.protobuf
 
-import dev.gangster.protobuf.common.Achievement
+import dev.gangster.protobuf.common.PBAchievement
 import kotlinx.serialization.Serializable
 
 /**
@@ -9,12 +9,12 @@ import kotlinx.serialization.Serializable
  * [example: %xt%newachievements%1%-1%%]
  */
 @Serializable
-data class MiscNewAchievementsResponse(
-    val achievements: List<Achievement>
+data class PBMiscNewAchievementsResponse(
+    val achievements: List<PBAchievement>
 ) {
     companion object {
-        fun empty(): MiscNewAchievementsResponse {
-            return MiscNewAchievementsResponse(
+        fun empty(): PBMiscNewAchievementsResponse {
+            return PBMiscNewAchievementsResponse(
                 achievements = emptyList()
             )
         }

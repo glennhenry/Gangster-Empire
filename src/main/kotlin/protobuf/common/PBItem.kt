@@ -5,41 +5,41 @@ import dev.gangster.model.constants.ItemType
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Item(
+data class PBItem(
     val id: Int,
     val quality: ItemQuality,
     val type: ItemType,
-    val costs: Costs,
+    val costs: PBCosts,
     val isGoldPrice: Boolean,
-    val levels: Levels,
+    val levels: PBLevels,
     val subType: Int?,
-    val attributes: Attributes?,
-    val damage: Damage?,
-    val shape: Shape?,
-    val duration: Duration?,
+    val attributes: PBAttributes?,
+    val damage: PBDamage?,
+    val shape: PBShape?,
+    val duration: PBDuration?,
     val amount: Int?,
     val rounds: Int?,
-    val effects: ItemEffect,
-    val dependencies: List<WeaponType>,
+    val effects: PBItemEffect,
+    val dependencies: List<PBWeaponType>,
     val charge: Int?,
 ) {
     companion object {
-        fun dummyFood(id: Int): Item {
-            return Item(
+        fun dummyFood(id: Int): PBItem {
+            return PBItem(
                 id = id,
                 quality = ItemQuality.Normal,
                 type = ItemType.Food,
-                costs = Costs.dummy(),
+                costs = PBCosts.dummy(),
                 isGoldPrice = false,
-                levels = Levels.dummy(),
+                levels = PBLevels.dummy(),
                 subType = 1,
                 attributes = null,
                 damage = null,
                 shape = null,
-                duration = Duration.dummy(),
+                duration = PBDuration.dummy(),
                 amount = 5,
                 rounds = null,
-                effects = ItemEffect.dummy(id = 1),
+                effects = PBItemEffect.dummy(id = 1),
                 dependencies = emptyList(),
                 charge = null
             )

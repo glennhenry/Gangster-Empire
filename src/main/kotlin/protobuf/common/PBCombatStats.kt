@@ -3,7 +3,7 @@ package dev.gangster.protobuf.common
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CombatStats(
+data class PBCombatStats(
     val damage: Int?,
     val health: Int?,
     val critical: Float?,
@@ -11,8 +11,8 @@ data class CombatStats(
     val hitChance: Float?,
 ) {
     companion object {
-        fun dummy(): CombatStats {
-            return CombatStats(
+        fun dummy(): PBCombatStats {
+            return PBCombatStats(
                 damage = 10,
                 health = 500,
                 critical = 30f,

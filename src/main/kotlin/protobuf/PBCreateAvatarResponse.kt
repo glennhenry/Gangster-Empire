@@ -2,7 +2,10 @@ package dev.gangster.protobuf
 
 import kotlinx.serialization.Serializable
 
+/**
+ * result ok = 1
+ */
 @Serializable
-data class MiscNewAchievementsRequest(
-    val actuallyEmpty: String? = null,
+data class PBCreateAvatarResponse(
+    val result: Int = 1
 )

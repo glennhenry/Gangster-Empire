@@ -3,15 +3,15 @@ package dev.gangster.protobuf.common
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Attributes(
+data class PBAttributes(
     val attack: Int?,
     val endurance: Int?,
     val luck: Int?,
     val toughness: Int?,
 ) {
     companion object {
-        fun dummy(): Attributes {
-            return Attributes(
+        fun dummy(): PBAttributes {
+            return PBAttributes(
                 attack = 20,
                 endurance = 20,
                 luck = 20,

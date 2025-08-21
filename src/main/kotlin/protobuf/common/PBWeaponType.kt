@@ -1,8 +1,8 @@
 package dev.gangster.protobuf.common
 
-typealias WeaponType = Int
+typealias PBWeaponType = Int
 
-object WeaponTypeConstants {
+object PBWeaponTypeConstants {
     const val PISTOL = 1
     const val SMG = 2
     const val SHOTGUN = 3
