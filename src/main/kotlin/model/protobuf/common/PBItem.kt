@@ -19,7 +19,7 @@ data class PBItem(
     val duration: PBDuration?,
     val amount: Int?,
     val rounds: Int?,
-    val effects: PBItemEffect,
+    val effects: List<PBItemEffect>,
     val dependencies: List<PBWeaponType>,
     val charge: Int?,
 ) {
@@ -39,7 +39,7 @@ data class PBItem(
                 duration = PBDuration.dummy(),
                 amount = 5,
                 rounds = null,
-                effects = PBItemEffect.dummy(id = 1),
+                effects = listOf(PBItemEffect.dummy(id = 1)),
                 dependencies = emptyList(),
                 charge = null
             )

@@ -10,6 +10,7 @@ import dev.gangster.model.user.PlayerInfo
 import dev.gangster.model.components.toPayload
 import dev.gangster.model.protobuf.PBCreateAvatarRequest
 import dev.gangster.model.protobuf.PBCreateAvatarResponse
+import dev.gangster.model.protobuf.PBEquipmentViewArmamentResponse
 import dev.gangster.model.protobuf.PBMiscNewAchievementsResponse
 import dev.gangster.model.protobuf.PBMiscPaymentInfoResponse
 import dev.gangster.model.protobuf.PBMiscPlayerCurrencyResponse
@@ -186,7 +187,7 @@ class Server(
 
                         // to send in order:
                         // *oga, *sgc, *oio, *playerprofile, *newachievements
-                        // *paymentinfo, *oud, playercurrency, viewarmament, getarmamentpresetstatus,
+                        // *paymentinfo, *oud, *playercurrency, viewarmament, getarmamentpresetstatus,
                         // viewgear, viewfood, viewinventory, viewitems, viewitems, viewitems, auc,
                         // getplayerbooster, showmissionbooster, viewmissions, viewwork, png, sae, lfe, gch,
                         // gfl, getactivequests, sgs, sga, apd
@@ -252,12 +253,12 @@ class Server(
                             connection.sendRaw(newAchievementsRes)
 
                             /* paymentinfo */
-                            val paymentInfoResponse = PBMiscPaymentInfoResponse.dummy()
+                            val paymentInfoPbResponse = PBMiscPaymentInfoResponse.dummy()
                             val paymentInfoRes = SmartFoxString.makeXt(
                                 "paymentinfo",
                                 reqId,
                                 -1, // signify protobuf mode
-                                Base64.encode(GlobalContext.pb.encodeToByteArray(paymentInfoResponse))
+                                Base64.encode(GlobalContext.pb.encodeToByteArray(paymentInfoPbResponse))
                             )
                             connection.sendRaw(paymentInfoRes)
 
@@ -272,14 +273,25 @@ class Server(
                             connection.sendRaw(oudXtResponse)
 
                             /* playercurrency */
-                            val playerCurrencyResponse = PBMiscPlayerCurrencyResponse.dummy()
-                            val playerCurrencyResponseRes = SmartFoxString.makeXt(
+                            val playerCurrencyPbResponse = PBMiscPlayerCurrencyResponse.dummy()
+                            val playerCurrencyRes = SmartFoxString.makeXt(
                                 "playercurrency",
                                 reqId,
                                 -1, // signify protobuf mode
-                                Base64.encode(GlobalContext.pb.encodeToByteArray(playerCurrencyResponse))
+                                Base64.encode(GlobalContext.pb.encodeToByteArray(playerCurrencyPbResponse))
                             )
-                            connection.sendRaw(playerCurrencyResponseRes)
+                            connection.sendRaw(playerCurrencyRes)
+
+                            /* viewarmament */
+                            val viewArmamentPbResponse = PBEquipmentViewArmamentResponse.dummy(AdminData.PLAYER_ID_INT)
+                            val viewArmamentRes = SmartFoxString.makeXt(
+                                "paymentinfo",
+                                reqId,
+                                -1, // signify protobuf mode
+                                Base64.encode(GlobalContext.pb.encodeToByteArray(viewArmamentPbResponse))
+                            )
+                            connection.sendRaw(viewArmamentRes)
+
 
                             // send apd (ready message)
                             val likelyStatusCodeWhere0IsSuccess = 0
