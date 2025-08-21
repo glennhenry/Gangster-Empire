@@ -12,6 +12,7 @@ import dev.gangster.model.protobuf.PBCreateAvatarRequest
 import dev.gangster.model.protobuf.PBCreateAvatarResponse
 import dev.gangster.model.protobuf.PBEquipmentGetArmamentPresetStatusResponse
 import dev.gangster.model.protobuf.PBEquipmentViewArmamentResponse
+import dev.gangster.model.protobuf.PBEquipmentViewGearResponse
 import dev.gangster.model.protobuf.PBMiscNewAchievementsResponse
 import dev.gangster.model.protobuf.PBMiscPaymentInfoResponse
 import dev.gangster.model.protobuf.PBMiscPlayerCurrencyResponse
@@ -188,8 +189,8 @@ class Server(
 
                         // to send in order:
                         // *oga, *sgc, *oio, *playerprofile, *newachievements
-                        // *paymentinfo, *oud, *playercurrency, *viewarmament, getarmamentpresetstatus,
-                        // viewgear, viewfood, viewinventory, viewitems, viewitems, viewitems, auc,
+                        // *paymentinfo, *oud, *playercurrency, *viewarmament, *getarmamentpresetstatus,
+                        // *viewgear, viewfood, viewinventory, viewitems, viewitems, viewitems, auc,
                         // getplayerbooster, showmissionbooster, viewmissions, viewwork, png, sae, lfe, gch,
                         // gfl, getactivequests, sgs, sga, apd
 
@@ -302,6 +303,16 @@ class Server(
                                 Base64.encode(GlobalContext.pb.encodeToByteArray(getArmamentPresetStatusPbResponse))
                             )
                             connection.sendRaw(getArmamentPresetStatusRes)
+
+                            /* viewgear */
+                            val viewGearPbResponse = PBEquipmentViewGearResponse.empty(AdminData.PLAYER_ID_INT)
+                            val viewGearRes = SmartFoxString.makeXt(
+                                "viewgear",
+                                reqId,
+                                -1, // signify protobuf mode
+                                Base64.encode(GlobalContext.pb.encodeToByteArray(viewGearPbResponse))
+                            )
+                            connection.sendRaw(viewGearRes)
 
 
                             // send apd (ready message)
