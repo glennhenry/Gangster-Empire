@@ -44,5 +44,68 @@ data class PBItem(
                 charge = null
             )
         }
+
+        fun dummyWeapon(id: Int): PBItem {
+            return PBItem(
+                id = id,
+                quality = ItemQuality.Normal,
+                type = ItemType.Weapon,
+                costs = PBCosts.dummy(),
+                isGoldPrice = false,
+                levels = PBLevels.dummy(),
+                subType = 1,
+                attributes = null,
+                damage = PBDamage.dummy(),
+                shape = PBShape.dummy(),
+                duration = null,
+                amount = 1,
+                rounds = null,
+                effects = emptyList(),
+                dependencies = emptyList(),
+                charge = null
+            )
+        }
+
+        fun dummyAmmo(id: Int): PBItem {
+            return PBItem(
+                id = id,
+                quality = ItemQuality.Normal,
+                type = ItemType.Consumable,
+                costs = PBCosts.dummy(),
+                isGoldPrice = false,
+                levels = PBLevels.dummy(),
+                subType = 1,
+                attributes = null,
+                damage = null,
+                shape = PBShape.dummy(),
+                duration = null,
+                amount = 1,
+                rounds = 140,
+                effects = emptyList(),
+                dependencies = listOf(PBWeaponTypeConstants.PISTOL),
+                charge = null
+            )
+        }
+
+        fun dummyGear(id: Int): PBItem {
+            return PBItem(
+                id = id,
+                quality = ItemQuality.Normal,
+                type = ItemType.Gear,
+                costs = PBCosts.dummy(),
+                isGoldPrice = false,
+                levels = PBLevels.dummy(),
+                subType = 1,
+                attributes = PBAttributes.dummy(),
+                damage = null,
+                shape = null,
+                duration = null,
+                amount = 1,
+                rounds = null,
+                effects = emptyList(),
+                dependencies = emptyList(),
+                charge = null
+            )
+        }
     }
 }
