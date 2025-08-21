@@ -1,4 +1,4 @@
-package dev.gangster.model
+package dev.gangster.model.vo
 
 import kotlinx.serialization.Serializable
 
