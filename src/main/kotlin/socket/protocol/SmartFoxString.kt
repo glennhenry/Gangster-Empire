@@ -1,5 +1,7 @@
 package dev.gangster.socket.protocol
 
+import kotlin.io.encoding.Base64
+
 /**
  * Smart fox XT structure: %xt%<zone>%<command>%<reqId>%<payload>%
  */
@@ -33,11 +35,14 @@ object SmartFoxString {
         fun sliceAsString(start: Int, end: Int) =
             raw.copyOfRange(start, end).toString(Charsets.UTF_8)
 
-        val zone = sliceAsString(positions[0] + 1, positions[1])
-        val command = sliceAsString(positions[1] + 1, positions[2])
-        val reqId = sliceAsString(positions[2] + 1, positions[3])
+        val zone = sliceAsString(positions[1] + 1, positions[2])
+        val command = sliceAsString(positions[2] + 1, positions[3])
+        val reqId = sliceAsString(positions[3] + 1, positions[4])
 
-        val payload = raw.copyOfRange(positions[3] + 1, raw.size - 1) // strip trailing %
+        val payloadBase64 = raw.copyOfRange(positions[4] + 1, raw.size - 2) // trim the last %
+            .toString(Charsets.UTF_8)
+
+        val payload = Base64.decode(payloadBase64)
 
         return XtMessage(zone, command, reqId, payload)
     }
