@@ -21,6 +21,7 @@ import kotlinx.serialization.protobuf.ProtoBuf
 import java.nio.charset.Charset
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.io.encoding.Base64
+import kotlin.random.Random
 
 const val POLICY_REQUEST =
     "<cross-domain-policy><allow-access-from domain='*' to-ports='7777' /></cross-domain-policy>\u0000"
@@ -117,6 +118,7 @@ class Server(
                             Logger.debug { "Received xt pin message" }
                         }
 
+                        // Handle version check (again)
                         data.startsWithString("%xt%MafiaEx%vck") -> {
                             val r = 1
                             val unknown1 = 0
@@ -126,8 +128,8 @@ class Server(
                             )
                         }
 
+                        // Handle create avatar
                         data.startsWithString("%xt%MafiaEx%createavatar") -> {
-                            // ex: %xt%MafiaEx%createavatar%1%CAIQAxoqMiExfjF+Mn4xfjR+Mn4wfjAhMH40fjJ+M340fjR+M34wfjZ+Mn4xfjEw%
                             val xtReq = SmartFoxString.parsePbXt(data)
                             val pbRequest = ProtoBuf.decodeFromByteArray<CreateAvatarRequest>(xtReq.pbPayload)
                             Logger.debug { "Received createavatar request: $pbRequest" }
@@ -142,11 +144,33 @@ class Server(
                             connection.sendRaw(xtRes)
                         }
 
+                        // Handle login register (new player)
                         data.startsWithString("%xt%MafiaEx%lre") -> {
-                            // Received raw: %xt%MafiaEx%lre%1%adminplayer%adminplayer@gmail.com%adminpass%<RoundHouseKick>%en%<RoundHouseKick>%1755594777186888054%<RoundHouseKick>%1%-1%-1%-1%-1%adminplayer@gmail.com;;;;;;;;;;;0%
-                            val lreRequest = SmartFoxString.parseObjXt<LreRequest>(data)
+                            val (xtReq, lreRequest) = SmartFoxString.parseObjXt<LreRequest>(data)
                             Logger.debug { "Received lre request: $lreRequest" }
+
+                            val likelyStatusCodeWhere0IsSuccess = 0
+                            val userId = 420
+                            val playerId = 10
+                            val xtRes1 = SmartFoxString.makeXt(
+                                "lre",
+                                xtReq.reqId,
+                                likelyStatusCodeWhere0IsSuccess,
+                                userId,
+                                playerId,
+                            )
+                            connection.sendRaw(xtRes1)
                         }
+
+                        // Handle login
+//                        data.startsWithString("%xt%MafiaEx%lgn") -> {
+//                            val (xtReq, lreRequest) = SmartFoxString.parseObjXt<LreRequest>(data)
+//                            Logger.debug { "Received lgn request: $lreRequest" }
+//
+//                            val playerId = Random.nextInt(1, 10000)
+//                            val xtRes1 = SmartFoxString.makeXt("lgn", xtReq.reqId, 0, 315, 48343, 0, 0, 0)
+//                            connection.sendRaw(xtRes1)
+//                        }
                     }
 
                     Logger.info("<------------ SOCKET MESSAGE END ------------>")

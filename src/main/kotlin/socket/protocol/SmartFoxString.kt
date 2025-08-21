@@ -5,7 +5,8 @@ import kotlinx.serialization.json.Json
 import kotlin.io.encoding.Base64
 
 /**
- * Smart fox XT structure: %xt%<zone>%<command>%<reqId>%<payload>%
+ * Smart fox XT structure for protobuf: %xt%<zone>%<command>%<reqId>%<payload>%
+ * Smart fox XT structure for raw message: %xt%<zone>%<command>%<reqId>%<status_code>%<args_strings>%
  */
 object SmartFoxString {
     fun makeXt(type: String, vararg msg: Any): String {
