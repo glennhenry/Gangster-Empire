@@ -9,12 +9,16 @@ import kotlin.io.encoding.Base64
  * Smart fox XT structure for raw message: %xt%<zone>%<command>%<reqId>%<status_code>%<args_strings>%
  */
 object SmartFoxString {
-    fun makeXt(type: String, vararg msg: Any): String {
+    fun makeXt(type: String, vararg msg: Any?): String {
         return buildString {
             append("%xt")
             append("%$type")
             msg.forEach {
-                append("%$it")
+                if (it == null) {
+                    append("%")
+                } else {
+                    append("%$it")
+                }
             }
             append("%\u0000")
         }

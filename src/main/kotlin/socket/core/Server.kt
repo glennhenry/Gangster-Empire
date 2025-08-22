@@ -26,6 +26,8 @@ import dev.gangster.model.protobuf.mission.PBMissionBoosterShowMissionBoosterRes
 import dev.gangster.model.protobuf.mission.PBMissionViewResponse
 import dev.gangster.model.protobuf.shop.PBShopViewItemsResponse
 import dev.gangster.model.protobuf.work.PBWorkViewWorkResponse
+import dev.gangster.model.response.PngResponse
+import dev.gangster.model.response.toListOfResponse
 import dev.gangster.model.user.MafiaUserData
 import dev.gangster.model.user.toOudResponse
 import dev.gangster.model.user.toPayload
@@ -200,8 +202,8 @@ class Server(
                         // *oga, *sgc, *oio, *playerprofile, *newachievements
                         // *paymentinfo, *oud, *playercurrency, *viewarmament, *getarmamentpresetstatus,
                         // *viewgear, *viewfood, *viewinventory, *viewitems, *viewitems, *viewitems, *auc,
-                        // *getplayerbooster, *showmissionbooster, *viewmissions, *viewwork, png, sae, lfe, gch,
-                        // gfl, getactivequests, sgs, sga, apd
+                        // *getplayerbooster, *showmissionbooster, *viewmissions, *viewwork,
+                        // png, sae, lfe, gch, gfl, getactivequests, sgs, sga, apd
 
                         // apd is supposed to be send when the all data is sent to game
                         data.startsWithString("%xt%MafiaEx%apd") -> {
@@ -423,6 +425,16 @@ class Server(
                                 Base64.encode(GlobalContext.pb.encodeToByteArray(viewWorkPbResponse))
                             )
                             connection.sendRaw(viewWorkRes)
+
+                            /* png or ping data */
+                            val pngData = PngResponse.empty()
+                            val pngXtResponse = SmartFoxString.makeXt(
+                                "png",
+                                apdXtRequest.reqId,
+                                statusCodeSuccess,
+                                pngData.toListOfResponse()
+                            )
+                            connection.sendRaw(pngXtResponse)
 
 
                             // send apd (ready message)

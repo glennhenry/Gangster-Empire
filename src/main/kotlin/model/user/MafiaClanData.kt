@@ -1,0 +1,21 @@
+package dev.gangster.model.user
+
+import dev.gangster.model.vo.ClanStatusVO
+import dev.gangster.model.vo.toResponse
+import kotlinx.serialization.Serializable
+
+/**
+ * format: <clan_status_vo_1>#<clan_status_vo_n>#<end_marker>
+ *         <clan_status_vo> = <id>+<value>+<clan_id?>
+ *   e.g.: 1+2+3#3+2+1#1+2+3
+ */
+@Serializable
+data class MafiaClanData(
+    val clanStatus: List<ClanStatusVO>,
+    val placeholderDataBecauseLastItemIsPopped: Int = 0,
+)
+
+fun MafiaClanData.toPngResponsePart(): String {
+    val clans = clanStatus.joinToString("#") { it.toResponse() }
+    return "$clans#$placeholderDataBecauseLastItemIsPopped"
+}
