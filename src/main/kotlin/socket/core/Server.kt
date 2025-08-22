@@ -31,9 +31,11 @@ import dev.gangster.model.response.LfeResponse
 import dev.gangster.model.response.PngResponse
 import dev.gangster.model.response.SaeResponse
 import dev.gangster.model.response.toResponse
+import dev.gangster.model.user.MafiaGangData
 import dev.gangster.model.user.MafiaUserData
 import dev.gangster.model.user.toOudResponse
 import dev.gangster.model.user.toPayload
+import dev.gangster.model.user.toResponse
 import dev.gangster.model.vo.toPayload
 import dev.gangster.socket.protocol.SmartFoxString
 import dev.gangster.socket.protocol.SmartFoxXML
@@ -206,7 +208,7 @@ class Server(
                         // *paymentinfo, *oud, *playercurrency, *viewarmament, *getarmamentpresetstatus,
                         // *viewgear, *viewfood, *viewinventory, *viewitems, *viewitems, *viewitems, *auc,
                         // *getplayerbooster, *showmissionbooster, *viewmissions, *viewwork,
-                        // *png, *sae, *lfe, *gch, *gfl, *getactivequests, sgs, sga, apd
+                        // *png, *sae, *lfe, *gch, *gfl, *getactivequests, *sgs, sga, apd
 
                         // apd is supposed to be send when the all data is sent to game
                         data.startsWithString("%xt%MafiaEx%apd") -> {
@@ -492,6 +494,17 @@ class Server(
                                 Base64.encode(GlobalContext.pb.encodeToByteArray(getActiveQuestsPbResponse))
                             )
                             connection.sendRaw(getActiveQuestsRes)
+
+                            /* sgs or gang shop*/
+                            val sgsData = MafiaGangData.empty()
+                            val sgsXtResponse = SmartFoxString.makeXt(
+                                "sgs",
+                                apdXtRequest.reqId,
+                                statusCodeSuccess,
+                                sgsData.toResponse()
+                            )
+                            connection.sendRaw(sgsXtResponse)
+
 
 
                             // send apd (ready message)
