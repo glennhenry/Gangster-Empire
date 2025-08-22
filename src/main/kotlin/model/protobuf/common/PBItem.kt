@@ -1,14 +1,12 @@
 package dev.gangster.model.protobuf.common
 
-import dev.gangster.model.constants.ItemQuality
-import dev.gangster.model.constants.ItemType
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class PBItem(
     val id: Int,
-    val quality: ItemQuality,
-    val type: ItemType,
+    val quality: PBItemQuality,
+    val type: PBItemType,
     val costs: PBCosts,
     val isGoldPrice: Boolean,
     val levels: PBLevels,
@@ -27,13 +25,13 @@ data class PBItem(
         fun dummyFood(id: Int): PBItem {
             return PBItem(
                 id = id,
-                quality = ItemQuality.Normal,
-                type = ItemType.Food,
+                quality = PBItemQualityConstants.NORMAL,
+                type = PBItemTypeConstants.FOOD,
                 costs = PBCosts.dummy(),
                 isGoldPrice = false,
                 levels = PBLevels.dummy(),
                 subType = 1,
-                attributes = null,
+                attributes = PBAttributes.dummy(),
                 damage = null,
                 shape = null,
                 duration = PBDuration.dummy(),
@@ -48,8 +46,8 @@ data class PBItem(
         fun dummyWeapon(id: Int): PBItem {
             return PBItem(
                 id = id,
-                quality = ItemQuality.Normal,
-                type = ItemType.Weapon,
+                quality = PBItemQualityConstants.NORMAL,
+                type = PBItemTypeConstants.WEAPON,
                 costs = PBCosts.dummy(),
                 isGoldPrice = false,
                 levels = PBLevels.dummy(),
@@ -69,8 +67,8 @@ data class PBItem(
         fun dummyAmmo(id: Int): PBItem {
             return PBItem(
                 id = id,
-                quality = ItemQuality.Normal,
-                type = ItemType.Consumable,
+                quality = PBItemQualityConstants.NORMAL,
+                type = PBItemTypeConstants.CONSUMABLE,
                 costs = PBCosts.dummy(),
                 isGoldPrice = false,
                 levels = PBLevels.dummy(),
@@ -90,8 +88,8 @@ data class PBItem(
         fun dummyGear(id: Int): PBItem {
             return PBItem(
                 id = id,
-                quality = ItemQuality.Normal,
-                type = ItemType.Gear,
+                quality = PBItemQualityConstants.NORMAL,
+                type = PBItemTypeConstants.GEAR,
                 costs = PBCosts.dummy(),
                 isGoldPrice = false,
                 levels = PBLevels.dummy(),
