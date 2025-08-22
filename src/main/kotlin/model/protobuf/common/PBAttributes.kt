@@ -18,5 +18,14 @@ data class PBAttributes(
                 toughness = 20
             )
         }
+
+        fun hacker(): PBAttributes {
+            return PBAttributes(
+                attack = 8885555,
+                endurance = 7777555,
+                luck = 20,
+                toughness = 20
+            )
+        }
     }
 }

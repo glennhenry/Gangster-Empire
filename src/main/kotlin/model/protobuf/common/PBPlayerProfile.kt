@@ -1,5 +1,6 @@
 package dev.gangster.model.protobuf.common
 
+import dev.gangster.model.components.PortraitData
 import dev.gangster.utils.AdminData
 import kotlinx.serialization.Serializable
 
@@ -30,9 +31,9 @@ data class PBPlayerProfile(
             return PBPlayerProfile(
                 name = AdminData.USERNAME,
                 gender = AdminData.GENDER,
-                picString = "",
+                picString = PortraitData.randomMale(),
                 characterClass = AdminData.CHARACTER_CLASS,
-                attributes = PBAttributes.dummy(),
+                attributes = PBAttributes.hacker(),
                 combatStats = PBCombatStats.dummy(),
                 highscore = PBHighscore.dummy(),
                 wonDuels = 0,

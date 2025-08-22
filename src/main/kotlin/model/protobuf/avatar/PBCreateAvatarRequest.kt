@@ -1,5 +1,7 @@
 package dev.gangster.model.protobuf.avatar
 
+import dev.gangster.model.protobuf.common.PBCharacterClass
+import dev.gangster.model.protobuf.common.PBGender
 import kotlinx.serialization.Serializable
 
 /**
@@ -14,7 +16,7 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class PBCreateAvatarRequest(
-    val gender: Int,
-    val characterClass: Int,
+    val gender: PBGender,
+    val characterClass: PBCharacterClass,
     val portrait: String,
 )
