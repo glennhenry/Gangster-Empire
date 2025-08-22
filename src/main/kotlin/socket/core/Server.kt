@@ -194,14 +194,13 @@ class Server(
                         }
 
                         // Handle login
-//                        data.startsWithString("%xt%MafiaEx%lgn") -> {
-//                            val (xtReq, lreRequest) = SmartFoxString.parseObjXt<LreRequest>(data)
-//                            Logger.debug { "Received lgn request: $lreRequest" }
-//
-//                            val playerId = Random.nextInt(1, 10000)
-//                            val xtRes1 = SmartFoxString.makeXt("lgn", xtReq.reqId, 0, 315, 48343, 0, 0, 0)
-//                            connection.sendRaw(xtRes1)
-//                        }
+                        data.startsWithString("%xt%MafiaEx%lgn") -> {
+                            val (xtReq, ) = SmartFoxString.parseObjXt<LreRequest>(data)
+                            Logger.debug { "Received lgn request: " }
+
+                            val xtRes1 = SmartFoxString.makeXt("lgn", xtReq.reqId, 0, 315, 48343, 0, 0, 0)
+                            connection.sendRaw(xtRes1)
+                        }
 
                         // to send in order:
                         // *oga, *sgc, *oio, *playerprofile, *newachievements
