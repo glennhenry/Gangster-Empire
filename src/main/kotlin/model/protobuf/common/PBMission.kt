@@ -9,7 +9,8 @@ data class PBMission(
     val xp: Int,
     val activity: Int,
     val time: Int,
-    val opponentClass: PBCharacterClass
+    val opponentClass: PBCharacterClass,
+    val item: PBItem?
 ) {
     companion object {
         fun dummy(id: Int): PBMission {
@@ -19,7 +20,8 @@ data class PBMission(
                 xp = 4321,
                 activity = 23,
                 time = 32,
-                opponentClass = PBCharacterClassConstants.BULLY
+                opponentClass = PBCharacterClassConstants.BULLY,
+                item = null,
             )
         }
     }
