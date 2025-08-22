@@ -208,7 +208,7 @@ class Server(
                         // *paymentinfo, *oud, *playercurrency, *viewarmament, *getarmamentpresetstatus,
                         // *viewgear, *viewfood, *viewinventory, *viewitems, *viewitems, *viewitems, *auc,
                         // *getplayerbooster, *showmissionbooster, *viewmissions, *viewwork,
-                        // *png, *sae, *lfe, *gch, *gfl, *getactivequests, *sgs, *sga, apd
+                        // *png, *sae, *lfe, *gch, *gfl, *getactivequests, *sgs, *sga, *apd
 
                         // apd is supposed to be send when the all data is sent to game
                         data.startsWithString("%xt%MafiaEx%apd") -> {
@@ -517,11 +517,10 @@ class Server(
                             connection.sendRaw(sgaXtResponse)
 
                             // send apd (ready message)
-                            val likelyStatusCodeWhere0IsSuccess = 0
                             val apdXtResponse = SmartFoxString.makeXt(
                                 "apd",
                                 apdXtRequest.reqId,
-                                likelyStatusCodeWhere0IsSuccess,
+                                statusCodeSuccess,
                             )
                             connection.sendRaw(apdXtResponse)
                         }
