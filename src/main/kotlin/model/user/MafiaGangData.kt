@@ -11,20 +11,23 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class MafiaGangData(
-    val gangs: List<GangVO>
+    val gangs: List<GangVO>,
+    val bonusCount: Int?,
 ) {
     companion object {
         fun empty(): MafiaGangData {
             return MafiaGangData(
-                gangs = emptyList()
+                gangs = emptyList(),
+                bonusCount = null
             )
         }
     }
 }
 
-fun MafiaGangData.toResponse(): List<Any> {
+fun MafiaGangData.toResponse(): List<Any?> {
     val gangsStr = gangs.joinToString("#") { it.toResponse() }
     return listOf(
-        "$gangsStr#"
+        "$gangsStr#",
+        bonusCount
     )
 }
