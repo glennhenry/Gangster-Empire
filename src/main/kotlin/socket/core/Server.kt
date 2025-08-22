@@ -205,7 +205,7 @@ class Server(
                         // *paymentinfo, *oud, *playercurrency, *viewarmament, *getarmamentpresetstatus,
                         // *viewgear, *viewfood, *viewinventory, *viewitems, *viewitems, *viewitems, *auc,
                         // *getplayerbooster, *showmissionbooster, *viewmissions, *viewwork,
-                        // *png, *sae, *lfe, gch, gfl, getactivequests, sgs, sga, apd
+                        // *png, *sae, *lfe, *gch, *gfl, getactivequests, sgs, sga, apd
 
                         // apd is supposed to be send when the all data is sent to game
                         data.startsWithString("%xt%MafiaEx%apd") -> {
@@ -457,6 +457,30 @@ class Server(
                                 lfeData.toResponse()
                             )
                             connection.sendRaw(lfeXtResponse)
+
+                            /* gch or payment hash (possibly unique code for payment, differ each session) */
+                            // example hash: 33f8fa22f1b3426568dc387edf1a50bcbbed4e71bcf2d8
+                            // no need to implement
+                            val gchData = "payment-hash-123"
+                            val gchXtResponse = SmartFoxString.makeXt(
+                                "gch",
+                                apdXtRequest.reqId,
+                                statusCodeSuccess,
+                                gchData
+                            )
+                            connection.sendRaw(gchXtResponse)
+
+                            /* gfl or crypted forum hash */
+                            // unknown what is this for, forum is dead since 10 years ago anyway
+                            // example: 022161899996ee4135ffc36686634feac177a712e2dd584cb9d6b5779548631e7e8d600cce29799600403a482ec73657e20cdff6760b33cf2bf814f27d3c4506c82f4a95a5f8f6caab26bfbeb9d25c65cf8e72b7ffbabb79
+                            val gflData = "forum-hash-123"
+                            val gflXtResponse = SmartFoxString.makeXt(
+                                "gfl",
+                                apdXtRequest.reqId,
+                                statusCodeSuccess,
+                                gflData
+                            )
+                            connection.sendRaw(gflXtResponse)
 
 
                             // send apd (ready message)
