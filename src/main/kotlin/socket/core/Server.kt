@@ -26,6 +26,7 @@ import dev.gangster.model.protobuf.mission.PBMissionBoosterShowMissionBoosterRes
 import dev.gangster.model.protobuf.mission.PBMissionViewResponse
 import dev.gangster.model.protobuf.shop.PBShopViewItemsResponse
 import dev.gangster.model.protobuf.work.PBWorkViewWorkResponse
+import dev.gangster.model.response.LfeResponse
 import dev.gangster.model.response.PngResponse
 import dev.gangster.model.response.SaeResponse
 import dev.gangster.model.response.toResponse
@@ -204,7 +205,7 @@ class Server(
                         // *paymentinfo, *oud, *playercurrency, *viewarmament, *getarmamentpresetstatus,
                         // *viewgear, *viewfood, *viewinventory, *viewitems, *viewitems, *viewitems, *auc,
                         // *getplayerbooster, *showmissionbooster, *viewmissions, *viewwork,
-                        // *png, sae, lfe, gch, gfl, getactivequests, sgs, sga, apd
+                        // *png, *sae, *lfe, gch, gfl, getactivequests, sgs, sga, apd
 
                         // apd is supposed to be send when the all data is sent to game
                         data.startsWithString("%xt%MafiaEx%apd") -> {
@@ -447,6 +448,15 @@ class Server(
                             )
                             connection.sendRaw(saeXtResponse)
 
+                            /* lfe or login features data */
+                            val lfeData = LfeResponse.empty()
+                            val lfeXtResponse = SmartFoxString.makeXt(
+                                "lfe",
+                                apdXtRequest.reqId,
+                                statusCodeSuccess,
+                                lfeData.toResponse()
+                            )
+                            connection.sendRaw(lfeXtResponse)
 
 
                             // send apd (ready message)

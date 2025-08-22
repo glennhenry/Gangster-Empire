@@ -12,10 +12,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class MafiaClanData(
     val clanStatus: List<ClanStatusVO>,
-    val placeholderDataBecauseLastItemIsPopped: Int = 0,
 )
 
 fun MafiaClanData.toPngResponsePart(): String {
     val clans = clanStatus.joinToString("#") { it.toResponse() }
-    return "$clans#$placeholderDataBecauseLastItemIsPopped"
+    return "$clans#" // client pop the last so keep trailing #
 }
