@@ -14,7 +14,7 @@ object SmartFoxString {
             append("%xt")
             append("%$type")
             msg.forEach {
-                if (it == null) {
+                if (it == null || it == "") {
                     append("%")
                 } else {
                     append("%$it")

@@ -27,7 +27,8 @@ import dev.gangster.model.protobuf.mission.PBMissionViewResponse
 import dev.gangster.model.protobuf.shop.PBShopViewItemsResponse
 import dev.gangster.model.protobuf.work.PBWorkViewWorkResponse
 import dev.gangster.model.response.PngResponse
-import dev.gangster.model.response.toListOfResponse
+import dev.gangster.model.response.SaeResponse
+import dev.gangster.model.response.toResponse
 import dev.gangster.model.user.MafiaUserData
 import dev.gangster.model.user.toOudResponse
 import dev.gangster.model.user.toPayload
@@ -203,7 +204,7 @@ class Server(
                         // *paymentinfo, *oud, *playercurrency, *viewarmament, *getarmamentpresetstatus,
                         // *viewgear, *viewfood, *viewinventory, *viewitems, *viewitems, *viewitems, *auc,
                         // *getplayerbooster, *showmissionbooster, *viewmissions, *viewwork,
-                        // png, sae, lfe, gch, gfl, getactivequests, sgs, sga, apd
+                        // *png, sae, lfe, gch, gfl, getactivequests, sgs, sga, apd
 
                         // apd is supposed to be send when the all data is sent to game
                         data.startsWithString("%xt%MafiaEx%apd") -> {
@@ -432,9 +433,20 @@ class Server(
                                 "png",
                                 apdXtRequest.reqId,
                                 statusCodeSuccess,
-                                pngData.toListOfResponse()
+                                pngData.toResponse()
                             )
                             connection.sendRaw(pngXtResponse)
+
+                            /* sae or special event data */
+                            val saeData = SaeResponse.noEvent()
+                            val saeXtResponse = SmartFoxString.makeXt(
+                                "sae",
+                                apdXtRequest.reqId,
+                                statusCodeSuccess,
+                                saeData.toResponse()
+                            )
+                            connection.sendRaw(saeXtResponse)
+
 
 
                             // send apd (ready message)

@@ -37,7 +37,7 @@ data class PngResponse(
     }
 }
 
-fun PngResponse.toListOfResponse(): List<Any?> {
+fun PngResponse.toResponse(): List<Any?> {
     return listOf(
         city.ordinal,
         progressData.toPngResponsePart(),
