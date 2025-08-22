@@ -24,6 +24,7 @@ import dev.gangster.model.protobuf.misc.PBMiscPlayerProfileResponse
 import dev.gangster.model.protobuf.mission.PBMissionBoosterGetPlayerBoosterResponse
 import dev.gangster.model.protobuf.mission.PBMissionBoosterShowMissionBoosterResponse
 import dev.gangster.model.protobuf.mission.PBMissionViewResponse
+import dev.gangster.model.protobuf.quest.PBQuestGetActiveQuestsResponse
 import dev.gangster.model.protobuf.shop.PBShopViewItemsResponse
 import dev.gangster.model.protobuf.work.PBWorkViewWorkResponse
 import dev.gangster.model.response.LfeResponse
@@ -205,7 +206,7 @@ class Server(
                         // *paymentinfo, *oud, *playercurrency, *viewarmament, *getarmamentpresetstatus,
                         // *viewgear, *viewfood, *viewinventory, *viewitems, *viewitems, *viewitems, *auc,
                         // *getplayerbooster, *showmissionbooster, *viewmissions, *viewwork,
-                        // *png, *sae, *lfe, *gch, *gfl, getactivequests, sgs, sga, apd
+                        // *png, *sae, *lfe, *gch, *gfl, *getactivequests, sgs, sga, apd
 
                         // apd is supposed to be send when the all data is sent to game
                         data.startsWithString("%xt%MafiaEx%apd") -> {
@@ -481,6 +482,16 @@ class Server(
                                 gflData
                             )
                             connection.sendRaw(gflXtResponse)
+
+                            /* getactivequests */
+                            val getActiveQuestsPbResponse = PBQuestGetActiveQuestsResponse.dummy()
+                            val getActiveQuestsRes = SmartFoxString.makeXt(
+                                "getactivequests",
+                                reqId,
+                                -1, // signify protobuf mode
+                                Base64.encode(GlobalContext.pb.encodeToByteArray(getActiveQuestsPbResponse))
+                            )
+                            connection.sendRaw(getActiveQuestsRes)
 
 
                             // send apd (ready message)
