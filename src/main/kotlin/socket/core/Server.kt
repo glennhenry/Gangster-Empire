@@ -436,7 +436,7 @@ class Server(
                                 "png",
                                 apdXtRequest.reqId,
                                 statusCodeSuccess,
-                                pngData.toResponse()
+                                *pngData.toResponse().toTypedArray()
                             )
                             connection.sendRaw(pngXtResponse)
 
@@ -446,7 +446,7 @@ class Server(
                                 "sae",
                                 apdXtRequest.reqId,
                                 statusCodeSuccess,
-                                saeData.toResponse()
+                                *saeData.toResponse().toTypedArray()
                             )
                             connection.sendRaw(saeXtResponse)
 
@@ -456,7 +456,7 @@ class Server(
                                 "lfe",
                                 apdXtRequest.reqId,
                                 statusCodeSuccess,
-                                lfeData.toResponse()
+                                *lfeData.toResponse().toTypedArray()
                             )
                             connection.sendRaw(lfeXtResponse)
 
@@ -500,7 +500,7 @@ class Server(
                                 "sgs",
                                 apdXtRequest.reqId,
                                 statusCodeSuccess,
-                                sgsData.toResponse()
+                                *sgsData.toResponse().toTypedArray()
                             )
                             connection.sendRaw(sgsXtResponse)
 
@@ -511,7 +511,7 @@ class Server(
                                 apdXtRequest.reqId,
                                 statusCodeSuccess,
                                 AdminData.PLAYER_ID_INT,
-                                sgaData.toResponse()
+                                *sgaData.toResponse().toTypedArray()
                             )
                             connection.sendRaw(sgaXtResponse)
 

@@ -43,7 +43,7 @@ data class PBPlayerProfile(
                 lostDuels = 0,
                 isIgnored = false,
                 level = 1,
-                cityId = AdminData.CITY_ID,
+                cityId = PBCityConstants.NEW_YORK,
                 clanName = null,
                 clanId = null,
                 rankInClan = null
