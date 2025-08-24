@@ -9,10 +9,11 @@ import com.toxicbakery.bcrypt.Bcrypt
 import dev.gangster.data.collection.PlayerAccount
 import dev.gangster.data.collection.PlayerCounter
 import dev.gangster.data.collection.PlayerData
-import dev.gangster.data.collection.model.AvatarData
 import dev.gangster.data.collection.model.ServerMetadata
 import dev.gangster.data.db.CollectionName
 import dev.gangster.game.data.AdminData
+import dev.gangster.game.model.protobuf.avatar.PBCreateAvatarRequest
+import dev.gangster.game.model.user.MafiaUserData
 import dev.gangster.utils.Logger
 import io.ktor.util.date.getTimeMillis
 import kotlinx.coroutines.CoroutineScope
@@ -117,7 +118,7 @@ class MongoDB(db: MongoDatabase) : Database {
         username: String,
         email: String,
         password: String,
-        avatarData: AvatarData
+        avatarData: PBCreateAvatarRequest
     ): Result<Int> {
         return runMongoCatching {
             val pid = nextPlayerId()
@@ -133,7 +134,8 @@ class MongoDB(db: MongoDatabase) : Database {
 
             val dat = PlayerData(
                 playerId = pid,
-                x = 0
+                avatarData = avatarData,
+                mafiaUserData = MafiaUserData.dummy()
             )
 
             accounts.insertOne(acc)
