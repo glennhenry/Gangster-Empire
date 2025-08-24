@@ -7,12 +7,12 @@ import java.util.concurrent.ConcurrentHashMap
  * Keeps track online players and their status ([PlayerStatus]).
  */
 class OnlinePlayerRegistry {
-    private val players = ConcurrentHashMap<String, PlayerStatus>()
+    private val players = ConcurrentHashMap<Long, PlayerStatus>()
 
     /**
      * Mark the [playerId] as online. Does nothing if player is already online
      */
-    fun markOnline(playerId: String) {
+    fun markOnline(playerId: Long) {
         if (!players.contains(playerId)) {
             players[playerId] = PlayerStatus(
                 playerId = playerId,
@@ -24,14 +24,14 @@ class OnlinePlayerRegistry {
     /**
      * Mark a player of [playerId] as offline. Does nothing if player is already offline
      */
-    fun markOffline(playerId: String) {
+    fun markOffline(playerId: Long) {
         players.remove(playerId)
     }
 
     /**
      * Find out whether [playerId] is online.
      */
-    fun isOnline(playerId: String): Boolean {
+    fun isOnline(playerId: Long): Boolean {
         return players.contains(playerId)
     }
 
@@ -40,7 +40,7 @@ class OnlinePlayerRegistry {
      *
      * @return `null` if player is not online.
      */
-    fun getStatus(playerId: String): PlayerStatus? {
+    fun getStatus(playerId: Long): PlayerStatus? {
         return players[playerId]
     }
 

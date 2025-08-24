@@ -1,6 +1,6 @@
 package dev.gangster.registry
 
 data class PlayerStatus(
-    val playerId: String,
+    val playerId: Long,
     val onlineSince: Long,
 )
