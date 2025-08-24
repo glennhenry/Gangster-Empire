@@ -48,45 +48,59 @@ class MongoDB(db: MongoDatabase) : Database {
     }
 
     private suspend fun nextPlayerId(startAt: Long = 10): Long {
-        val doc = counter.findOneAndUpdate(
-            Filters.eq("_id", "playerCounter"),
-            Updates.inc("seq", 1),
-            FindOneAndUpdateOptions()
-                .returnDocument(ReturnDocument.AFTER)
-                .upsert(true)
-        )
+        return runMongoCatching {
+            val doc = counter.findOneAndUpdate(
+                Filters.eq("_id", "playerCounter"),
+                Updates.inc("seq", 1),
+                FindOneAndUpdateOptions()
+                    .returnDocument(ReturnDocument.AFTER)
+                    .upsert(true)
+            )
 
-        if (doc == null) {
-            counter.insertOne(PlayerCounter(seq = startAt))
-            return startAt
-        }
+            if (doc == null) {
+                counter.insertOne(PlayerCounter(seq = startAt))
+                return startAt
+            }
 
-        return doc.seq
+            return@runMongoCatching doc.seq
+        }.getOrThrow()
     }
 
     private suspend fun createAdminAccount() {
-        val adminDoc = accounts.find(Filters.eq("playerId", AdminData.PLAYER_ID_NUMBER)).firstOrNull()
-        if (adminDoc == null) {
-            val start = getTimeMillis()
+        runMongoCatching {
+            val adminDoc = accounts.find(Filters.eq("playerId", AdminData.PLAYER_ID_NUMBER)).firstOrNull()
+            if (adminDoc == null) {
+                val start = getTimeMillis()
 
-            val acc = PlayerAccount.admin()
-            val dat = PlayerData.admin()
+                val acc = PlayerAccount.admin()
+                val dat = PlayerData.admin()
 
-            accounts.insertOne(acc)
-            data.insertOne(dat)
+                accounts.insertOne(acc)
+                data.insertOne(dat)
 
-            Logger.info { "MongoDB: Admin account inserted in ${getTimeMillis() - start}ms" }
-        } else {
-            Logger.info { "MongoDB: Admin account already exists." }
+                Logger.info { "MongoDB: Admin account inserted in ${getTimeMillis() - start}ms" }
+            } else {
+                Logger.info { "MongoDB: Admin account already exists." }
+            }
         }
     }
 
-    override suspend fun loadPlayerAccount(playerId: Long): PlayerAccount? {
-        return accounts.find(Filters.eq("playerId", playerId)).firstOrNull()
+    override suspend fun loadPlayerAccount(playerId: Long): Result<PlayerAccount> {
+        return runMongoCatching {
+            val filters = Filters.eq("playerId", playerId)
+            accounts.find(filters)
+                .firstOrNull()
+                ?: throw NoSuchElementException("MongoDB: PlayerAccount for playerId=$playerId not found.")
+        }
     }
 
-    override suspend fun loadPlayerData(playerId: Long): PlayerData? {
-        return data.find(Filters.eq("playerId", playerId)).firstOrNull()
+    override suspend fun loadPlayerData(playerId: Long): Result<PlayerData> {
+        return runMongoCatching {
+            val filters = Filters.eq("playerId", playerId)
+            data.find(filters)
+                .firstOrNull()
+                ?: throw NoSuchElementException("MongoDB: PlayerData for playerId=$playerId not found.")
+        }
     }
 
     override suspend fun createPlayer(
@@ -94,26 +108,29 @@ class MongoDB(db: MongoDatabase) : Database {
         email: String,
         password: String,
         avatarData: AvatarData
-    ): Long {
-        val pid = nextPlayerId()
-        val acc = PlayerAccount(
-            playerId = pid,
-            username = username,
-            email = email,
-            hashedPassword = hashPw(password),
-            createdAt = getTimeMillis(),
-            lastLogin = getTimeMillis(),
-            serverMetadata = ServerMetadata()
-        )
+    ): Result<Long> {
+        return runMongoCatching {
+            val pid = nextPlayerId()
+            val acc = PlayerAccount(
+                playerId = pid,
+                username = username,
+                email = email,
+                hashedPassword = hashPw(password),
+                createdAt = getTimeMillis(),
+                lastLogin = getTimeMillis(),
+                serverMetadata = ServerMetadata()
+            )
 
-        val dat = PlayerData(
-            x = 0
-        )
+            val dat = PlayerData(
+                playerId = pid,
+                x = 0
+            )
 
-        accounts.insertOne(acc)
-        data.insertOne(dat)
+            accounts.insertOne(acc)
+            data.insertOne(dat)
 
-        return pid
+            pid
+        }
     }
 
     private fun hashPw(password: String): String {
