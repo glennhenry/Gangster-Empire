@@ -2,8 +2,8 @@ package dev.gangster.db
 
 import dev.gangster.data.collection.PlayerAccount
 import dev.gangster.data.collection.PlayerData
-import dev.gangster.data.collection.model.AvatarData
 import dev.gangster.data.db.CollectionName
+import dev.gangster.game.model.protobuf.avatar.PBCreateAvatarRequest
 
 /**
  * Represent game database.
@@ -26,7 +26,7 @@ interface Database {
      */
     suspend fun createPlayer(
         username: String, email: String,
-        password: String, avatarData: AvatarData
+        password: String, avatarData: PBCreateAvatarRequest
     ): Result<Int>
 
     /**
