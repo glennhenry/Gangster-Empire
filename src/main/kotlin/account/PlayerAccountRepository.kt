@@ -19,6 +19,11 @@ interface PlayerAccountRepository {
     suspend fun updateLastLogin(playerId: Int, lastLogin: Long): Result<Unit>
 
     /**
+     * Return the time in days player is banned for.
+     */
+    suspend fun isPlayerBanned(playerId: Int): Result<Int>
+
+    /**
      * Verify credentials of the given username and password.
      *
      * @return playerId for the corresponding username if success.
