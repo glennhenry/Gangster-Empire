@@ -10,4 +10,4 @@ data class SfMessage(
     val action: String,
     val reqId: Int,
     val body: String,
-)
+): SocketMessage

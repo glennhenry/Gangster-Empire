@@ -7,7 +7,7 @@ data class XtMessage(
     val mode: XtMode,
     val stringParts: List<String> = emptyList(),
     val pbPayload: ByteArray = byteArrayOf(0),
-) {
+): SocketMessage {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

@@ -107,6 +107,14 @@ class Server(
                     Logger.debug { "Received raw: ${data.decodeToString()}" }
 
                     when {
+                        data.startsWithString("<") -> {
+                            // smartfox xml
+                        }
+
+                        data.startsWithString("%") -> {
+                            // xt message
+                        }
+
                         // Version check handshake (follows original smartfox)
                         data.startsWithString("<msg t='sys'><body action='verChk'") -> {
                             connection.sendRaw(POLICY_RESPONSE.toByteArray()) // first request so response this first
