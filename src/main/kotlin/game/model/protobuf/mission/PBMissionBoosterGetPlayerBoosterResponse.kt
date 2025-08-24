@@ -9,11 +9,11 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class PBMissionBoosterGetPlayerBoosterResponse(
     val result: Int = 1,
-    val playerId: Int,
+    val playerId: Long,
     val boosters: List<PBMissionBoosterGetPlayerBoosterBooster>
 ) {
     companion object {
-        fun empty(pid: Int): PBMissionBoosterGetPlayerBoosterResponse {
+        fun empty(pid: Long): PBMissionBoosterGetPlayerBoosterResponse {
             return PBMissionBoosterGetPlayerBoosterResponse(
                 result = 1,
                 playerId = pid,

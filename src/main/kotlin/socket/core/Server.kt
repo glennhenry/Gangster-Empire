@@ -3,6 +3,7 @@ package dev.gangster.socket.core
 import dev.gangster.SERVER_HOST
 import dev.gangster.SOCKET_SERVER_PORT
 import dev.gangster.context.GlobalContext
+import dev.gangster.context.ServerContext
 import dev.gangster.game.model.components.AttributeCostsData
 import dev.gangster.game.model.vo.AchievementVO
 import dev.gangster.game.model.components.GoldConstantsData
@@ -42,8 +43,10 @@ import dev.gangster.socket.protocol.SmartFoxXML
 import dev.gangster.game.data.AdminData
 import dev.gangster.utils.Logger
 import dev.gangster.utils.UUID
+import dev.gangster.utils.startsWithString
 import io.ktor.network.selector.*
 import io.ktor.network.sockets.*
+import io.ktor.util.date.getTimeMillis
 import io.ktor.utils.io.*
 import kotlinx.coroutines.*
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -54,16 +57,15 @@ import java.nio.charset.Charset
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.io.encoding.Base64
 
-const val POLICY_REQUEST =
+const val POLICY_RESPONSE =
     "<cross-domain-policy><allow-access-from domain='*' to-ports='7777' /></cross-domain-policy>\u0000"
 
 class Server(
     private val host: String = SERVER_HOST,
     private val port: Int = SOCKET_SERVER_PORT,
+    private val context: ServerContext,
     private val coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.IO + SupervisorJob()),
 ) {
-    private val clients = ConcurrentHashMap<String, Connection>() // connectionId: Connection
-
     fun start() {
         coroutineScope.launch {
             try {
@@ -79,12 +81,11 @@ class Server(
                         output = socket.openWriteChannel(autoFlush = true),
                     )
                     Logger.info { "New client: ${connection.socket.remoteAddress}" }
-                    clients[connection.connectionId]
                     handleClient(connection)
                 }
             } catch (e: Exception) {
                 Logger.error { "ERROR on server: $e" }
-                shutdown()
+                this@Server.close()
             }
         }
     }
@@ -108,7 +109,7 @@ class Server(
                     when {
                         // Version check handshake (follows original smartfox)
                         data.startsWithString("<msg t='sys'><body action='verChk'") -> {
-                            connection.sendRaw(POLICY_REQUEST.toByteArray()) // first request so response this first
+                            connection.sendRaw(POLICY_RESPONSE.toByteArray()) // first request so response this first
                             connection.sendRaw(SmartFoxXML.apiOK())
                         }
 
@@ -195,7 +196,7 @@ class Server(
 
                         // Handle login
                         data.startsWithString("%xt%MafiaEx%lgn") -> {
-                            val (xtReq, ) = SmartFoxString.parseObjXt<LreRequest>(data)
+                            val (xtReq) = SmartFoxString.parseObjXt<LreRequest>(data)
                             Logger.debug { "Received lgn request: " }
 
                             val xtRes1 = SmartFoxString.makeXt("lgn", xtReq.reqId, 0, 315, 48343, 0, 0, 0)
@@ -300,7 +301,8 @@ class Server(
                             connection.sendRaw(playerCurrencyRes)
 
                             /* viewarmament (the preset of equipment) */
-                            val viewArmamentPbResponse = PBEquipmentViewArmamentResponse.dummy(AdminData.PLAYER_ID_NUMBER)
+                            val viewArmamentPbResponse =
+                                PBEquipmentViewArmamentResponse.dummy(AdminData.PLAYER_ID_NUMBER)
                             val viewArmamentRes = SmartFoxString.makeXt(
                                 "viewarmament",
                                 reqId,
@@ -529,31 +531,27 @@ class Server(
                 }
             } catch (e: Exception) {
                 Logger.error { "Error in socket for ${connection.socket.remoteAddress}: $e" }
+                closePlayer(connection)
             } finally {
                 Logger.info { "Client ${connection.socket.remoteAddress} disconnected" }
-                connection.close()
+                closePlayer(connection)
             }
         }
     }
 
-    fun shutdown() {
+    private suspend fun closePlayer(connection: Connection) {
+        context.onlinePlayerRegistry.markOffline(connection.playerId)
+        context.playerAccountRepository.updateLastLogin(connection.playerId, getTimeMillis())
+        context.playerContextRegistry.removePlayer(connection.playerId)
+        context.taskDispatcher.stopAllTasksForPlayer(connection.playerId)
+        connection.close()
+    }
+
+    fun close() {
+        context.playerContextRegistry.close()
+        context.onlinePlayerRegistry.close()
+        context.taskDispatcher.close()
+//        socketDispatcher.shutdown()
         Logger.info { "Server closed." }
     }
-}
-
-fun ByteArray.startsWithBytes(prefix: ByteArray): Boolean {
-    if (this.size < prefix.size) return false
-    for (i in prefix.indices) {
-        if (this[i] != prefix[i]) return false
-    }
-    return true
-}
-
-fun ByteArray.startsWithString(prefix: String, charset: Charset = Charsets.UTF_8): Boolean {
-    val prefixBytes = prefix.toByteArray(charset)
-    if (this.size < prefixBytes.size) return false
-    for (i in prefixBytes.indices) {
-        if (this[i] != prefixBytes[i]) return false
-    }
-    return true
 }

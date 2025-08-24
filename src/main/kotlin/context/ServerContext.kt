@@ -33,7 +33,6 @@ fun ServerContext.requirePlayerContext(playerId: Long): PlayerContext =
         ?: error("PlayerContext not found for pid=$playerId")
 
 data class ServerConfig(
-    val adminEnabled: Boolean,
     val useMongo: Boolean,
     val mongoUrl: String,
     val isProd: Boolean,
