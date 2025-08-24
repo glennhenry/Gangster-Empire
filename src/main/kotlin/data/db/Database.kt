@@ -11,12 +11,12 @@ interface Database {
     /**
      * Load player account using [playerId].
      */
-    suspend fun loadPlayerAccount(playerId: Long): PlayerAccount?
+    suspend fun loadPlayerAccount(playerId: Long): Result<PlayerAccount>
 
     /**
      * Load player data using [playerId].
      */
-    suspend fun loadPlayerData(playerId: Long): PlayerData?
+    suspend fun loadPlayerData(playerId: Long): Result<PlayerData>
 
     /**
      * Create player with the provided credentials and avatarData.
@@ -26,7 +26,7 @@ interface Database {
     suspend fun createPlayer(
         username: String, email: String,
         password: String, avatarData: AvatarData
-    ): Long
+    ): Result<Long>
 
     /**
      * Close database. This will be called when server turns off.
