@@ -15,6 +15,7 @@ import dev.gangster.db.MongoDB
 import dev.gangster.registry.OnlinePlayerRegistry
 import dev.gangster.registry.PlayerContextRegistry
 import dev.gangster.socket.core.Server
+import dev.gangster.socket.smartfox.Room
 import dev.gangster.task.ServerTaskDispatcher
 import dev.gangster.utils.LogLevel
 import dev.gangster.utils.Logger
@@ -24,6 +25,7 @@ import io.ktor.serialization.kotlinx.json.*
 import io.ktor.serialization.kotlinx.protobuf.*
 import io.ktor.server.application.*
 import io.ktor.server.http.content.*
+import io.ktor.server.netty.EngineMain
 import io.ktor.server.plugins.calllogging.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.plugins.cors.routing.*
@@ -40,7 +42,7 @@ import java.io.File
 import kotlin.time.Duration.Companion.seconds
 
 fun main(args: Array<String>) {
-    io.ktor.server.netty.EngineMain.main(args)
+    EngineMain.main(args)
 }
 
 const val SERVER_HOST = "127.0.0.1"
@@ -58,8 +60,8 @@ const val MONGO_DATABASE_NAME = "gangster"
  * Setup the server:
  *
  * 1. Install Ktor modules and configure them.
- * 2. Initialize contexts: [GlobalContext], [dev.gangster.context.ServerContext].
- * 3. Initialize each [dev.gangster.context.ServerContext] components.
+ * 2. Initialize contexts: [GlobalContext], [ServerContext].
+ * 3. Initialize each [ServerContext] components.
  * 4. Inject dependency.
  */
 @OptIn(ExperimentalSerializationApi::class)
@@ -130,6 +132,10 @@ suspend fun Application.module() {
         authProvider = authProvider,
         taskDispatcher = taskDispatcher,
         playerContextRegistry = playerContextRegistry,
+        rooms = listOf(Room(
+            roomId = 1,
+            userCount = 0
+        )),
         config = config,
     )
 
