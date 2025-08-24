@@ -1,5 +1,6 @@
 package dev.gangster.socket.core
 
+import dev.gangster.game.model.protobuf.avatar.PBCreateAvatarRequest
 import dev.gangster.utils.Logger
 import dev.gangster.utils.UUID
 import io.ktor.network.sockets.Socket
@@ -11,18 +12,17 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 
 /**
- * Smartfox convention:
+ * Represent a client socket connection.
  *
- * if message starts with:
- * - "<": XML
- * - "{": JSON
- * - "%": String
+ * @property playerId the associated player for this connection.
+ * @property temporaryAvatarData used when player register, because avatar data is sent separately from credentials.
  */
 class Connection(
     var playerId: Int = -1,
     val connectionId: String = UUID.new(),
     val socket: Socket,
     val scope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default),
+    private var temporaryAvatarData: PBCreateAvatarRequest? = null,
     private val output: ByteWriteChannel,
 ) {
     /**
@@ -46,6 +46,15 @@ class Connection(
         output.writeFully(bytes)
     }
 
+    fun saveAvatarTemporarily(request: PBCreateAvatarRequest) {
+        temporaryAvatarData = request
+    }
+
+    fun getAndClearAvatar(): PBCreateAvatarRequest {
+        val data = checkNotNull(temporaryAvatarData) { "temporaryAvatarData was null" }
+        temporaryAvatarData = null
+        return data.copy()
+    }
 
     fun close() {
         scope.cancel()
