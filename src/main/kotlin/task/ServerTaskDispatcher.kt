@@ -95,7 +95,7 @@ class ServerTaskDispatcher {
     /**
      * Remove all running tasks for the [playerId] and stop each coroutine job.
      */
-    fun stopAllTasksForPlayer(playerId: Long) {
+    fun stopAllTasksForPlayer(playerId: Int) {
         runningInstances
             .filterValues { it.playerId == playerId }
             .forEach { (taskId, _) -> stopTask(taskId) }

@@ -3,7 +3,7 @@ package dev.gangster.data.collection
 import dev.gangster.game.data.AdminData
 
 data class PlayerData(
-    val playerId: Long,
+    val playerId: Int,
     val x: Int = 0
 ) {
     companion object {

@@ -10,18 +10,18 @@ interface PlayerAccountRepository {
 
     suspend fun getAccountByUsername(username: String): Result<PlayerAccount>
 
-    suspend fun getAccountByPlayerId(playerId: Long): Result<PlayerAccount>
+    suspend fun getAccountByPlayerId(playerId: Int): Result<PlayerAccount>
 
-    suspend fun getPlayerIdByUsername(username: String): Result<Long>
+    suspend fun getPlayerIdByUsername(username: String): Result<Int>
 
-    suspend fun updatePlayerAccount(playerId: Long, account: PlayerAccount): Result<Unit>
+    suspend fun updatePlayerAccount(playerId: Int, account: PlayerAccount): Result<Unit>
 
-    suspend fun updateLastLogin(playerId: Long, lastLogin: Long): Result<Unit>
+    suspend fun updateLastLogin(playerId: Int, lastLogin: Long): Result<Unit>
 
     /**
      * Verify credentials of the given username and password.
      *
      * @return playerId for the corresponding username if success.
      */
-    suspend fun verifyCredentials(username: String, password: String): Result<Long>
+    suspend fun verifyCredentials(username: String, password: String): Result<Int>
 }

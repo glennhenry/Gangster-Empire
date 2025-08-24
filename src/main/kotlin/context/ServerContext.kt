@@ -20,7 +20,7 @@ data class ServerContext(
 /**
  * Get player context for the [playerId] or null if it's not found.
  */
-fun ServerContext.getPlayerContextOrNull(playerId: Long): PlayerContext? =
+fun ServerContext.getPlayerContextOrNull(playerId: Int): PlayerContext? =
     playerContextRegistry.getContext(playerId)
 
 /**
@@ -28,7 +28,7 @@ fun ServerContext.getPlayerContextOrNull(playerId: Long): PlayerContext? =
  *
  * @throws IllegalStateException if context is not found.
  */
-fun ServerContext.requirePlayerContext(playerId: Long): PlayerContext =
+fun ServerContext.requirePlayerContext(playerId: Int): PlayerContext =
     getPlayerContextOrNull(playerId)
         ?: error("PlayerContext not found for pid=$playerId")
 

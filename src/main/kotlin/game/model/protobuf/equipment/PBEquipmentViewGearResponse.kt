@@ -8,11 +8,11 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class PBEquipmentViewGearResponse(
-    val playerId: Long,
+    val playerId: Int,
     val items: List<PBItem>
 ) {
     companion object {
-        fun empty(pid: Long): PBEquipmentViewGearResponse {
+        fun empty(pid: Int): PBEquipmentViewGearResponse {
             return PBEquipmentViewGearResponse(
                 playerId = pid,
                 items = emptyList()

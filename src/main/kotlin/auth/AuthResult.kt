@@ -1,7 +1,7 @@
 package dev.gangster.auth
 
 sealed class AuthResult {
-    data class Success(val playerId: Long) : AuthResult()
+    data class Success(val playerId: Int) : AuthResult()
     data class Failure(val reason: AuthFailureReason) : AuthResult()
 }
 

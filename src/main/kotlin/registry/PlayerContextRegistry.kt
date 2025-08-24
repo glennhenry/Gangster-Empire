@@ -15,13 +15,13 @@ import java.util.concurrent.ConcurrentHashMap
  * Tracks each active player's context.
  */
 class PlayerContextRegistry {
-    val players = ConcurrentHashMap<Long, PlayerContext>()
+    val players = ConcurrentHashMap<Int, PlayerContext>()
 
     /**
      * Create context for a player.
      */
     suspend fun createContext(
-        playerId: Long,
+        playerId: Int,
         connection: Connection,
         db: Database,
         useMongo: Boolean
@@ -42,7 +42,7 @@ class PlayerContextRegistry {
     }
 
     private suspend fun initializeServices(
-        playerId: Long,
+        playerId: Int,
         db: Database,
         useMongo: Boolean
     ): PlayerServices {
@@ -65,7 +65,7 @@ class PlayerContextRegistry {
      *
      * @return null if context isn't found.
      */
-    fun getContext(playerId: Long): PlayerContext? {
+    fun getContext(playerId: Int): PlayerContext? {
         return players[playerId]
     }
 
@@ -74,7 +74,7 @@ class PlayerContextRegistry {
      *
      * The [update] method pass the current context and expects to return the updated context.
      */
-    fun updateContext(playerId: Long, update: (PlayerContext) -> PlayerContext) {
+    fun updateContext(playerId: Int, update: (PlayerContext) -> PlayerContext) {
         val context = players.get(playerId) ?: return
         players[playerId] = update(context)
     }
@@ -82,7 +82,7 @@ class PlayerContextRegistry {
     /**
      * Remove player to free-up memory.
      */
-    fun removePlayer(playerId: Long) {
+    fun removePlayer(playerId: Int) {
         players.remove(playerId)
     }
 

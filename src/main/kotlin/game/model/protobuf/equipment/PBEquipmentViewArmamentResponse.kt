@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class PBEquipmentViewArmamentResponse(
-    val playerId: Long,
+    val playerId: Int,
     val width: Int,
     val height: Int,
     val itemSlots: List<PBItemSlot>,
@@ -18,7 +18,7 @@ data class PBEquipmentViewArmamentResponse(
     val nextFreeUnlockLevel: Int?,
 ) {
     companion object {
-        fun dummy(pid: Long): PBEquipmentViewArmamentResponse {
+        fun dummy(pid: Int): PBEquipmentViewArmamentResponse {
             return PBEquipmentViewArmamentResponse(
                 playerId = pid,
                 width = 8,

@@ -35,7 +35,7 @@ class PlayerAccountRepositoryMongo(
         }
     }
 
-    override suspend fun getAccountByPlayerId(playerId: Long): Result<PlayerAccount> {
+    override suspend fun getAccountByPlayerId(playerId: Int): Result<PlayerAccount> {
         val filters = Filters.eq("playerId", playerId)
 
         return runMongoCatching {
@@ -44,7 +44,7 @@ class PlayerAccountRepositoryMongo(
         }
     }
 
-    override suspend fun getPlayerIdByUsername(username: String): Result<Long> {
+    override suspend fun getPlayerIdByUsername(username: String): Result<Int> {
         val filters = Filters.eq("profile.displayName", username)
         val projections = Projections.include("playerId")
 
@@ -59,7 +59,7 @@ class PlayerAccountRepositoryMongo(
     }
 
     override suspend fun updatePlayerAccount(
-        playerId: Long,
+        playerId: Int,
         account: PlayerAccount
     ): Result<Unit> {
         return runMongoCatching {
@@ -75,7 +75,7 @@ class PlayerAccountRepositoryMongo(
         }
     }
 
-    override suspend fun updateLastLogin(playerId: Long, lastLogin: Long): Result<Unit> {
+    override suspend fun updateLastLogin(playerId: Int, lastLogin: Long): Result<Unit> {
         return runMongoCatching {
             val filters = Filters.eq("playerId", playerId)
             val updates = Updates.set("lastLogin", lastLogin)
@@ -99,7 +99,7 @@ class PlayerAccountRepositoryMongo(
     override suspend fun verifyCredentials(
         username: String,
         password: String
-    ): Result<Long> {
+    ): Result<Int> {
         return runMongoCatching {
             val filters = Filters.eq("username", username)
             val projection = Projections.include("hashedPassword", "playerId")
@@ -112,7 +112,7 @@ class PlayerAccountRepositoryMongo(
                 ?: throw NoSuchElementException("Account with username=$username isn't found")
 
             val hashed = acc.getString("hashedPassword")
-            val playerId = acc.getLong("playerId")
+            val playerId = acc.getInteger("playerId")
             val matches = Bcrypt.verify(password, Base64.decode(hashed))
 
             if (matches) playerId else throw IllegalArgumentException("Wrong password for username=$username")

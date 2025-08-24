@@ -8,5 +8,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class PlayerCounter(
     val _id: String = "playercounter",
-    val seq: Long
+    val seq: Int
 )

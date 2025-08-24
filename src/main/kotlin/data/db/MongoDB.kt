@@ -11,6 +11,7 @@ import dev.gangster.data.collection.PlayerCounter
 import dev.gangster.data.collection.PlayerData
 import dev.gangster.data.collection.model.AvatarData
 import dev.gangster.data.collection.model.ServerMetadata
+import dev.gangster.data.db.CollectionName
 import dev.gangster.game.data.AdminData
 import dev.gangster.utils.Logger
 import io.ktor.util.date.getTimeMillis
@@ -47,7 +48,16 @@ class MongoDB(db: MongoDatabase) : Database {
         }
     }
 
-    private suspend fun nextPlayerId(startAt: Long = 10): Long {
+    @Suppress("UNCHECKED_CAST")
+    override suspend fun <T> getCollection(name: CollectionName): T {
+        return when (name) {
+            CollectionName.PLAYER_ACCOUNT_COLLECTION -> accounts
+            CollectionName.PLAYER_DATA_COLLECTION -> data
+            CollectionName.COUNTER_COLLECTION -> counter
+        } as T
+    }
+
+    private suspend fun nextPlayerId(startAt: Int = 10): Int {
         return runMongoCatching {
             val doc = counter.findOneAndUpdate(
                 Filters.eq("_id", "playerCounter"),
@@ -85,7 +95,7 @@ class MongoDB(db: MongoDatabase) : Database {
         }
     }
 
-    override suspend fun loadPlayerAccount(playerId: Long): Result<PlayerAccount> {
+    override suspend fun loadPlayerAccount(playerId: Int): Result<PlayerAccount> {
         return runMongoCatching {
             val filters = Filters.eq("playerId", playerId)
             accounts.find(filters)
@@ -94,7 +104,7 @@ class MongoDB(db: MongoDatabase) : Database {
         }
     }
 
-    override suspend fun loadPlayerData(playerId: Long): Result<PlayerData> {
+    override suspend fun loadPlayerData(playerId: Int): Result<PlayerData> {
         return runMongoCatching {
             val filters = Filters.eq("playerId", playerId)
             data.find(filters)
@@ -108,7 +118,7 @@ class MongoDB(db: MongoDatabase) : Database {
         email: String,
         password: String,
         avatarData: AvatarData
-    ): Result<Long> {
+    ): Result<Int> {
         return runMongoCatching {
             val pid = nextPlayerId()
             val acc = PlayerAccount(

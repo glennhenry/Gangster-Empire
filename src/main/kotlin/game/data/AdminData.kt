@@ -2,7 +2,7 @@ package dev.gangster.game.data
 
 object AdminData {
     const val PLAYER_ID_STR = "1"
-    const val PLAYER_ID_NUMBER = 1L
+    const val PLAYER_ID_NUMBER = 1
     const val USERNAME = "AdminPlayer"
     const val EMAIL = "admin@admin.com" // must be same to login info
     const val PASSWORD = "admin"

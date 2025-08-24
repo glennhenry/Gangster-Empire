@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class PlayerAccount(
-    val playerId: Long, // referenced by other collections
+    val playerId: Int, // referenced by other collections
     val username: String,
     val email: String = "",
     val hashedPassword: String,

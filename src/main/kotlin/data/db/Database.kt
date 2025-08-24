@@ -12,12 +12,12 @@ interface Database {
     /**
      * Load player account using [playerId].
      */
-    suspend fun loadPlayerAccount(playerId: Long): Result<PlayerAccount>
+    suspend fun loadPlayerAccount(playerId: Int): Result<PlayerAccount>
 
     /**
      * Load player data using [playerId].
      */
-    suspend fun loadPlayerData(playerId: Long): Result<PlayerData>
+    suspend fun loadPlayerData(playerId: Int): Result<PlayerData>
 
     /**
      * Create player with the provided credentials and avatarData.
@@ -27,7 +27,7 @@ interface Database {
     suspend fun createPlayer(
         username: String, email: String,
         password: String, avatarData: AvatarData
-    ): Result<Long>
+    ): Result<Int>
 
     /**
      * Get a particular collection without type safety.

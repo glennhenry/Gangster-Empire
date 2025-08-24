@@ -12,7 +12,7 @@ import kotlinx.coroutines.Job
  * @property onComplete callback after task has finished running.
  */
 data class TaskInstance(
-    val playerId: Long,
+    val playerId: Int,
     val taskKey: TaskTemplate,
     val config: TaskConfig,
     val job: Job,
