@@ -47,7 +47,7 @@ class Connection(
     }
 
 
-    fun shutdown() {
+    fun close() {
         scope.cancel()
         socket.close()
     }

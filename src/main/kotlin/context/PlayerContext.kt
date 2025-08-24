@@ -4,7 +4,7 @@ import dev.gangster.data.collection.PlayerAccount
 import dev.gangster.socket.core.Connection
 
 data class PlayerContext(
-    val playerId: String,
+    val playerId: Long,
     val connection: Connection,
     val onlineSince: Long,
     val playerAccount: PlayerAccount,

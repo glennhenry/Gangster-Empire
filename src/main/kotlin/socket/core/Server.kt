@@ -531,7 +531,7 @@ class Server(
                 Logger.error { "Error in socket for ${connection.socket.remoteAddress}: $e" }
             } finally {
                 Logger.info { "Client ${connection.socket.remoteAddress} disconnected" }
-                connection.shutdown()
+                connection.close()
             }
         }
     }
