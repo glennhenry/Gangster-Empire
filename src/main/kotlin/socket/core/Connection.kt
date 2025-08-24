@@ -19,7 +19,7 @@ import kotlinx.coroutines.cancel
  * - "%": String
  */
 class Connection(
-    var playerId: String = "",
+    var playerId: Long = -1,
     val connectionId: String = UUID.new(),
     val socket: Socket,
     val scope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default),
