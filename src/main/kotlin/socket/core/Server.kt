@@ -181,8 +181,8 @@ class Server(
                             Logger.debug { "Received lre request: $lreRequest" }
 
                             val likelyStatusCodeWhere0IsSuccess = 0
-                            val userId = AdminData.USER_ID
-                            val playerId = AdminData.PLAYER_ID_INT
+                            val userId = AdminData.PLAYER_ID_NUMBER
+                            val playerId = AdminData.PLAYER_ID_NUMBER
                             val xtRes1 = SmartFoxString.makeXt(
                                 "lre",
                                 xtReq.reqId,
@@ -284,7 +284,7 @@ class Server(
                                 "oud",
                                 apdXtRequest.reqId,
                                 statusCodeSuccess,
-                                AdminData.PLAYER_ID_INT,
+                                AdminData.PLAYER_ID_NUMBER,
                                 MafiaUserData.dummy().toOudResponse()
                             )
                             connection.sendRaw(oudXtResponse)
@@ -300,7 +300,7 @@ class Server(
                             connection.sendRaw(playerCurrencyRes)
 
                             /* viewarmament (the preset of equipment) */
-                            val viewArmamentPbResponse = PBEquipmentViewArmamentResponse.dummy(AdminData.PLAYER_ID_INT)
+                            val viewArmamentPbResponse = PBEquipmentViewArmamentResponse.dummy(AdminData.PLAYER_ID_NUMBER)
                             val viewArmamentRes = SmartFoxString.makeXt(
                                 "viewarmament",
                                 reqId,
@@ -320,7 +320,7 @@ class Server(
                             connection.sendRaw(getArmamentPresetStatusRes)
 
                             /* viewgear (the 8 item that increases attributes) */
-                            val viewGearPbResponse = PBEquipmentViewGearResponse.empty(AdminData.PLAYER_ID_INT)
+                            val viewGearPbResponse = PBEquipmentViewGearResponse.empty(AdminData.PLAYER_ID_NUMBER)
                             val viewGearRes = SmartFoxString.makeXt(
                                 "viewgear",
                                 reqId,
@@ -330,7 +330,7 @@ class Server(
                             connection.sendRaw(viewGearRes)
 
                             /* viewfood (player food booster) */
-                            val viewFoodPbResponse = PBEquipmentViewFoodResponse.empty(AdminData.PLAYER_ID_INT)
+                            val viewFoodPbResponse = PBEquipmentViewFoodResponse.empty(AdminData.PLAYER_ID_NUMBER)
                             val viewFoodRes = SmartFoxString.makeXt(
                                 "viewfood",
                                 reqId,
@@ -390,7 +390,7 @@ class Server(
 
                             /* getplayerbooster */
                             val getPlayerBoosterPbResponse =
-                                PBMissionBoosterGetPlayerBoosterResponse.empty(AdminData.PLAYER_ID_INT)
+                                PBMissionBoosterGetPlayerBoosterResponse.empty(AdminData.PLAYER_ID_NUMBER)
                             val getPlayerBoosterRes = SmartFoxString.makeXt(
                                 "getplayerbooster",
                                 reqId,
@@ -510,7 +510,7 @@ class Server(
                                 "sga",
                                 apdXtRequest.reqId,
                                 statusCodeSuccess,
-                                AdminData.PLAYER_ID_INT,
+                                AdminData.PLAYER_ID_NUMBER,
                                 *sgaData.toResponse().toTypedArray()
                             )
                             connection.sendRaw(sgaXtResponse)

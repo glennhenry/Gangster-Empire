@@ -18,7 +18,7 @@ data class PBMiscPlayerProfileResponse(
         fun dummy(): PBMiscPlayerProfileResponse {
             return PBMiscPlayerProfileResponse(
                 result = 1,
-                playerId = AdminData.PLAYER_ID_INT,
+                playerId = AdminData.PLAYER_ID_NUMBER,
                 playerName = AdminData.USERNAME,
                 profile = PBPlayerProfile.dummy()
             )
