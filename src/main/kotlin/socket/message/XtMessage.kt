@@ -1,9 +1,10 @@
 package dev.gangster.socket.message
 
 data class XtMessage(
-    val zone: String,
+    val zone: String?,
     val command: String,
     val reqId: String,
+    val mode: XtMode,
     val stringParts: List<String> = emptyList(),
     val pbPayload: ByteArray = byteArrayOf(0),
 ) {
@@ -28,4 +29,9 @@ data class XtMessage(
         result = 31 * result + pbPayload.contentHashCode()
         return result
     }
+}
+
+sealed class XtMode(val value: Int) {
+    object Protobuf: XtMode(-1)
+    object Nothing: XtMode(0)
 }

@@ -2,12 +2,19 @@ package dev.gangster.socket.protocol
 
 import dev.gangster.context.GlobalContext
 import dev.gangster.socket.message.XtMessage
+import dev.gangster.socket.message.XtMode
 import kotlinx.serialization.json.Json
 import kotlin.io.encoding.Base64
 
 /**
- * Smart fox XT structure for protobuf: %xt%<zone>%<command>%<reqId>%<payload>%
- * Smart fox XT structure for raw message: %xt%<zone>%<command>%<reqId>%<status_code>%<args_strings>%
+ * Always have trailing `\u0000` (null byte)
+ *
+ * Request structure:
+ * - `%xt%<zone>%<command>%<reqId>%<payload>%`
+ *
+ * Response structure:
+ * - protobuf: `%xt%<command>%<reqId>%-1%<payload>%`
+ * - raw message: `%xt%<reqId>%<status_code>%<args_strings>%` (structure of args_strings depend on each message)
  */
 object SmartFoxString {
     fun makeXt(type: String, vararg msg: Any?): String {
@@ -44,7 +51,7 @@ object SmartFoxString {
                 if (it == "<RoundHouseKick>") "" else it
             }.dropLastWhile { it.isEmpty() || it == "0" }
 
-        return XtMessage(zone, command, reqId, params.dropLast(1))
+        return XtMessage(zone, command, reqId, XtMode.Nothing, params.dropLast(1))
     }
 
     /**
@@ -75,7 +82,7 @@ object SmartFoxString {
 
         val payload = Base64.decode(payloadBase64)
 
-        return XtMessage(zone, command, reqId, emptyList(), payload)
+        return XtMessage(zone, command, reqId, XtMode.Protobuf, emptyList(), payload)
     }
 
     /**
