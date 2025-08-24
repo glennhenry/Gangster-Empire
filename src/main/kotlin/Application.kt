@@ -1,5 +1,7 @@
 package dev.gangster
 
+import dev.gangster.api.apiRoutes
+import dev.gangster.api.fileRoutes
 import dev.gangster.context.GlobalContext
 import dev.gangster.socket.core.Server
 import dev.gangster.utils.Logger
@@ -81,47 +83,8 @@ fun Application.module() {
 
     // 6. Configure API routes
     routing {
-        get("/") {
-            val indexFile = File("static/index.html")
-            if (indexFile.exists()) {
-                call.respondFile(indexFile)
-            } else {
-                call.respond(HttpStatusCode.NotFound)
-            }
-        }
-
-        post("/ftracking") {
-            val body = call.receiveText()
-            Logger.debug { "Received f tracking: $body" }
-            call.respond(HttpStatusCode.OK)
-        }
-
-        post("/logging") {
-            val body = call.receiveText().decodedUrl()
-            Logger.debug(logFull = true) { "Received external logging: $body" }
-            Logger.debug(logFull = true) { "TL;DR; ${body.substringAfter("logMessage").substringBefore("errorCode")}" }
-            call.respond(HttpStatusCode.OK)
-        }
-
-        // web assets
-        staticFiles("/assets", File("static/assets"))
-        staticFiles("/game", File("static/game"))
-
-        // crossdomain
-        staticFiles("crossdomain.xml", File("static"))
-
-        // subdomain
-        staticFiles("/files-ak", File("static/gangster-files"))
-        staticFiles("/gangster-files", File("static/gangster-files"))
-        staticFiles("/account", File("static/gangster-account"))
-        staticFiles("/gangster-account", File("static/gangster-account"))
-        staticFiles("/data", File("static/gangster-data"))
-        staticFiles("/gangster-data", File("static/gangster-data"))
-        staticFiles("/content", File("static/gangster-content"))
-        staticFiles("/gangster-content", File("static/gangster-content"))
-
-        // not yet requested, only seen in decompiled
-        staticFiles("/cdn", File("static/cdn")) // CookieSaver.swf
+        fileRoutes()
+        apiRoutes()
     }
 
     // 7. Start game server
