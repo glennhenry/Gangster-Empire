@@ -4,6 +4,7 @@ import dev.gangster.api.apiRoutes
 import dev.gangster.api.fileRoutes
 import dev.gangster.context.GlobalContext
 import dev.gangster.socket.core.Server
+import dev.gangster.utils.LogLevel
 import dev.gangster.utils.Logger
 import dev.gangster.utils.decodedUrl
 import io.ktor.http.*
@@ -80,6 +81,7 @@ fun Application.module() {
 
     // 5. Configure Logging
     install(CallLogging)
+    Logger.level = LogLevel.DEBUG // LogLevel.NOTHING disables logging
 
     // 6. Configure API routes
     routing {
@@ -94,33 +96,3 @@ fun Application.module() {
         server.shutdown()
     })
 }
-
-/**
- *
- * adminplayer
- * adminplayer@gmail.com
- * adminplayer
- *
- * Known links:
- *
- * POST
- * 	http://f.tracking.goodgamestudios.com/clienttracker.php
- *
- * cache breaker:
- * - `http://files-ak.goodgamestudios.com/games-config/country.xml` (downloaded)
- * - `http://account.goodgamestudios.com/CookieSaver.swf` (not downloaded)
- *
- *
- * SUB_DOMAIN_FILE_SERVER_OLD = "files-ak"
- * SUB_DOMAIN_MEDIA_SERVER_OLD = "media"
- * SUB_DOMAIN_DATA_SERVER_OLD = "data"
- * SUB_DOMAIN_CONTENT_SERVER_OLD = "content"
- * SUB_DOMAIN_ACCOUNT_SERVER_OLD = "account"
- * SUB_DOMAIN_FILE_SERVER_NEW = "gangster-files-ak"
- * SUB_DOMAIN_MEDIA_SERVER_NEW = "gangster-media"
- * SUB_DOMAIN_DATA_SERVER_NEW = "gangster-data"
- * SUB_DOMAIN_CONTENT_SERVER_NEW = "gangster-content"
- * SUB_DOMAIN_ACCOUNT_SERVER_NEW = "gangster-account"
- * cdnSubDomain = "content"
- *
- */
