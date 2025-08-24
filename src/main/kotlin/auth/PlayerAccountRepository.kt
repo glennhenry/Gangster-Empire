@@ -8,11 +8,11 @@ import dev.gangster.data.collection.PlayerAccount
 interface PlayerAccountRepository {
     suspend fun doesUserExist(username: String): Result<Boolean>
 
-    suspend fun getAccountByUsername(username: String): Result<PlayerAccount?>
+    suspend fun getAccountByUsername(username: String): Result<PlayerAccount>
 
-    suspend fun getAccountByPlayerId(playerId: Long): Result<PlayerAccount?>
+    suspend fun getAccountByPlayerId(playerId: Long): Result<PlayerAccount>
 
-    suspend fun getPlayerIdByUsername(username: String): Result<Long?>
+    suspend fun getPlayerIdByUsername(username: String): Result<Long>
 
     suspend fun updatePlayerAccount(playerId: Long, account: PlayerAccount): Result<Unit>
 
@@ -23,5 +23,5 @@ interface PlayerAccountRepository {
      *
      * @return playerId for the corresponding username if success.
      */
-    suspend fun verifyCredentials(username: String, password: String): Result<Long?>
+    suspend fun verifyCredentials(username: String, password: String): Result<Long>
 }
