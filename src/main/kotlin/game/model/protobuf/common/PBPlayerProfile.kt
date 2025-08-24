@@ -1,7 +1,7 @@
 package dev.gangster.game.model.protobuf.common
 
 import dev.gangster.game.model.components.PortraitData
-import dev.gangster.utils.AdminData
+import dev.gangster.game.data.AdminData
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.protobuf.ProtoNumber

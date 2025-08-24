@@ -1,4 +1,4 @@
-package dev.gangster.utils
+package dev.gangster.game.data
 
 object AdminData {
     const val USER_ID = 420

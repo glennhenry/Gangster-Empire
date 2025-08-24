@@ -1,4 +1,4 @@
-package dev.gangster.utils
+package dev.gangster.socket.message
 
 class XmlBuilder(private val name: String) {
     private val attributes = mutableMapOf<String, String>()

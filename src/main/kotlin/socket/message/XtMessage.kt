@@ -1,4 +1,4 @@
-package dev.gangster.socket.protocol
+package dev.gangster.socket.message
 
 data class XtMessage(
     val zone: String,

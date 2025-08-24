@@ -1,7 +1,7 @@
 package dev.gangster.game.model.protobuf.misc
 
 import dev.gangster.game.model.protobuf.common.PBPlayerProfile
-import dev.gangster.utils.AdminData
+import dev.gangster.game.data.AdminData
 import kotlinx.serialization.Serializable
 
 /**

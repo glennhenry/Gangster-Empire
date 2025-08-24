@@ -39,7 +39,7 @@ import dev.gangster.game.model.user.toResponse
 import dev.gangster.game.model.vo.toPayload
 import dev.gangster.socket.protocol.SmartFoxString
 import dev.gangster.socket.protocol.SmartFoxXML
-import dev.gangster.utils.AdminData
+import dev.gangster.game.data.AdminData
 import dev.gangster.utils.Logger
 import dev.gangster.utils.UUID
 import io.ktor.network.selector.*

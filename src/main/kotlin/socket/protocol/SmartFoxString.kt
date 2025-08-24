@@ -1,6 +1,7 @@
 package dev.gangster.socket.protocol
 
 import dev.gangster.context.GlobalContext
+import dev.gangster.socket.message.XtMessage
 import kotlinx.serialization.json.Json
 import kotlin.io.encoding.Base64
 

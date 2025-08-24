@@ -1,6 +1,6 @@
 package dev.gangster.socket.protocol
 
-import dev.gangster.utils.XmlBuilder
+import dev.gangster.socket.message.XmlBuilder
 
 object SmartFoxXML {
     fun makeSys(action: String, r: Int = 0, inner: String = ""): String {
