@@ -35,7 +35,7 @@ class ServerTaskDispatcher {
     private val runningInstances = mutableMapOf<UUID, TaskInstance>()
 
     /**
-     * Instance of a default task scheduler, used when the following task does not provide one.
+     * Instance of the default task scheduler, used when the following task does not provide one.
      */
     private val defaultScheduler = DefaultTaskScheduler()
 
@@ -85,24 +85,32 @@ class ServerTaskDispatcher {
         return taskId
     }
 
+    /**
+     * Remove task from the running instances and stop the coroutine job.
+     */
     fun stopTask(taskId: UUID) {
         runningInstances.remove(taskId)?.job?.cancel()
     }
 
+    /**
+     * Remove all running tasks for the [playerId] and stop each coroutine job.
+     */
     fun stopAllTasksForPlayer(playerId: Long) {
         runningInstances
             .filterValues { it.playerId == playerId }
             .forEach { (taskId, _) -> stopTask(taskId) }
     }
 
+    /**
+     * Remove all running tasks in the server.
+     */
     fun stopAllPushTasks() {
         runningInstances.forEach { (taskId, _) -> stopTask(taskId) }
     }
 
-    fun shutdown() {
+    fun close() {
         registeredTasks.clear()
         defaultConfigs.clear()
         stopAllPushTasks()
     }
 }
-
