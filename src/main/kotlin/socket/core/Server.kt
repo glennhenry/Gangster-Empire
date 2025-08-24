@@ -41,6 +41,16 @@ import dev.gangster.game.model.vo.toPayload
 import dev.gangster.socket.protocol.SmartFoxString
 import dev.gangster.socket.protocol.SmartFoxXML
 import dev.gangster.game.data.AdminData
+import dev.gangster.socket.handler.extension.XtCreateAvatarHandler
+import dev.gangster.socket.handler.extension.XtLoginHandler
+import dev.gangster.socket.handler.extension.XtLoginRegisterHandler
+import dev.gangster.socket.handler.extension.XtPinHandler
+import dev.gangster.socket.handler.extension.XtVersionCheckHandler
+import dev.gangster.socket.handler.smartfox.SfAutoJoinHandler
+import dev.gangster.socket.handler.smartfox.SfLoginHandler
+import dev.gangster.socket.handler.smartfox.SfRoundTripHandler
+import dev.gangster.socket.handler.smartfox.SfVersionCheckHandler
+import dev.gangster.socket.message.MessageDispatcher
 import dev.gangster.utils.Logger
 import dev.gangster.utils.UUID
 import dev.gangster.utils.startsWithString
@@ -57,15 +67,26 @@ import java.nio.charset.Charset
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.io.encoding.Base64
 
-const val POLICY_RESPONSE =
-    "<cross-domain-policy><allow-access-from domain='*' to-ports='7777' /></cross-domain-policy>\u0000"
-
 class Server(
     private val host: String = SERVER_HOST,
     private val port: Int = SOCKET_SERVER_PORT,
     private val context: ServerContext,
     private val coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.IO + SupervisorJob()),
 ) {
+    private val messageDispatcher = MessageDispatcher()
+
+    init {
+        messageDispatcher.registerSf(SfVersionCheckHandler())
+        messageDispatcher.registerSf(SfLoginHandler(context))
+        messageDispatcher.registerSf(SfAutoJoinHandler())
+        messageDispatcher.registerSf(SfRoundTripHandler())
+        messageDispatcher.registerXt(XtPinHandler())
+        messageDispatcher.registerXt(XtVersionCheckHandler())
+        messageDispatcher.registerXt(XtCreateAvatarHandler())
+        messageDispatcher.registerXt(XtLoginRegisterHandler(context))
+        messageDispatcher.registerXt(XtLoginHandler(context))
+    }
+
     fun start() {
         coroutineScope.launch {
             try {
@@ -108,115 +129,14 @@ class Server(
 
                     when {
                         data.startsWithString("<") -> {
-                            // smartfox xml
+                            val message = SmartFoxXML.parse(data.decodeToString())
+                            messageDispatcher.findSfHandler(message)
                         }
 
                         data.startsWithString("%") -> {
-                            // xt message
+                            val message = SmartFoxString.parseXt(data)
+                            messageDispatcher.findXtHandler(message)
                         }
-
-                        // Version check handshake (follows original smartfox)
-                        data.startsWithString("<msg t='sys'><body action='verChk'") -> {
-                            connection.sendRaw(POLICY_RESPONSE.toByteArray()) // first request so response this first
-                            connection.sendRaw(SmartFoxXML.apiOK())
-                        }
-
-                        // Handle server login (game uses extension for login response)
-                        data.startsWithString("<msg t='sys'><body action='login'") -> {
-                            val r = -1             // param0
-                            val roomId = 1         // param1
-                            val userCount = 1      // param2
-                            val maxUsers = 100     // param3
-                            val flags = 2          // param4 flags for room.
-                            // (_loc3_ >> 1 & 1) = temp  [1 if flags=2]
-                            // (_loc3_ >> 2 & 1) = game  [0 if flags=2]
-                            // (_loc3_ >> 0 & 1) = priv  [0 if flags=2]
-                            // (_loc3_ >> 3 & 1) = limbo [0 if flags=2]
-
-                            val roomName = "Lobby" // param5 must be lobby
-                            connection.sendRaw(
-                                SmartFoxString.makeXt(
-                                    "rlu", r, roomId, userCount,
-                                    maxUsers, flags, roomName
-                                )
-                            )
-                        }
-
-                        // Handle room list
-                        data.startsWithString("<msg t='sys'><body action='autoJoin'") -> {
-                            connection.sendRaw(SmartFoxXML.joinOk(r = 1, pid = 0))
-                        }
-
-                        // Response to roundTrip message (likely first periodic ping)
-                        data.startsWithString("<msg t='sys'><body action='roundTrip'") -> {
-                            connection.sendRaw(SmartFoxXML.roundTripResponse())
-                        }
-
-                        // Response to periodic ping which is sent after the first roundTrip
-                        // follows zone name in 1.xml
-                        data.startsWithString("%xt%MafiaEx%pin") -> {
-                            Logger.debug { "Received xt pin message" }
-                        }
-
-                        // Handle version check (again)
-                        data.startsWithString("%xt%MafiaEx%vck") -> {
-                            val r = 1
-                            val unknown1 = 0
-                            val unknown2 = 0
-                            connection.sendRaw(
-                                SmartFoxString.makeXt("vck", r, unknown1, unknown2)
-                            )
-                        }
-
-                        // Handle create avatar
-                        data.startsWithString("%xt%MafiaEx%createavatar") -> {
-                            val xtReq = SmartFoxString.parsePbXt(data)
-                            val pbRequest = ProtoBuf.decodeFromByteArray<PBCreateAvatarRequest>(xtReq.pbPayload)
-                            Logger.debug { "Received createavatar request: $pbRequest" }
-
-                            val pbResponse = PBCreateAvatarResponse(result = 1)
-                            val xtRes = SmartFoxString.makeXt(
-                                "createavatar",
-                                xtReq.reqId,
-                                -1, // signify protobuf mode
-                                Base64.encode(GlobalContext.pb.encodeToByteArray(pbResponse))
-                            )
-                            connection.sendRaw(xtRes)
-                        }
-
-                        // Handle login register (new player)
-                        data.startsWithString("%xt%MafiaEx%lre") -> {
-                            val (xtReq, lreRequest) = SmartFoxString.parseObjXt<LreRequest>(data)
-                            Logger.debug { "Received lre request: $lreRequest" }
-
-                            val likelyStatusCodeWhere0IsSuccess = 0
-                            val userId = AdminData.PLAYER_ID_NUMBER
-                            val playerId = AdminData.PLAYER_ID_NUMBER
-                            val xtRes1 = SmartFoxString.makeXt(
-                                "lre",
-                                xtReq.reqId,
-                                likelyStatusCodeWhere0IsSuccess,
-                                userId,
-                                playerId,
-                            )
-                            connection.sendRaw(xtRes1)
-                        }
-
-                        // Handle login
-                        data.startsWithString("%xt%MafiaEx%lgn") -> {
-                            val (xtReq) = SmartFoxString.parseObjXt<LreRequest>(data)
-                            Logger.debug { "Received lgn request: " }
-
-                            val xtRes1 = SmartFoxString.makeXt("lgn", xtReq.reqId, 0, 315, 48343, 0, 0, 0)
-                            connection.sendRaw(xtRes1)
-                        }
-
-                        // to send in order:
-                        // *oga, *sgc, *oio, *playerprofile, *newachievements
-                        // *paymentinfo, *oud, *playercurrency, *viewarmament, *getarmamentpresetstatus,
-                        // *viewgear, *viewfood, *viewinventory, *viewitems, *viewitems, *viewitems, *auc,
-                        // *getplayerbooster, *showmissionbooster, *viewmissions, *viewwork,
-                        // *png, *sae, *lfe, *gch, *gfl, *getactivequests, *sgs, *sga, *apd
 
                         // apd is supposed to be send when the all data is sent to game
                         data.startsWithString("%xt%MafiaEx%apd") -> {
