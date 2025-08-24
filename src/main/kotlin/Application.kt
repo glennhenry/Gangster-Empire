@@ -3,7 +3,6 @@ package dev.gangster
 import com.mongodb.kotlin.client.coroutine.MongoClient
 import dev.gangster.api.apiRoutes
 import dev.gangster.api.fileRoutes
-import dev.gangster.auth.InGameAuthProvider
 import dev.gangster.auth.PlayerAccountRepository
 import dev.gangster.auth.PlayerAccountRepositoryMongo
 import dev.gangster.context.GlobalContext
@@ -19,27 +18,21 @@ import dev.gangster.socket.smartfox.Room
 import dev.gangster.task.ServerTaskDispatcher
 import dev.gangster.utils.LogLevel
 import dev.gangster.utils.Logger
-import dev.gangster.utils.decodedUrl
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.serialization.kotlinx.protobuf.*
 import io.ktor.server.application.*
-import io.ktor.server.http.content.*
-import io.ktor.server.netty.EngineMain
+import io.ktor.server.netty.*
 import io.ktor.server.plugins.calllogging.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.plugins.cors.routing.*
 import io.ktor.server.plugins.statuspages.*
-import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import io.ktor.server.websocket.*
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.protobuf.ProtoBuf
 import org.bson.Document
-import java.io.File
-import kotlin.time.Duration.Companion.seconds
 
 fun main(args: Array<String>) {
     EngineMain.main(args)
@@ -120,7 +113,6 @@ suspend fun Application.module() {
         )
     }
     val onlinePlayerRegistry = OnlinePlayerRegistry()
-    val authProvider = InGameAuthProvider(database, playerAccountRepository)
     val taskDispatcher = ServerTaskDispatcher()
     val playerContextRegistry = PlayerContextRegistry()
 
@@ -129,7 +121,6 @@ suspend fun Application.module() {
         db = database,
         playerAccountRepository = playerAccountRepository,
         onlinePlayerRegistry = onlinePlayerRegistry,
-        authProvider = authProvider,
         taskDispatcher = taskDispatcher,
         playerContextRegistry = playerContextRegistry,
         rooms = listOf(Room(
@@ -159,13 +150,13 @@ suspend fun Application.module() {
         // no logging to ws right now
     }
 
-    // 10. Configure API routes
+    // 9. Configure API routes
     routing {
         fileRoutes()
         apiRoutes()
     }
 
-    // 11. Start the game socket server
+    // 10. Start the game socket server
     val server = Server(context = serverContext)
     server.start()
     Runtime.getRuntime().addShutdownHook(Thread {

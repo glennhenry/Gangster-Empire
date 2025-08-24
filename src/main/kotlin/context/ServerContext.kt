@@ -1,6 +1,5 @@
 package dev.gangster.context
 
-import dev.gangster.auth.AuthProvider
 import dev.gangster.auth.PlayerAccountRepository
 import dev.gangster.db.Database
 import dev.gangster.registry.OnlinePlayerRegistry
@@ -12,7 +11,6 @@ data class ServerContext(
     val db: Database,
     val playerAccountRepository: PlayerAccountRepository,
     val onlinePlayerRegistry: OnlinePlayerRegistry,
-    val authProvider: AuthProvider,
     val taskDispatcher: ServerTaskDispatcher,
     val playerContextRegistry: PlayerContextRegistry,
     val rooms: List<Room>,
