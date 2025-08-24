@@ -3,7 +3,7 @@ package dev.gangster.socket.message
 data class XtMessage(
     val zone: String?,
     val command: String,
-    val reqId: String,
+    val reqId: Int,
     val mode: XtMode,
     val stringParts: List<String> = emptyList(),
     val pbPayload: ByteArray = byteArrayOf(0),
