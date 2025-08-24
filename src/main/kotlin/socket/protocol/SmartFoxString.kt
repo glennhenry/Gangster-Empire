@@ -19,7 +19,7 @@ import kotlin.io.encoding.Base64
 object SmartFoxString {
     fun makeXt(
         command: String, reqId: Int,
-        statusCode: Int? = null, mode: XtMode, vararg msg: Any?
+        statusCode: Int? = null, mode: XtMode = XtMode.Nothing, vararg msg: Any?
     ): String {
         return buildString {
             append("%xt")

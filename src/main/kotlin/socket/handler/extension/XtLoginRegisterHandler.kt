@@ -35,7 +35,7 @@ class XtLoginRegisterHandler(private val serverContext: ServerContext) : Message
         val request = SmartFoxString.parseObjXt<LreRequest>(message)
         Logger.debug { "Received login register request: $request" }
 
-        var status = verifyUser(message.reqId, request)
+        var status = verifyUser(request)
 
         val payload = when (status) {
             SUGGEST_NAME_CHANGE -> {
@@ -79,7 +79,7 @@ class XtLoginRegisterHandler(private val serverContext: ServerContext) : Message
     /**
      * Verify user and return status code
      */
-    private suspend fun verifyUser(r: Int, req: LreRequest): Int {
+    private suspend fun verifyUser(req: LreRequest): Int {
         // Case: username too short
         if (req.username.length < 6) {
             return SUGGEST_NAME_CHANGE
