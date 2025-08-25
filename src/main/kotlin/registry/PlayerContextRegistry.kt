@@ -21,11 +21,11 @@ class PlayerContextRegistry {
      * Create context for a player.
      */
     suspend fun createContext(
-        playerId: Int,
         connection: Connection,
         db: Database,
         useMongo: Boolean
     ) {
+        val playerId = connection.playerId
         val playerAccount = db.loadPlayerAccount(playerId)
         if (playerAccount.isFailure) {
             Logger.error { "Error when creating context for playerId=$playerId: ${playerAccount.exceptionOrNull()}" }
