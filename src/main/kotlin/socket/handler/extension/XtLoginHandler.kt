@@ -70,7 +70,7 @@ class XtLoginHandler(private val serverContext: ServerContext) : MessageHandler<
         val playerId = passwordMatch.getOrThrow()
 
         // Case: player is banned
-        val bannedTime = serverContext.playerAccountRepository.isPlayerBanned(playerId)
+        val bannedTime = serverContext.playerAccountRepository.playerBanExpireAt(playerId)
         if (bannedTime.getOrNull() != null && bannedTime.getOrThrow() > 0) {
             return Pair(PLAYER_BANNED, null)
         }

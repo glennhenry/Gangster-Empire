@@ -19,9 +19,9 @@ interface PlayerAccountRepository {
     suspend fun updateLastLogin(playerId: Int, lastLogin: Long): Result<Unit>
 
     /**
-     * Return the time in days player is banned for.
+     * Return the epoch millis a player's ban will be lifted. Zero means player is not banned.
      */
-    suspend fun isPlayerBanned(playerId: Int): Result<Int>
+    suspend fun playerBanExpireAt(playerId: Int): Result<Long>
 
     /**
      * Verify credentials of the given username and password.

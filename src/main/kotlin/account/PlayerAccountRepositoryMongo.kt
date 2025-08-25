@@ -90,7 +90,7 @@ class PlayerAccountRepositoryMongo(
         }
     }
 
-    override suspend fun isPlayerBanned(playerId: Int): Result<Int> {
+    override suspend fun playerBanExpireAt(playerId: Int): Result<Long> {
         return runMongoCatching {
             val filters = Filters.eq("playerId", playerId)
 
@@ -98,7 +98,7 @@ class PlayerAccountRepositoryMongo(
                 .firstOrNull()
                 ?: throw NoSuchElementException("Account with playerId=$playerId doesn't exist")
 
-            acc.serverMetadata.bannedInDays
+            acc.serverMetadata.banExpireAt
         }
     }
 
