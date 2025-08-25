@@ -4,6 +4,7 @@ import dev.gangster.game.data.AdminData
 import dev.gangster.game.model.protobuf.avatar.PBCreateAvatarRequest
 import dev.gangster.game.model.user.MafiaUserData
 
+// TO-DO populate data, and create data model instead of using PB data
 data class PlayerData(
     val playerId: Int,
     val avatarData: PBCreateAvatarRequest,
